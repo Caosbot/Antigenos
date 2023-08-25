@@ -7,7 +7,7 @@ public class StatsComponent : MonoBehaviour, IDamageable
     [System.Serializable]
     private class Stat //Classe que define os Stats do Jogo
     {
-        [SerializeField] public string name { get; } //Nome do Stat, não vai ser mudado durante o jogo!
+        [SerializeField] private string name; //Nome do Stat, não vai ser mudado durante o jogo!
         [SerializeField] private int baseValue; //Valor base do Stat para cada Objeto, ele define o valor Máximo e o Atual(O Atual só segue o valor base na Inicialização)
         [System.NonSerialized] public int currentValue; //Valor Atual
         [System.NonSerialized] protected int maxValue; //Valor Máximo
@@ -17,6 +17,10 @@ public class StatsComponent : MonoBehaviour, IDamageable
             baseValue = BaseValue;
             maxValue = baseValue;
             currentValue = baseValue;
+        }
+        public string GetName()
+        {
+            return name;
         }
     }
 
@@ -38,7 +42,7 @@ public class StatsComponent : MonoBehaviour, IDamageable
     {
         foreach(Stat currentStat in stats)
         {
-            if(statName == currentStat.name)
+            if(statName == currentStat.GetName())
             {
                 return currentStat;
             }
