@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    void TakeDamage(int inDamage, bool ignoreArmor = false);
+    void TakeDamage(int inDamage,bool ignoreArmor = false, GameObject damageDealer = null);
 }
 public static class InterfaceHelper
 {

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatsComponent : MonoBehaviour, IDamageable
+[System.Serializable]
+public class Stats_Component
 {
     [System.Serializable]
     private class Stat //Classe que define os Stats do Jogo
@@ -27,12 +28,7 @@ public class StatsComponent : MonoBehaviour, IDamageable
     //Declaração de Essenciais como padrão
     [SerializeField] private Stat[] stats = { new Stat("Vida", 20), new Stat("Estamina", 20), new Stat("Mana", 10)}; //Os Stats do Jogo, por padrão todos os scripts contém 3
 
-#if UNITY_EDITOR
-    [SerializeField] private bool DarDano;
-    [SerializeField] private int Dano;
-#endif
-
-    public void TakeDamage(int inDamage, bool ignoreArmor = false) //Método da Interface IDamageable
+    public void ReceiveDamage(int inDamage, bool ignoreArmor = false) //Método da Interface IDamageable
     {
         Stat tempStat = FindDesiredStat("Vida");
         tempStat.currentValue -= inDamage;
@@ -49,22 +45,6 @@ public class StatsComponent : MonoBehaviour, IDamageable
         }
         Debug.LogError("INVALID STAT");
         return stats[0];
-    }
-
-#if UNITY_EDITOR
-    void Update()
-    {
-        if (DarDano) //Temporário
-        {
-            DarDano = !DarDano;
-            InterfaceHelper.GetDamageable(gameObject).TakeDamage(Dano); //Exemplo para dar dano
-        }
-    }
-#endif
-
-    void Start()
-    {
-
     }
 
 }
