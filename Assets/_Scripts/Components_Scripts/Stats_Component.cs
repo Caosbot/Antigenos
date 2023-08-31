@@ -11,7 +11,7 @@ public class Stats_Component
         [SerializeField] private string name; //Nome do Stat, não vai ser mudado durante o jogo!
         [SerializeField] private int baseValue; //Valor base do Stat para cada Objeto, ele define o valor Máximo e o Atual(O Atual só segue o valor base na Inicialização)
         [System.NonSerialized] public int currentValue; //Valor Atual
-        [System.NonSerialized] protected int maxValue; //Valor Máximo
+        [System.NonSerialized] public int maxValue; //Valor Máximo
         public Stat(string StatName, int BaseValue) //Construtor dos Stats
         {
             name = StatName;
@@ -45,6 +45,17 @@ public class Stats_Component
         }
         Debug.LogError("INVALID STAT");
         return stats[0];
+    }
+    public float GetStatPercentage(string statName)
+    {
+        foreach (Stat currentStat in stats)
+        {
+            if (statName == currentStat.GetName())
+            {
+                return (float)(currentStat.currentValue/(float)currentStat.maxValue);
+            }
+        }
+        return 1;
     }
 
 }

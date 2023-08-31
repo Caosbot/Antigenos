@@ -6,6 +6,8 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
 {
     public Stats_Component statsComponent;
     public ImmunoXP_Component immunoComponent;
+    [SerializeField] private Initialize_Component serverInitializeComponent;
+    public ProgressBar healthProgressBar;
 
     public _Enemy_Behaviour e;
 
@@ -25,12 +27,14 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        DoDamage(e);
-        DoDamage(e);
+        TakeDamage(10);
+        healthProgressBar.UpdatePercentage(statsComponent.GetStatPercentage("Vida"));
+        Debug.Log(statsComponent.GetStatPercentage("Vida"));
     }
     public void TakeDamage(int inDamage, bool ignoreArmor = false, GameObject damageDealer = null)
     {
         statsComponent.ReceiveDamage(inDamage,ignoreArmor);
+        healthProgressBar.UpdatePercentage(statsComponent.GetStatPercentage("Vida"));
     }
 
 }
