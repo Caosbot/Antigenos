@@ -8,7 +8,6 @@ public class Pulmao : MonoBehaviour
     public GameObject EnemySamplePrefab;
     void Start()
     {
-        private Queue<int> posArray = new Queue<int>();
-        private Queue<Vector2> local = new Queue<Vector2>();
+
     }
 }

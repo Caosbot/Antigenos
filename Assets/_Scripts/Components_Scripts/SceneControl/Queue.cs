@@ -1,27 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-//using System.Diagnostics;
-//using TMPro;
 using UnityEngine;
 
-public class Queue<QueueType>
+public class Fila<FilaType>
 {
-    private QueueType[] _content = null;
+    private FilaType[] _content = null;
     private int _size = 0;
     private int _front = 0;
     private int _rear = 0;
     private int _resize = 0;
 
-    public Queue(int size, int factor = -1)
+    public Fila(int size, int factor = -1)
     {
-        _content = new QueueType[size];
+        _content = new FilaType[size];
         _size = size;
         _resize = factor;
 
     }
 
-    public void Enqueue(QueueType value)
+    public void Enqueue(FilaType value)
     {
         if (_rear == _size)
         {
@@ -30,7 +28,7 @@ public class Queue<QueueType>
         _content[_rear++] = value;
     }
 
-    public QueueType Dequeue()
+    public FilaType Dequeue()
     {
         UnityEngine.Debug.Assert(_rear != _front);
         int index = _front++;
@@ -53,7 +51,7 @@ public class Queue<QueueType>
     {
         int reSizeLenght = _resize == -1 ? (int)_size / 2 : _resize;
         _size += reSizeLenght;
-        QueueType[] newArray = new QueueType[_size];
+        FilaType[] newArray = new FilaType[_size];
         for (int i = _front; i < _content.Length; i++)
         {
             newArray[i - _front] = _content[i];
