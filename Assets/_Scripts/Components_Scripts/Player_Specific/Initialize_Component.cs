@@ -6,6 +6,7 @@ using UnityEngine;
 public class Initialize_Component
 {
     [SerializeField] private GameObject[] objectsToHide;
+    [SerializeField] private MonoBehaviour[] scriptsToHide;
     [SerializeField] private GameObject[] objectsToShow;
     public void Initialize()
     {
@@ -17,5 +18,9 @@ public class Initialize_Component
         {
             g.SetActive(true);
         }
+        /*foreach(MonoBehaviour m in scriptsToHide)
+        {
+            m.enabled = false;
+        }*/
     }
 }

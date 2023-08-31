@@ -2266,6 +2266,7 @@ GameObject:
   - component: {fileID: 8125699325902856910}
   - component: {fileID: 8125699325902856909}
   - component: {fileID: 8125699325458533118}
+  - component: {fileID: 901276790207364062}
   m_Layer: 6
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -2415,12 +2416,29 @@ MonoBehaviour:
         levelFactor: 1.5
         immunoFactor: 1.5
       level: 1
+  serverInitializeComponent:
+    objectsToHide: []
+    scriptsToHide: []
+    objectsToShow: []
   healthProgressBar: {fileID: 1674995991321052665}
-  objectsToHide:
-  - {fileID: 3700611044251489805}
-  objectsToShow:
-  - {fileID: 1674995991698020361}
   e: {fileID: 0}
+--- !u!114 &901276790207364062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8125699325902856905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4a6f353358b7874a8039306c5d3337c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 3700611044251489802}
+  player: {fileID: 8125699325902856906}
+  playerObj: {fileID: 8597073726421972414}
+  rigidBody: {fileID: 0}
+  rotationSpeed: 7
 --- !u!1 &8125699326051369602
 GameObject:
   m_ObjectHideFlags: 0
@@ -2808,11 +2826,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3ff5aede371df478ca25eb98bf5681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1674995991698020361 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7492458738363670423, guid: 785c6ef068af03c4282a6ae3316b3bd7, type: 3}
-  m_PrefabInstance: {fileID: 8125699326290495390}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1674995991698020362 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7492458738363670420, guid: 785c6ef068af03c4282a6ae3316b3bd7, type: 3}
