@@ -7,6 +7,9 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
     public Stats_Component statsComponent;
     public ImmunoXP_Component immunoComponent;
     [SerializeField] private Initialize_Component serverInitializeComponent;
+    public WeaponClass baseClass;
+    public Mellee_WeaponClass melleeClass;
+    public Ranged_WeaponClass rangedClass;
     public ProgressBar healthProgressBar;
 
     public _Enemy_Behaviour e;

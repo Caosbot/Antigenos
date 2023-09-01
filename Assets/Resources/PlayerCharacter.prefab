@@ -626,9 +626,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -693,9 +701,20 @@ MonoBehaviour:
   m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &4472475690555550856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,6 +2286,7 @@ GameObject:
   - component: {fileID: 8125699325902856909}
   - component: {fileID: 8125699325458533118}
   - component: {fileID: 901276790207364062}
+  - component: {fileID: 3710465114155342238}
   m_Layer: 6
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -2343,6 +2363,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8125699325902856909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2417,9 +2438,14 @@ MonoBehaviour:
         immunoFactor: 1.5
       level: 1
   serverInitializeComponent:
-    objectsToHide: []
-    scriptsToHide: []
-    objectsToShow: []
+    objectsToHide:
+    - {fileID: 3700611044251489805}
+    scriptsToHide:
+    - {fileID: 901276790207364062}
+    - {fileID: 0}
+    - {fileID: 8125699325902856908}
+    objectsToShow:
+    - {fileID: 1674995991698020361}
   healthProgressBar: {fileID: 1674995991321052665}
   e: {fileID: 0}
 --- !u!114 &901276790207364062
@@ -2434,11 +2460,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a6f353358b7874a8039306c5d3337c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: {fileID: 3700611044251489802}
-  player: {fileID: 8125699325902856906}
-  playerObj: {fileID: 8597073726421972414}
-  rigidBody: {fileID: 0}
-  rotationSpeed: 7
+  speed: 6
+  jumpSpeed: 6
+  gravity: 10
+  controller: {fileID: 0}
+  cameraTransform: {fileID: 8125699325902856906}
+--- !u!143 &3710465114155342238
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8125699325902856905}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 3.46
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1.67, z: 0}
 --- !u!1 &8125699326051369602
 GameObject:
   m_ObjectHideFlags: 0
@@ -2652,6 +2704,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9205719242478455903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2691,6 +2744,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 8125699325902856906}
     m_Modifications:
     - target: {fileID: 7492458738363670418, guid: 785c6ef068af03c4282a6ae3316b3bd7, type: 3}
@@ -2814,6 +2868,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 785c6ef068af03c4282a6ae3316b3bd7, type: 3}
 --- !u!114 &1674995991321052665 stripped
 MonoBehaviour:
@@ -2826,6 +2883,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3ff5aede371df478ca25eb98bf5681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1674995991698020361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7492458738363670423, guid: 785c6ef068af03c4282a6ae3316b3bd7, type: 3}
+  m_PrefabInstance: {fileID: 8125699326290495390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1674995991698020362 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7492458738363670420, guid: 785c6ef068af03c4282a6ae3316b3bd7, type: 3}
