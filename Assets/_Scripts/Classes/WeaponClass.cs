@@ -11,7 +11,10 @@ public class WeaponClass
     [Header("Attributes")]
     public float damage;
     [SerializeField] protected WeaponType typeOfWeapon;
-    public _WeaponData weaponData;
+
+    [Header("Bases")]
+    public GameObject weaponPrefab;
+
 }
 
 [System.Serializable]
