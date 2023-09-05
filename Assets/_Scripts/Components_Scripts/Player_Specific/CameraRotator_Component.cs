@@ -21,12 +21,12 @@ public class CameraRotator_Component : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         while (true)
         {
-            transform.Rotate(Vector3.up, (Input.GetAxis("Mouse X") * Time.deltaTime) * offsetMultiplier.x, Space.World);
+            transform.Rotate(Vector3.up, (((Input.GetAxis("Mouse X") * (offsetMultiplier.x)) * Time.deltaTime)), Space.World);
             if (transform.rotation.eulerAngles.x > 45+factor && transform.rotation.eulerAngles.x < 55 + factor && Input.GetAxis("Mouse Y") < 0) { }
             else if (transform.rotation.eulerAngles.x < 330 + factor && transform.rotation.eulerAngles.x > 300 + factor && Input.GetAxis("Mouse Y") > 0) { }
             else
             {
-                transform.Rotate(Vector3.right, (Input.GetAxis("Mouse Y") * Time.deltaTime) * (offsetMultiplier.y * -1), Space.Self);
+                transform.Rotate(Vector3.right, (((Input.GetAxis("Mouse Y")*(offsetMultiplier.y * -1)) * Time.deltaTime)), Space.Self);
             }
             yield return 0;
         }

@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IDamageable
 {
     void TakeDamage(int inDamage,bool ignoreArmor = false, GameObject damageDealer = null);
+    void Die();
 }
 public static class InterfaceHelper
 {

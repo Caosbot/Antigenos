@@ -5,13 +5,16 @@ using UnityEngine;
 public class _Character_Behaviour : MonoBehaviour, IDamageable
 {
     [Header("Components")]
-    public Stats_Component statsComponent;
-    public ImmunoXP_Component immunoComponent;
-    [SerializeField] private Initialize_Component serverInitializeComponent;
-    public Weapon_Component weaponComponent;
-    public AnimationState_Component animationComponent;
+    public Stats_Component                              statsComponent;
+    public ImmunoXP_Component                           immunoComponent;
+    [SerializeField] private Initialize_Component       serverInitializeComponent;
+    [System.NonSerialized] public Weapon_Component      weaponComponent = null;
+    public AnimationState_Component                     animationComponent;
     [Header("ProgressBar")]
     [SerializeField] private ProgressBar healthProgressBar;
+
+    [Header("Sockets")]
+    [SerializeField] private Transform handTransform;
 
     public void DoDamage(_Enemy_Behaviour enemyBehaviour)
     {
@@ -29,7 +32,6 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        GameObject instance = Instantiate(Resources.Load(weaponComponent.GetWeaponLocation(), typeof(GameObject)), weaponComponent.handTransform) as GameObject;
         TakeDamage(10);
         healthProgressBar.UpdatePercentage(statsComponent.GetStatPercentage("Vida"));
         Debug.Log(statsComponent.GetStatPercentage("Vida"));
@@ -37,11 +39,25 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
     private void Update()
     {
         animationComponent.Update();
+        if (Input.GetMouseButtonDown(0) && weaponComponent != null) //Left Mouse Button
+        {
+            weaponComponent.Shot();
+        }
+    }
+    public void Die()
+    {
+
     }
     public void TakeDamage(int inDamage, bool ignoreArmor = false, GameObject damageDealer = null)
     {
         statsComponent.ReceiveDamage(inDamage,ignoreArmor);
         healthProgressBar.UpdatePercentage(statsComponent.GetStatPercentage("Vida"));
+    }
+    public void SpawnWeapon(string weaponLocation)
+    {
+        GameObject instance = Instantiate(Resources.Load(weaponLocation, typeof(GameObject)), handTransform) as GameObject;
+        weaponComponent = instance.GetComponent<Weapon_Component>();
+        weaponComponent.aimComponent = gameObject.GetComponent<Aim_Component>();
     }
 
 }

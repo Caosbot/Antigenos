@@ -28,5 +28,5 @@ public class Ranged_WeaponClass : WeaponClass
     [SerializeField] private Transform weaponNozzle;
 
     [Header("Attributes")]
-    [SerializeField] private float shootingInterval;
+    public float shootingInterval;
 }

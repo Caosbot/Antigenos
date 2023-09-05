@@ -46,6 +46,18 @@ public class Stats_Component
         Debug.LogError("INVALID STAT");
         return stats[0];
     }
+    public int FindStatValue(string statName) //Método que retorna o valor do Stat
+    {
+        foreach (Stat currentStat in stats)
+        {
+            if (statName == currentStat.GetName())
+            {
+                return currentStat.currentValue;
+            }
+        }
+        Debug.LogError("INVALID STAT");
+        return 1;
+    }
     public float GetStatPercentage(string statName)
     {
         foreach (Stat currentStat in stats)
