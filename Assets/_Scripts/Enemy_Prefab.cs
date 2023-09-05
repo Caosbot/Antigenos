@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Enemy_Prefab
+public class Enemy_Prefab : MonoBehaviour
 {
-    [SerializeField] private Enemies EnemyPrefab;
-    public string GetLoadLocation()
-    {
-        return "Assets/Resources/EnemyPrefabs/" + EnemyPrefab.ToString();
-    }
+    [SerializeField] private string prefabLocation;
+    [SerializeField] private string p;
 }
 
 public enum Enemies
 {
-    BacteriaLight,
+
 }
