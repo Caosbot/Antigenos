@@ -7,6 +7,8 @@ public class Aim_Component : MonoBehaviour
     [SerializeField] private Transform aimPosition;
     [SerializeField] private float aimSpeed = 20;
     [SerializeField] LayerMask aimMask;
+    public Transform hitTransform;
+    public RaycastHit hitR;
 
     private void Update()
     {
@@ -15,6 +17,8 @@ public class Aim_Component : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, aimMask))
         {
             aimPosition.position = Vector3.Lerp(aimPosition.position, hit.point, aimSpeed * Time.deltaTime);
+            hitTransform = hit.transform;
+            hitR = hit;
         }
         Debug.DrawRay(ray.GetPoint(0), ray.GetPoint(100));
     }
