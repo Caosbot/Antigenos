@@ -13,7 +13,7 @@ public class Weapon_Component : MonoBehaviour
     {
         return weapon.weaponData.prefabLocation;
     }
-    public void Shot()
+    public void Shot(GameObject owner)
     {
         if(weapon != null && canShoot)
         {
@@ -24,6 +24,13 @@ public class Weapon_Component : MonoBehaviour
             {
                 Debug.Log("Hit Something");
                 IDamageable iDamage = InterfaceHelper.GetDamageable(g);
+                if(owner == g)
+                {
+                    Debug.Log("Hit self");
+                    canShoot = false;
+                    StartCoroutine(ShootTimer());
+                    return;
+                }
                 if (iDamage != null)
                 {
                     Debug.Log("Hit Damageable");

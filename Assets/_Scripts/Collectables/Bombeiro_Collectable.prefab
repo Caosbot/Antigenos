@@ -51,7 +51,7 @@ MonoBehaviour:
     typeOfWeapon: 1
     weaponData: {fileID: 11400000, guid: b13bba2ca7251044688dd7ae6a39f69f, type: 2}
     weaponNozzle: {fileID: 0}
-    shootingInterval: 0
+    shootingInterval: 0.2
   rotationSpeed: 1
 --- !u!65 &5953632744524457619
 BoxCollider:

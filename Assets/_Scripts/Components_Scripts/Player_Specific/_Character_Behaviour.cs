@@ -41,7 +41,7 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
         animationComponent.Update();
         if (Input.GetMouseButtonDown(0) && weaponComponent != null) //Left Mouse Button
         {
-            weaponComponent.Shot();
+            weaponComponent.Shot(gameObject);
         }
     }
     public void Die()

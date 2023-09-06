@@ -57,5 +57,17 @@ public class Stats_Component
         }
         return 1;
     }
+    public float FindStatValue(string statName) //Método que retorna o Stat baseado no seu nome, caso inválido retorna o primeiro Stat e Printa no Console Erro
+    {
+        foreach (Stat currentStat in stats)
+        {
+            if (statName == currentStat.GetName())
+            {
+                return currentStat.currentValue;
+            }
+        }
+        Debug.LogError("INVALID STAT");
+        return 1;
+    }
 
 }
