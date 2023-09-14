@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bullet
   - Mask
+  - AimCube
   layers:
   - Default
   - TransparentFX
