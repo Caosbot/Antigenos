@@ -34,6 +34,7 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        photonComponent = GetComponent<PhotonView>();
         TakeDamage(10);
         healthProgressBar.UpdatePercentage(statsComponent.GetStatPercentage("Vida"));
         Debug.Log(statsComponent.GetStatPercentage("Vida"));
