@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
     [SerializeField] private Initialize_Component       serverInitializeComponent;
     [System.NonSerialized] public Weapon_Component      weaponComponent = null;
     public AnimationState_Component                     animationComponent;
+    public PhotonView photonComponent;
     [Header("ProgressBar")]
     [SerializeField] private ProgressBar healthProgressBar;
 
@@ -35,6 +37,10 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
         TakeDamage(10);
         healthProgressBar.UpdatePercentage(statsComponent.GetStatPercentage("Vida"));
         Debug.Log(statsComponent.GetStatPercentage("Vida"));
+        if (!photonComponent.IsMine)
+        {
+            serverInitializeComponent.Initialize();
+        }
     }
     private void Update()
     {
