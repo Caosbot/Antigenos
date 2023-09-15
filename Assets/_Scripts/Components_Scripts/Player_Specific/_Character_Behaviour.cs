@@ -13,6 +13,7 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
     [System.NonSerialized] public Weapon_Component      weaponComponent = null;
     public AnimationState_Component                     animationComponent;
     private PhotonView                                  photonComponent;
+    public Aim_Component                                aimComponent;
     [Header("ProgressBar")]
     [SerializeField] private ProgressBar                healthProgressBar;
     [SerializeField] private TextMeshProUGUI            playerText;
@@ -40,11 +41,18 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
         if (!photonComponent.IsMine)
         {
             serverInitializeComponent.Initialize();
+            aimComponent = null;
+        }
+        else
+        {
+            GameObject aimCube = Instantiate(Resources.Load<GameObject>("Weapons/AimCube/DebugAimCube"));
+            aimComponent.Start(aimCube);
         }
         playerText.text = PhotonNetwork.NickName;
     }
     private void Update()
     {
+        aimComponent.Update();
         animationComponent.Update();
         if (Input.GetMouseButtonDown(0) && weaponComponent != null) //Left Mouse Button
         {
@@ -64,7 +72,8 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
     {
         GameObject instance = Instantiate(Resources.Load(weaponLocation, typeof(GameObject)), handTransform) as GameObject;
         weaponComponent = instance.GetComponent<Weapon_Component>();
-        weaponComponent.aimComponent = gameObject.GetComponent<Aim_Component>();
+        weaponComponent.aimComponent = aimComponent;
+        weaponComponent.animComponent = animationComponent;
     }
 
 }

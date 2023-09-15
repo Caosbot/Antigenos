@@ -5,10 +5,17 @@ using UnityEngine;
 public class Weapon_Component : MonoBehaviour
 {
     public WeaponClass weapon = null;
-    [System.NonSerialized]public Aim_Component aimComponent;
+    [System.NonSerialized] public Aim_Component                         aimComponent;
+    [System.NonSerialized] public AnimationState_Component              animComponent;
     private bool canShoot = true;
     [SerializeField] private GameObject muzzle;
     [SerializeField] private GameObject impact;
+
+    private AudioSource audioSource;
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public string GetWeaponLocation()
     {
         return weapon.weaponData.prefabLocation;
@@ -19,6 +26,8 @@ public class Weapon_Component : MonoBehaviour
         {
             StartCoroutine(Particles());
             Debug.Log("Shoting");
+            PlayAudio(weapon.weaponData.shootingSound);
+            animComponent.ShootingAnim();
             GameObject g = aimComponent.hitTransform.gameObject;
             if (g != null)
             {
@@ -59,5 +68,10 @@ public class Weapon_Component : MonoBehaviour
         }
         yield return new WaitForSeconds(time);
         canShoot = true;
+    }
+    private void PlayAudio(AudioClip audio)
+    {
+        audioSource.clip = audio;
+        audioSource.Play();
     }
 }

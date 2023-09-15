@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Aim_Component : MonoBehaviour
+[System.Serializable]
+public class Aim_Component
 {
-    [SerializeField] private Transform          aimPosition;
+    [System.NonSerialized] private Transform          aimPosition;
     [SerializeField] private float              aimSpeed = 20;
     [SerializeField] private LayerMask          aimMask;
     [System.NonSerialized] public Transform     hitTransform;
     [System.NonSerialized] public RaycastHit    hitR;
 
-    private void Start()
+    public void Start(GameObject aimCube)
     {
-        GameObject aimCube = Instantiate(Resources.Load<GameObject>("Weapons/AimCube/DebugAimCube"));
         aimPosition = aimCube.transform;
         aimCube.name = "PlayerAimCube";
     }
-    private void Update()
+    public void Update()
     {
         Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);

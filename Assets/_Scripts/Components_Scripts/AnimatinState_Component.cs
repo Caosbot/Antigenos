@@ -64,4 +64,8 @@ public class AnimationState_Component
         }
         animator.SetBool("IsGrounded",controller.isGrounded);
     }
+    public void ShootingAnim()
+    {
+        animator.Play("RifleShooting", 1);
+    }
 }

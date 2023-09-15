@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: BaseWeapon
   m_EditorClassIdentifier: 
   prefabLocation: Weapons/Bombeiro_Weapon
+  shootingSound: {fileID: 8300000, guid: a1b30caa689f13d45850f3285a5cf65c, type: 3}
