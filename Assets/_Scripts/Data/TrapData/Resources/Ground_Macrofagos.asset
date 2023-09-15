@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02758e26efca91a4e96f92ed2579b031, type: 3}
-  m_Name: "C\xE2ncer"
+  m_Script: {fileID: 11500000, guid: 6d940aa086592874bb756d3d347881dc, type: 3}
+  m_Name: Ground_Macrofagos
   m_EditorClassIdentifier: 
-  prefabLocation: Default_Enemy.prefab
+  numRef: 0
+  prefabLocation: 
+  trapsPlace: Ground

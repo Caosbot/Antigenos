@@ -34,6 +34,9 @@ public class GameConnection : MonoBehaviourPunCallbacks
     {
         Debug.Log("Entrei na sala " + PhotonNetwork.CurrentRoom.Name);
         base.OnJoinedRoom();
+        Vector3 position = new Vector3(0,0.79f,0);
+        Quaternion rotation = Quaternion.Euler(Vector3.up * Random.Range(0, 360.0f));
+        PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
