@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class _Character_Behaviour : MonoBehaviour, IDamageable
 {
@@ -11,9 +12,10 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
     [SerializeField] private Initialize_Component       serverInitializeComponent;
     [System.NonSerialized] public Weapon_Component      weaponComponent = null;
     public AnimationState_Component                     animationComponent;
-    public PhotonView photonComponent;
+    private PhotonView                                  photonComponent;
     [Header("ProgressBar")]
-    [SerializeField] private ProgressBar healthProgressBar;
+    [SerializeField] private ProgressBar                healthProgressBar;
+    [SerializeField] private TextMeshProUGUI            playerText;
 
     [Header("Sockets")]
     [SerializeField] private Transform handTransform;
@@ -32,16 +34,14 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         photonComponent = GetComponent<PhotonView>();
-        TakeDamage(10);
-        healthProgressBar.UpdatePercentage(statsComponent.GetStatPercentage("Vida"));
-        Debug.Log(statsComponent.GetStatPercentage("Vida"));
         if (!photonComponent.IsMine)
         {
             serverInitializeComponent.Initialize();
         }
+        playerText.text = PhotonNetwork.NickName;
     }
     private void Update()
     {

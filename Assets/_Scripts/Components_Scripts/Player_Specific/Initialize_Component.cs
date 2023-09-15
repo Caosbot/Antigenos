@@ -18,9 +18,9 @@ public class Initialize_Component
         {
             g.SetActive(true);
         }
-        /*foreach(MonoBehaviour m in scriptsToHide)
+        foreach(MonoBehaviour m in scriptsToHide)
         {
             m.enabled = false;
-        }*/
+        }
     }
 }

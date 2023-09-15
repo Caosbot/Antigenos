@@ -4,12 +4,13 @@ using Photon.Pun;
 
 public class GameConnection : MonoBehaviourPunCallbacks
 {
-    public string roomName = "PUCC";
+    [SerializeField] private string roomName = "PUCC";
+    [SerializeField] private string[] playerNames;
     void Start()
     {
         //Conecta no photon
         Debug.Log("Conectando no Servidor...");
-        PhotonNetwork.NickName = "Xarope " + Random.Range(0, 1000);
+        PhotonNetwork.NickName = playerNames[Random.Range(0,playerNames.Length-1)] + Random.Range(0, 10);
         PhotonNetwork.ConnectUsingSettings();
     }
 

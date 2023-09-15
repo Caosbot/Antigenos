@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Aim_Component : MonoBehaviour
 {
-    [SerializeField] private Transform aimPosition;
-    [SerializeField] private float aimSpeed = 20;
-    [SerializeField] LayerMask aimMask;
-    public Transform hitTransform;
-    public RaycastHit hitR;
+    [SerializeField] private Transform          aimPosition;
+    [SerializeField] private float              aimSpeed = 20;
+    [SerializeField] private LayerMask          aimMask;
+    [System.NonSerialized] public Transform     hitTransform;
+    [System.NonSerialized] public RaycastHit    hitR;
 
+    private void Start()
+    {
+        GameObject aimCube = Instantiate(Resources.Load<GameObject>("Weapons/AimCube/DebugAimCube"));
+        aimPosition = aimCube.transform;
+        aimCube.name = "PlayerAimCube";
+    }
     private void Update()
     {
         Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
