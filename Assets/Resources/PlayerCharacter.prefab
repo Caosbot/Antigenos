@@ -78,7 +78,6 @@ GameObject:
   - component: {fileID: 5051563553989844195}
   - component: {fileID: 2032860823041302141}
   - component: {fileID: 5403874626672734518}
-  - component: {fileID: 856306209084547603}
   m_Layer: 6
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -271,14 +270,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!81 &856306209084547603
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405520131636635572}
-  m_Enabled: 1
 --- !u!1 &558323289801823598
 GameObject:
   m_ObjectHideFlags: 0

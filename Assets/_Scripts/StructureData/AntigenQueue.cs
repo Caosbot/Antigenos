@@ -19,7 +19,7 @@ public class AntigenQueue<QueueType>
     {
         lastIndex++;
         queue[lastIndex] = toAdd;
-        if (lastIndex + 1 == size)
+        if (lastIndex - 1 == size)
         {
             Resize();
         }
@@ -53,33 +53,32 @@ public class AntigenQueue<QueueType>
             queue[tempInt] = q;
             tempInt++;
         }
-        Debug.Log("Resized");
     }
     private void Arrange()
     {
-        DebugQueue("Arrange:");
         QueueType[] tempQueue = queue;
-        int tempInt = firstIndex;
-        int tempLocation = 0;
+        int tempFirstIndex = firstIndex; //10
+        int tempLastIndex = lastIndex; //12
+        firstIndex = 0; 
+        lastIndex = -1; 
         queue = new QueueType[queue.Length];
-        while (tempInt < lastIndex)
+        while (tempFirstIndex < tempLastIndex)
         {
-            queue[tempLocation] = tempQueue[tempInt];
-            tempLocation++;
-            tempInt++;
+            Queue(tempQueue[tempFirstIndex]);
+            tempFirstIndex++;
         }
-        queue[tempLocation] = tempQueue[tempInt];
-        lastIndex = tempLocation;
-        firstIndex = 0;
-        Debug.Log("Rearranged");
     }
     public void DebugQueue(string debugDenonimator = "Non Especified Debug:")
     {
-        string tempS = debugDenonimator + "\n";
+        string tempS = debugDenonimator + "\n FirstIndex:" + firstIndex + "\n LastIndex:" + lastIndex + "\n";
         foreach (QueueType q in queue)
         {
             tempS += q + "\n";
         }
         Debug.Log(tempS);
+    }
+    public QueueType GetFirstValue()
+    {
+        return queue[firstIndex];
     }
 }
