@@ -52,6 +52,7 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
     }
     private void Update()
     {
+        if(aimComponent != null)
         aimComponent.Update();
         animationComponent.Update();
         if (Input.GetMouseButtonDown(0) && weaponComponent != null) //Left Mouse Button

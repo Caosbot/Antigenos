@@ -2188,7 +2188,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794690028}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d026ef5ab276844aa61186230841bdc, type: 3}
   m_Name: 
@@ -2228,6 +2228,7 @@ MonoBehaviour:
   enemyWaves:
   - wave_Name: Cancer
     waveSpawnRate: 10
+    shouldPauseOnEnded: 0
     enemyList:
     - enemyData: {fileID: 11400000, guid: 2bba4a5fda2bdf2498a5cf9ea399cb2d, type: 2}
       spawnCount: 10
@@ -2235,6 +2236,7 @@ MonoBehaviour:
       spawnCount: 5
   - wave_Name: Cancer
     waveSpawnRate: 10
+    shouldPauseOnEnded: 0
     enemyList:
     - enemyData: {fileID: 11400000, guid: 2bba4a5fda2bdf2498a5cf9ea399cb2d, type: 2}
       spawnCount: 10

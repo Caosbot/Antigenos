@@ -16,32 +16,14 @@ public class SpawnSystem : MonoBehaviour
     [SerializeField] private GameObject waveSpawnText;
     public static int spawnedEnemies;
 
-    private AntigenQueue<_EnemyData> enemyQueue = new AntigenQueue<_EnemyData>(21);
+    private AntigenQueue<_EnemyData> enemyQueue = new AntigenQueue<_EnemyData>(30);
     private int waveCounter = 0;
 
-    private void OnValidate()
-    {
-        foreach(EnemySpawnWave e in enemyWaves)
-        {
-            foreach(EnemyWave a in e.enemyList)
-            {
-                if(a.spawnCount <= 0)
-                {
-                    a.spawnCount = 1;
-                }
-            }
-        }
-        if(waveSpawnText != null)
-        {
-            if (waveSpawnText.GetComponent<TextMeshProUGUI>() == null)
-            {
-                waveSpawnText = null;
-            }
-        }
-    }
+    private bool wavePaused;
+    private bool waveShouldPause;
+
     private void Awake()
     {
-        QueueWave();
     }
     private void Start()
     {
@@ -49,54 +31,57 @@ public class SpawnSystem : MonoBehaviour
     }
     private IEnumerator SpawnEnemyWaves()
     {
-        while (!enemyQueue.IsEmpty())
+        QueueWave();
+        while(waveCounter <= enemyWaves.Length)
         {
-            yield return new WaitForSeconds(enemyQueue.GetFirstValue().spawnRate);
-            //Debug.Log(enemyQueue.GetFirstValue().name);
-            Debug.Log("A");
-            //Instantiate Enemy
-            SpawnSystem.spawnedEnemies++;
-            enemyQueue.Unqueu();
-            /*if(enemyQueue.IsEmpty() || enemyQueue.GetFirstValue()==null)
+            yield return 0;
+            _EnemyData[] tempEnemyData = enemyQueue.GetArray();
+            foreach (_EnemyData e in tempEnemyData)
             {
-                yield return new WaitForSeconds(enemyWaves[waveCounter].waveSpawnRate);
-                QueueWave();
-                Debug.Log("Fim da wave");
-            }*/
+                if(e != null)
+                {
+                    yield return new WaitForSeconds(e.spawnRate);
+                    Debug.Log(enemyQueue.GetFirstValue()); //Substituir por lógica de spawn
+                    enemyQueue.Unqueu();
+                }
+            }
+            if (waveShouldPause) wavePaused = true;
+            while (wavePaused)
+            {
+                yield return 0;
+            }
+            QueueWave();
         }
-        Debug.Log("FimDeJogo");
-        yield return 0;
     }
     private void QueueWave()
     {
-        if(waveCounter+1 > enemyWaves.Length)
+        if(waveCounter >= enemyWaves.Length)
         {
-            if (infinite)
-            {
-                waveCounter = 0;
-            }
-            else
-            {
-                return;
-            }
+            Debug.Log("END GAME");
+            ENDGAME();
+            waveCounter++;
+            return;
         }
-        foreach (EnemyWave a in enemyWaves[waveCounter].enemyList)
+        waveShouldPause = enemyWaves[waveCounter].shouldPauseOnEnded;
+        foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
         {
             int tempInt = 0;
-            while (tempInt < a.spawnCount)
+            while(tempInt < eCounter.spawnCount)
             {
-                Debug.Log(tempInt);
-                enemyQueue.Queue(a.enemyData);
+                enemyQueue.Queue(eCounter.enemyData);
                 tempInt++;
             }
         }
         waveCounter++;
-        enemyQueue.DebugQueue();
+    }
+    public void ENDGAME()
+    {
+        
     }
 }
 
 [System.Serializable]
-public class EnemyWave
+public class EnemiesCount
 {
     public _EnemyData enemyData;
     public int spawnCount = 1;
@@ -107,7 +92,8 @@ public class EnemySpawnWave
 {
     public string wave_Name;
     public float waveSpawnRate = 10f;
-    public EnemyWave[] enemyList;
+    public bool shouldPauseOnEnded = false;
+    public EnemiesCount[] enemyList;
 }
 
 [System.Serializable]
