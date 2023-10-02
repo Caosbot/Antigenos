@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Realtime;
+using Photon.Pun;
 
-public class Weapon_Component : MonoBehaviour
+public class Weapon_Component : MonoBehaviourPunCallbacks
 {
     public WeaponClass weapon = null;
     [System.NonSerialized] public Aim_Component                         aimComponent;

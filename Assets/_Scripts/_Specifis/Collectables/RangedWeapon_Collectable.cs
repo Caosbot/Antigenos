@@ -8,12 +8,12 @@ public class RangedWeapon_Collectable : MonoBehaviour
     [SerializeField] private float rotationSpeed = 1;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.gameObject.CompareTag("Player"))
+        /*if (other.transform.gameObject.CompareTag("Player"))
         {
             other.transform.gameObject.GetComponent<_Character_Behaviour>().SpawnWeapon(weaponClass.weaponData.prefabLocation);
             other.transform.gameObject.GetComponent<_Character_Behaviour>().weaponComponent.weapon = weaponClass;
             Destroy(gameObject);
-        }
+        }*/
     }
     private void Update()
     {

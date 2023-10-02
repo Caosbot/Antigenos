@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5897858421582390825}
   - component: {fileID: 7498844348823056620}
   - component: {fileID: 3592898065434241272}
+  - component: {fileID: -6824230584213987828}
   m_Layer: 6
   m_Name: Bombeiro_Weapon
   m_TagString: Untagged
@@ -164,6 +165,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-6824230584213987828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274629137023626458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2695499478118474000
 GameObject:
   m_ObjectHideFlags: 0

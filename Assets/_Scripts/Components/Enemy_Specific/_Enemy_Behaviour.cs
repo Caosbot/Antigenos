@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Realtime;
+using Photon.Pun;
 
 public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
 {

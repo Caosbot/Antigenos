@@ -195,6 +195,12 @@ MonoBehaviour:
   healthProgressBar: {fileID: 7087045063373455492}
   playerText: {fileID: 7087045063155873765}
   handTransform: {fileID: 405520131252620906}
+  weaponClass:
+    damage: 10
+    typeOfWeapon: 1
+    weaponData: {fileID: 11400000, guid: b13bba2ca7251044688dd7ae6a39f69f, type: 2}
+    weaponNozzle: {fileID: 0}
+    shootingInterval: 0.2
 --- !u!114 &8783427070772887203
 MonoBehaviour:
   m_ObjectHideFlags: 0

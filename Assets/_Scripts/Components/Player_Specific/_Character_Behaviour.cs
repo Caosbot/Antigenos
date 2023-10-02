@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Photon.Realtime;
 
-public class _Character_Behaviour : MonoBehaviour, IDamageable
+public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
 {
     [Header("Components")]
     public Stats_Component                              statsComponent;
@@ -20,6 +21,8 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
 
     [Header("Sockets")]
     [SerializeField] private Transform handTransform;
+
+    [SerializeField] private Ranged_WeaponClass weaponClass;
 
     public void DoDamage(_Enemy_Behaviour enemyBehaviour)
     {
@@ -59,6 +62,10 @@ public class _Character_Behaviour : MonoBehaviour, IDamageable
         {
             weaponComponent.Shot(gameObject);
         }
+    }
+    private void Start()
+    {
+        SpawnWeapon(weaponClass.weaponData.prefabLocation);
     }
     public void Die()
     {
