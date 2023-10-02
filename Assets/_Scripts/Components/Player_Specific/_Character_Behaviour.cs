@@ -55,13 +55,17 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
     }
     private void Update()
     {
-        if(aimComponent != null)
-        aimComponent.Update();
-        animationComponent.Update();
-        if (Input.GetMouseButtonDown(0) && weaponComponent != null) //Left Mouse Button
+        if (photonComponent.IsMine)
         {
-            weaponComponent.Shot(gameObject);
+            if (aimComponent != null)
+                aimComponent.Update();
+            animationComponent.Update();
+            if (Input.GetMouseButtonDown(0) && weaponComponent != null) //Left Mouse Button
+            {
+                weaponComponent.Shot(gameObject);
+            }
         }
+
     }
     private void Start()
     {
