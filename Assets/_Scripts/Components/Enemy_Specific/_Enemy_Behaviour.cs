@@ -18,12 +18,18 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
             tempName = damageDealer.name;
         }
         Debug.Log(inDamage + " de Dano foi recebido de " + tempName);
-        statsComponent.ReceiveDamage(inDamage, ignoreArmor);
-        progressBar.UpdatePercentage(statsComponent.GetStatPercentage("Vida"));
+        GetComponent<PhotonView>().RPC(nameof(SetLife), RpcTarget.All, inDamage, ignoreArmor);
         if (statsComponent.FindStatValue("Vida") <= 0)
         {
-            Die();
+            GetComponent<PhotonView>().RPC(nameof(Die), RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    public void SetLife(int inDamage, bool ignoreArmor, PhotonMessageInfo info)
+    {
+        statsComponent.ReceiveDamage(inDamage, ignoreArmor);
+        progressBar.UpdatePercentage(statsComponent.GetStatPercentage("Vida"));
     }
     public ImmunoType GetImmunoType()
     {
