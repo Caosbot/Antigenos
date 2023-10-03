@@ -84,7 +84,11 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
     }
     public void SpawnWeapon(string weaponLocation)
     {
-        GameObject instance = Instantiate(Resources.Load(weaponLocation, typeof(GameObject)), handTransform) as GameObject;
+        GameObject instance = PhotonNetwork.Instantiate(weaponLocation,new Vector3(0,0,0), new Quaternion(0,0,0,0));
+        instance.transform.parent = handTransform;
+        instance.transform.localPosition = new Vector3(0, 0, 0);
+        instance.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        instance.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
         weaponComponent = instance.GetComponent<Weapon_Component>();
         weaponComponent.aimComponent = aimComponent;
         weaponComponent.animComponent = animationComponent;
