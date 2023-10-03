@@ -21,7 +21,7 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
         GetComponent<PhotonView>().RPC(nameof(SetLife), RpcTarget.All, inDamage, ignoreArmor);
         if (statsComponent.FindStatValue("Vida") <= 0)
         {
-            PhotonNetwork.Destroy(gameObject);
+            GetComponent<PhotonView>().RPC(nameof(Die),RpcTarget.MasterClient);
         }
     }
 
@@ -35,9 +35,10 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     {
         return quantityOfXp.typeOfImmunity;
     }
+    [PunRPC]
     public void Die()
     {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 }
 
