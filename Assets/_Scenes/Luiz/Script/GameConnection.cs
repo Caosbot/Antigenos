@@ -47,8 +47,8 @@ public class GameConnection : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        playerObject.GetComponent<_Character_Behaviour>().DestroyInstantedObjects();
         Debug.Log("Player saiu sala " + otherPlayer.NickName);
         base.OnPlayerLeftRoom(otherPlayer);
+        playerObject.GetComponent<_Character_Behaviour>().DestroyInstantedObjects();
     }
 }
