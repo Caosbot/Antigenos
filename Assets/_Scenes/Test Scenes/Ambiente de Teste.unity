@@ -324,6 +324,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1308600904}
     m_Modifications:
+    - target: {fileID: 1973305852431624088, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4835703388386535857, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
       propertyPath: m_Name
       value: Default_Enemy (3)
@@ -696,6 +700,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1308600904}
     m_Modifications:
+    - target: {fileID: 1973305852431624088, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4835703388386535857, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
       propertyPath: m_Name
       value: Default_Enemy (5)
@@ -1173,6 +1181,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1308600904}
     m_Modifications:
+    - target: {fileID: 1973305852431624088, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4835703388386535857, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
       propertyPath: m_Name
       value: Default_Enemy (6)
@@ -1332,6 +1344,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1308600904}
     m_Modifications:
+    - target: {fileID: 1973305852431624088, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4835703388386535857, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
       propertyPath: m_Name
       value: Default_Enemy (1)
@@ -1389,6 +1405,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1308600904}
     m_Modifications:
+    - target: {fileID: 1973305852431624088, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4835703388386535857, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
       propertyPath: m_Name
       value: Default_Enemy (4)
@@ -1446,6 +1466,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1308600904}
     m_Modifications:
+    - target: {fileID: 1973305852431624088, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4835703388386535857, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
       propertyPath: m_Name
       value: Default_Enemy (2)
@@ -2052,6 +2076,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1308600904}
     m_Modifications:
+    - target: {fileID: 1973305852431624088, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4835703388386535857, guid: 3c773b408270a15459225ed1159f99c4, type: 3}
       propertyPath: m_Name
       value: Default_Enemy
