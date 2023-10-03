@@ -6,6 +6,7 @@ public class GameConnection : MonoBehaviourPunCallbacks
 {
     [SerializeField] private string roomName = "PUCC";
     [SerializeField] private string[] playerNames;
+    private GameObject playerObject;
     void Start()
     {
         //Conecta no photon
@@ -37,7 +38,7 @@ public class GameConnection : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         Vector3 position = new Vector3(0,0.79f,0);
         Quaternion rotation = Quaternion.Euler(Vector3.up * Random.Range(0, 360.0f));
-        PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
+        playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -46,6 +47,7 @@ public class GameConnection : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        playerObject.GetComponent<_Character_Behaviour>().DestroyInstantedObjects();
         Debug.Log("Player saiu sala " + otherPlayer.NickName);
         base.OnPlayerLeftRoom(otherPlayer);
     }

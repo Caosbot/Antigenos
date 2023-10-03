@@ -24,6 +24,8 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
 
     [SerializeField] private Ranged_WeaponClass weaponClass;
 
+    private GameObject[] instantedObjects;
+
     public void DoDamage(_Enemy_Behaviour enemyBehaviour)
     {
         int tempDamage = 10;
@@ -86,6 +88,20 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
         weaponComponent = instance.GetComponent<Weapon_Component>();
         weaponComponent.aimComponent = aimComponent;
         weaponComponent.animComponent = animationComponent;
+        instantedObjects = new GameObject[1];
+        instantedObjects[0] = instance;
+    }
+    public void DestroyInstantedObjects()
+    {
+        GetComponent<PhotonView>().RPC(nameof(DestroyOb), RpcTarget.MasterClient);
+    }
+    [PunRPC]
+    private void DestroyOb()
+    {
+        foreach (GameObject g in instantedObjects)
+        {
+            PhotonNetwork.Destroy(g);
+        }
     }
 
 }
