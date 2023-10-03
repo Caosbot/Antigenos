@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Photon.Realtime;
+using Photon.Pun;
 
-public class SpawnSystem : MonoBehaviour
+public class SpawnSystem : MonoBehaviourPunCallbacks
 {
     [Header("Enemy Wave List")]
     [SerializeField] private int maxEnemiesInScene = 16;
@@ -27,7 +29,10 @@ public class SpawnSystem : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(SpawnEnemyWaves());
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(SpawnEnemyWaves());
+        }
     }
     private IEnumerator SpawnEnemyWaves()
     {
@@ -41,6 +46,7 @@ public class SpawnSystem : MonoBehaviour
                 if(e != null)
                 {
                     yield return new WaitForSeconds(e.spawnRate);
+                    SpawnEnemy(enemyQueue.GetFirstValue().prefabLocation);
                     Debug.Log(enemyQueue.GetFirstValue()); //Substituir por lógica de spawn
                     enemyQueue.Unqueu();
                 }
@@ -77,6 +83,10 @@ public class SpawnSystem : MonoBehaviour
     public void ENDGAME()
     {
         
+    }
+    private void SpawnEnemy(string location)
+    {
+        GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[0].position, new Quaternion(0, 0, 0, 0));
     }
 }
 

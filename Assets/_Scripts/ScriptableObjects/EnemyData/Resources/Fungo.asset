@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02758e26efca91a4e96f92ed2579b031, type: 3}
   m_Name: Fungo
   m_EditorClassIdentifier: 
-  prefabLocation: 
+  spawnRate: 0.5
+  prefabLocation: Default_Enemy
