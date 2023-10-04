@@ -29,7 +29,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
+       // if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(SpawnEnemyWaves());
         }
