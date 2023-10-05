@@ -16,7 +16,6 @@ public class EnemyNavMesh : MonoBehaviour
     void Start()
     {
         enemyAgent = GetComponent<NavMeshAgent>();
-        //enemyPosition = GameObject.FindGameObjectWithTag("SpawPoint").transform.position;
         targetAgent = GameObject.FindGameObjectWithTag("EndPoint").transform.position; 
         if (targetAgent == null )
         {
