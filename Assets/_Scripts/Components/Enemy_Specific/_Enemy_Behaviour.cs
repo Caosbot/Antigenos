@@ -40,6 +40,10 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     {
         PhotonNetwork.Destroy(gameObject);
     }
+    public void InnTargetEnd()
+    {
+        GetComponent<PhotonView>().RPC(nameof(Die), RpcTarget.MasterClient);
+    }
 }
 
 [System.Serializable]

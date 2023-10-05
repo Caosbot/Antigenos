@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -11,12 +12,14 @@ public class EnemyNavMesh : MonoBehaviour
     private Vector3 targetAgent;
     private Vector3 enemyPosition;
     private float distance;
+    public _Enemy_Behaviour enemyBehaviour;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyAgent = GetComponent<NavMeshAgent>();
-        targetAgent = GameObject.FindGameObjectWithTag("EndPoint").transform.position; 
+        targetAgent = GameObject.FindGameObjectWithTag("EndPoint").transform.position;
+        enemyBehaviour = GetComponent<_Enemy_Behaviour>();
         if (targetAgent == null )
         {
             Debug.Log("Vazio");
@@ -39,6 +42,9 @@ public class EnemyNavMesh : MonoBehaviour
             enemyAgent.SetDestination(targetAgent);
         }
         else
-            Destroy(gameObject);
+        {
+            enemyBehaviour.InnTargetEnd();
+        }
+            //PhotonNetwork.Destroy(gameObject);
     }
 }
