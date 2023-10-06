@@ -2482,10 +2482,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d026ef5ab276844aa61186230841bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: AB
+  roomName: Coracao
   playerNames:
   - Amolita
   - Neofilo
+  spawnSystem: {fileID: 0}
 --- !u!4 &1794690030
 Transform:
   m_ObjectHideFlags: 0

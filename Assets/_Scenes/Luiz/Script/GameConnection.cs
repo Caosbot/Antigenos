@@ -44,7 +44,7 @@ public class GameConnection : MonoBehaviourPunCallbacks
         playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            Debug.Log("Eu sou o host, vou spawnar bazukas!!");
+            Debug.Log("Eu sou o host!!");
             spawnSystem.StartSpawn();
         }
     }
