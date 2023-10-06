@@ -7,12 +7,15 @@ public class GameConnection : MonoBehaviourPunCallbacks
     [SerializeField] private string roomName = "PUCC";
     [SerializeField] private string[] playerNames;
     private GameObject playerObject;
+    public SpawnSystem spawnSystem;
     void Start()
     {
         //Conecta no photon
+        spawnSystem = GetComponent<SpawnSystem>();
         Debug.Log("Conectando no Servidor...");
         PhotonNetwork.NickName = playerNames[Random.Range(0,playerNames.Length-1)] + Random.Range(0, 10);
         PhotonNetwork.ConnectUsingSettings();
+        
     }
 
     public override void OnConnectedToMaster()
@@ -39,6 +42,11 @@ public class GameConnection : MonoBehaviourPunCallbacks
         Vector3 position = new Vector3(0,0.79f,0);
         Quaternion rotation = Quaternion.Euler(Vector3.up * Random.Range(0, 360.0f));
         playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            Debug.Log("Eu sou o host, vou spawnar bazukas!!");
+            spawnSystem.StartSpawn();
+        }
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {

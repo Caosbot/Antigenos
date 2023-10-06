@@ -29,10 +29,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-       // if (PhotonNetwork.IsMasterClient)
+        /*if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
+            Debug.Log("Eu sou o host!!");
             StartCoroutine(SpawnEnemyWaves());
-        }
+        }*/
     }
     private IEnumerator SpawnEnemyWaves()
     {
@@ -87,6 +88,13 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private void SpawnEnemy(string location)
     {
         GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[0].position, new Quaternion(0, 0, 0, 0));
+    }
+    public void StartSpawn()
+    {
+        {
+            Debug.Log("Eu sou o host!!");
+            StartCoroutine(SpawnEnemyWaves());
+        }
     }
 }
 
