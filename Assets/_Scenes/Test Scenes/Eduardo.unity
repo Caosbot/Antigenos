@@ -1800,6 +1800,9 @@ MonoBehaviour:
     typeOfImmunity: 1
     quantity: 1
   progressBar: {fileID: 0}
+  speed: 0
+  acceleration: 0
+  stoppingDistance: 0
 --- !u!1 &1371036058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2520,8 +2523,8 @@ MonoBehaviour:
     waveSpawnRate: 10
     shouldPauseOnEnded: 0
     enemyList:
-    - enemyData: {fileID: 11400000, guid: 2bba4a5fda2bdf2498a5cf9ea399cb2d, type: 2}
-      spawnCount: 10
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 2
     - enemyData: {fileID: 11400000, guid: 2bba4a5fda2bdf2498a5cf9ea399cb2d, type: 2}
       spawnCount: 5
   - wave_Name: Cancer
@@ -2536,6 +2539,7 @@ MonoBehaviour:
   spawnLocations:
   - {fileID: 417227459}
   waveSpawnText: {fileID: 0}
+  serializeSpawnLifes: 15
 --- !u!1 &1809571055
 GameObject:
   m_ObjectHideFlags: 0
