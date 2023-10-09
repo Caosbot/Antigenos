@@ -20,12 +20,17 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     private AntigenQueue<_EnemyData> enemyQueue = new AntigenQueue<_EnemyData>(30);
     private int waveCounter = 0;
+    public int serializeSpawnLifes = 15;
+    public static int spawnLife = 0;
+    public static int spawnLifes = 15;
 
     private bool wavePaused;
     private bool waveShouldPause;
 
     private void Awake()
     {
+        spawnLifes = serializeSpawnLifes;
+        spawnLife = spawnLifes;
     }
     private void Start()
     {
@@ -81,7 +86,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         }
         waveCounter++;
     }
-    public void ENDGAME()
+    public static void ENDGAME()
     {
         
     }
@@ -94,6 +99,16 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         {
             Debug.Log("Eu sou o host!!");
             StartCoroutine(SpawnEnemyWaves());
+        }
+    }
+    public static void SpawnTakeDamage()
+    {
+        spawnLife--;
+        if(spawnLife == 0)
+        {
+#if UNITY_EDITOR
+            Debug.Log("Missão Falhou");
+#endif
         }
     }
 }

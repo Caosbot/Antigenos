@@ -128,6 +128,9 @@ MonoBehaviour:
     typeOfImmunity: 1
     quantity: 1
   progressBar: {fileID: 2657494431076871341}
+  speed: 10
+  acceleration: 10
+  stoppingDistance: 0.5
 --- !u!114 &1973305852431624088
 MonoBehaviour:
   m_ObjectHideFlags: 0

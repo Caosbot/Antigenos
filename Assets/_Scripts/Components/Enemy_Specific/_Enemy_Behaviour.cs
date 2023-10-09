@@ -9,6 +9,7 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     public Stats_Component statsComponent;
     [SerializeField] private ImmunoXpQuantity quantityOfXp = new ImmunoXpQuantity(1);
     [SerializeField] private ProgressBar progressBar;
+    public float speed, acceleration, stoppingDistance;
 
     public void TakeDamage(int inDamage, bool ignoreArmor = false, GameObject damageDealer = null)
     {
@@ -42,7 +43,9 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     }
     public void InnTargetEnd()
     {
+
         GetComponent<PhotonView>().RPC(nameof(Die), RpcTarget.MasterClient);
+        SpawnSystem.SpawnTakeDamage();
     }
 }
 

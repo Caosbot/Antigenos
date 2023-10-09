@@ -24,10 +24,10 @@ public class EnemyNavMesh : MonoBehaviour
         {
             Debug.Log("Vazio");
         }
-        Debug.Log("targetAgent = "+ targetAgent);
-        enemyAgent.speed = 10f;
-        enemyAgent.acceleration = 10f;
-        enemyAgent.stoppingDistance = 0.5f;
+        //Debug.Log("targetAgent = "+ targetAgent);
+        enemyAgent.speed = enemyBehaviour.speed;
+        enemyAgent.acceleration = enemyBehaviour.acceleration;
+        enemyAgent.stoppingDistance = enemyBehaviour.stoppingDistance;
     }
 
     // Update is called every frame
