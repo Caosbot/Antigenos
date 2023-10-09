@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Bacteria
   m_EditorClassIdentifier: 
   spawnRate: 2.8
-  prefabLocation: Default_Enemy
+  prefabLocation: LaBacteria
