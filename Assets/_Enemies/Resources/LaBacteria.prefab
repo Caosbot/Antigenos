@@ -66,6 +66,8 @@ MonoBehaviour:
   speed: 10
   acceleration: 10
   stoppingDistance: 0.5
+  enemy_Animation:
+    animInstance: {fileID: 111072385306251659}
 --- !u!195 &111072384325914193
 NavMeshAgent:
   m_ObjectHideFlags: 0

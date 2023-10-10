@@ -10,6 +10,7 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     [SerializeField] private ImmunoXpQuantity quantityOfXp = new ImmunoXpQuantity(1);
     [SerializeField] private ProgressBar progressBar;
     public float speed=7f, acceleration=7f, stoppingDistance = 0.5f;
+    public Enemy_Animation enemy_Animation;
 
     public void TakeDamage(int inDamage, bool ignoreArmor = false, GameObject damageDealer = null)
     {
@@ -18,6 +19,7 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
         {
             tempName = damageDealer.name;
         }
+        enemy_Animation.PlayDesiredAnimation("Hit");
         Debug.Log(inDamage + " de Dano foi recebido de " + tempName);
         GetComponent<PhotonView>().RPC(nameof(SetLife), RpcTarget.All, inDamage, ignoreArmor);
         if (statsComponent.FindStatValue("Vida") <= 0)
