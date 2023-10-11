@@ -164,14 +164,12 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         spawnLife--;
         if(spawnLife == 0)
         {
-#if UNITY_EDITOR
             Debug.Log("Missão Falhou");
             ended = true;
             foreach(_Enemy_Behaviour g in FindObjectsOfType<_Enemy_Behaviour>())
             {
                 g.enemy_Animation.PlayDesiredAnimation("Dance");
             }
-#endif
         }
     }
 }

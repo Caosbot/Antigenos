@@ -2160,6 +2160,22 @@ MonoBehaviour:
       spawnCount: 10
     - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
       spawnCount: 4
+    - enemyData: {fileID: 11400000, guid: 7e3e33df8aa649d4aa9abd86670efd98, type: 2}
+      spawnCount: 10
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 12
+    - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
+      spawnCount: 3
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 24
+    - enemyData: {fileID: 11400000, guid: 7e3e33df8aa649d4aa9abd86670efd98, type: 2}
+      spawnCount: 25
+    - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
+      spawnCount: 6
+    - enemyData: {fileID: 11400000, guid: 7e3e33df8aa649d4aa9abd86670efd98, type: 2}
+      spawnCount: 6
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 12
   infinite: 1
   spawnLocations:
   - {fileID: 998609747}
@@ -2182,11 +2198,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d026ef5ab276844aa61186230841bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: Coracao
+  roomName: Coracao2
   playerNames:
   - Amolita
   - Neofilo
-  spawnSystem: {fileID: 0}
+  spawnSystem: {fileID: 227844377}
 --- !u!4 &227844379
 Transform:
   m_ObjectHideFlags: 0

@@ -6,10 +6,6 @@ using UnityEngine;
 public class Enemy_Animation
 {
     public Animator animInstance;
-    public void Start(GameObject gameObject)
-    {
-        animInstance = gameObject.GetComponentInChildren<Animator>();
-    }
     public void PlayDesiredAnimation(string animationName)
     {
         if(animInstance != null)
