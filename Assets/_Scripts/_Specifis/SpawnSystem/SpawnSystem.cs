@@ -31,9 +31,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private bool waveShouldPause;
 
     private List<_Enemy_Behaviour> spawnedEnemiesList;
+    public static bool canSpawn;
 
     private void Awake()
     {
+        canSpawn = true;
         spawnLifes = serializeSpawnLifes;
         spawnLife = spawnLifes;
         spawnedEnemiesList = new List<_Enemy_Behaviour>(100);
@@ -74,7 +76,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         StartCoroutine(WaveTextTimer(20));
         yield return new WaitForSeconds(20);
         QueueWave();
-        while(waveCounter <= enemyWaves.Length)
+        while(waveCounter <= enemyWaves.Length || canSpawn)
         {
             yield return 0;
             _EnemyData[] tempEnemyData = enemyQueue.GetArray();
@@ -83,8 +85,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 if(e != null)
                 {
                     yield return new WaitForSeconds(e.spawnRate+Random.Range(0,0.7f));
-                    SpawnEnemy(enemyQueue.GetFirstValue().prefabLocation);
-                    enemyQueue.Unqueu();
+                    if (canSpawn)
+                    {
+                        SpawnEnemy(enemyQueue.GetFirstValue().prefabLocation);
+                        enemyQueue.Unqueu();
+                    }
                 }
             }
             if (waveShouldPause) wavePaused = true;
