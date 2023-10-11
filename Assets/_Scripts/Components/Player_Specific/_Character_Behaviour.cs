@@ -68,6 +68,10 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
             {
                 weaponComponent.Shot(gameObject);
             }
+            if (Input.GetKeyDown("G"))
+            {
+                Application.Quit();
+            }
         }
 
     }
