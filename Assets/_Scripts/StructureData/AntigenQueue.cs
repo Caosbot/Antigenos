@@ -81,8 +81,9 @@ public class AntigenQueue<QueueType>
         {
             tempInt += "\n" + f;
         }
+#if UNITY_EDITOR
         Debug.Log(tempInt);
-
+#endif
         QueueType[] tempFila = queue;
         int offsetFromStart = firstIndex;
         queue = new QueueType[queue.Length];
@@ -110,7 +111,9 @@ public class AntigenQueue<QueueType>
         {
             tempS += q + "\n";
         }
+#if UNITY_EDITOR
         Debug.Log(tempS);
+#endif
     }
     public QueueType GetFirstValue()
     {

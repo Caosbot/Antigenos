@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 
 public class Weapon_Component : MonoBehaviourPunCallbacks
 {
@@ -12,6 +13,7 @@ public class Weapon_Component : MonoBehaviourPunCallbacks
     private bool canShoot = true;
     [SerializeField] private GameObject muzzle;
     [SerializeField] private GameObject impact;
+    
 
     private AudioSource audioSource;
     private void Awake()
@@ -27,27 +29,30 @@ public class Weapon_Component : MonoBehaviourPunCallbacks
         if(weapon != null && canShoot)
         {
             StartCoroutine(Particles());
-            Debug.Log("Shoting");
+            
+            //Debug.Log("Shoting");
             PlayAudio(weapon.weaponData.shootingSound);
             animComponent.ShootingAnim();
             GameObject g = aimComponent.hitTransform.gameObject;
             if (g != null)
             {
-                Debug.Log("Hit Something");
+                
+                //Debug.Log("Hit Something");
                 IDamageable iDamage = InterfaceHelper.GetDamageable(g);
                 if(owner == g)
                 {
-                    Debug.Log("Hit self");
+                    
+                    //Debug.Log("Hit self");
                     canShoot = false;
                     StartCoroutine(ShootTimer());
                     return;
                 }
                 if (iDamage != null)
                 {
-#if UNITY_EDITOR
-                    Debug.Log("Hit Damageable");
+                    
+                    //Debug.Log("Hit Damageable");
                     iDamage.TakeDamage((int)weapon.damage);
-#endif
+
                 }
             }
             canShoot = false;

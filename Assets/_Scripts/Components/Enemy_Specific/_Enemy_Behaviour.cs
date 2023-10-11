@@ -20,7 +20,9 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
             tempName = damageDealer.name;
         }
         enemy_Animation.PlayDesiredAnimation("Hit");
-        Debug.Log(inDamage + " de Dano foi recebido de " + tempName);
+#if UNITY_EDITOR
+        //Debug.Log(inDamage + " de Dano foi recebido de " + tempName);
+#endif
         GetComponent<PhotonView>().RPC(nameof(SetLife), RpcTarget.All, inDamage, ignoreArmor);
         if (statsComponent.FindStatValue("Vida") <= 0)
         {

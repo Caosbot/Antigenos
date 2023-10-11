@@ -32,7 +32,9 @@ public class Stats_Component
     {
         Stat tempStat = FindDesiredStat("Vida");
         tempStat.currentValue -= inDamage;
-        Debug.Log("Vida atual: " + tempStat.currentValue);
+#if UNITY_EDITOR
+        //Debug.Log("Vida atual: " + tempStat.currentValue);
+#endif
     }
     private Stat FindDesiredStat(string statName) //Método que retorna o Stat baseado no seu nome, caso inválido retorna o primeiro Stat e Printa no Console Erro
     {

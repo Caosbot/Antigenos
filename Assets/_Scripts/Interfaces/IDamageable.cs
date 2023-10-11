@@ -18,7 +18,9 @@ public static class InterfaceHelper
         {
             return clickableObject;
         }
+#if UNITY_EDITOR
         Debug.LogWarning("Not Damageable");
+#endif
         return null;
     }
 }

@@ -36,7 +36,9 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
         }
         else
         {
+#if UNITY_EDITOR
             Debug.LogWarning("Not Antigen");
+#endif
         }
     }
 

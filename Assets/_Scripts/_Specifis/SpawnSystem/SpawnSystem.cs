@@ -48,7 +48,9 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 {
                     yield return new WaitForSeconds(e.spawnRate);
                     SpawnEnemy(enemyQueue.GetFirstValue().prefabLocation);
-                    Debug.Log(enemyQueue.GetFirstValue()); //Substituir por lógica de spawn
+#if UNITY_EDITOR
+                    //Debug.Log(enemyQueue.GetFirstValue()); //Substituir por lógica de spawn
+#endif
                     enemyQueue.Unqueu();
                 }
             }
@@ -64,7 +66,9 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     {
         if(waveCounter >= enemyWaves.Length)
         {
+#if UNITY_EDITOR
             Debug.Log("END GAME");
+#endif
             ENDGAME();
             waveCounter++;
             return;
@@ -87,12 +91,14 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private void SpawnEnemy(string location)
     {
-        GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[0].position, new Quaternion(0, 0, 0, 0));
+        GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[Random.Range(0,spawnLocations.Length)].position, new Quaternion(0, 0, 0, 0));
     }
     public void StartSpawn()
     {
         {
-            Debug.Log("Eu sou o host!!");
+#if UNITY_EDITOR
+            //Debug.Log("Eu sou o host!!");
+#endif
             StartCoroutine(SpawnEnemyWaves());
         }
     }

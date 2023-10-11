@@ -54,7 +54,7 @@ MonoBehaviour:
   statsComponent:
     stats:
     - name: Vida
-      baseValue: 20
+      baseValue: 30
     - name: Estamina
       baseValue: 20
     - name: Mana
@@ -63,7 +63,7 @@ MonoBehaviour:
     typeOfImmunity: 1
     quantity: 1
   progressBar: {fileID: 7381422021799331059}
-  speed: 10
+  speed: 4
   acceleration: 10
   stoppingDistance: 0.5
   enemy_Animation:
@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBehaviour: {fileID: 111072384325914206}
+  gameManager: {fileID: 0}
 --- !u!136 &111072384325914204
 CapsuleCollider:
   m_ObjectHideFlags: 0

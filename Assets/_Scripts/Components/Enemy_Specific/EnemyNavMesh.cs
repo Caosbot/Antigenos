@@ -14,6 +14,7 @@ public class EnemyNavMesh : MonoBehaviour
     private Vector3 playerPosition;
     private float distanceTarget, distancePlayer;
     public _Enemy_Behaviour enemyBehaviour;
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -36,11 +37,9 @@ public class EnemyNavMesh : MonoBehaviour
         enemyPosition = transform.position;
         distanceTarget = Vector3.Distance(targetPotion, enemyPosition);
         distancePlayer = Vector3.Distance(playerPosition, enemyPosition);
-        if (distancePlayer <= 5f)
+        //if (distancePlayer <= 5f)
         {
-#if UNITY_EDITOR
-            Debug.Log("Podia te Pegar.");
-#endif
+            //Debug.Log("Podia te Pegar.");
         }
         if (distanceTarget >= 4f )
         {
