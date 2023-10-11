@@ -63,7 +63,7 @@ MonoBehaviour:
     typeOfImmunity: 1
     quantity: 1
   progressBar: {fileID: 7381422021799331059}
-  speed: 2
+  speed: 4
   acceleration: 2
   stoppingDistance: 0.5
   enemy_Animation:

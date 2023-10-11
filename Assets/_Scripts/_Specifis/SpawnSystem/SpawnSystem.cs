@@ -35,6 +35,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     {
         spawnLifes = serializeSpawnLifes;
         spawnLife = spawnLifes;
+        spawnedEnemiesList = new List<_Enemy_Behaviour>(100);
     }
     private void Start()
     {
@@ -62,6 +63,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private IEnumerator SpawnEnemyWaves()
     {
+        StartCoroutine(WaveTextTimer(20));
+        yield return new WaitForSeconds(20);
         QueueWave();
         while(waveCounter <= enemyWaves.Length)
         {
@@ -108,7 +111,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
         {
             int tempInt = 0;
-            while(tempInt < eCounter.spawnCount)
+            while(tempInt < eCounter.spawnCount+PhotonNetwork.CountOfPlayersInRooms)
             {
                 enemyQueue.Queue(eCounter.enemyData);
                 tempInt++;
