@@ -17,6 +17,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI waveSpawnText;
     [SerializeField] private TextMeshProUGUI waveSpawnTimeText;
+    [SerializeField] private TextMeshProUGUI spawnerLives;
     public static int spawnedEnemies;
 
     private AntigenQueue<_EnemyData> enemyQueue = new AntigenQueue<_EnemyData>(30);
@@ -51,6 +52,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             StartCoroutine(DelayRestart());
 
         }
+        spawnerLives.text = spawnLife.ToString();
     }
     private IEnumerator DelayRestart()
     {

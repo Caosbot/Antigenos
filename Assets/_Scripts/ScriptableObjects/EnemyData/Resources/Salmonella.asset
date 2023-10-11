@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02758e26efca91a4e96f92ed2579b031, type: 3}
   m_Name: Salmonella
   m_EditorClassIdentifier: 
-  spawnRate: 3.74
+  spawnRate: 3.37
   prefabLocation: LaBacteriaFuerte
