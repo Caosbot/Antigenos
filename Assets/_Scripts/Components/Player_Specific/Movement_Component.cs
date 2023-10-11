@@ -36,12 +36,12 @@ public class Movement_Component : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         gravity = 50;
-        Debug.Log("GravidadeExtra");
+        //Debug.Log("GravidadeExtra");
         while (!controller.isGrounded)
         {
             yield return 0;
         }
-        Debug.Log("Normal");
+        //Debug.Log("Normal");
         gravity = 10;
     }
 }

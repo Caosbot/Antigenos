@@ -125,7 +125,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 tempInt++;
             }
         }
-        Debug.Log("A");
+        //Debug.Log("A");
         waveCounter++;
     }
     private IEnumerator WaveTextTimer(float time)
