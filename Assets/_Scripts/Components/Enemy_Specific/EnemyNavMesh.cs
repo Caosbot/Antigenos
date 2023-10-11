@@ -14,7 +14,6 @@ public class EnemyNavMesh : MonoBehaviour
     private Vector3 playerPosition;
     private float distanceTarget, distancePlayer;
     public _Enemy_Behaviour enemyBehaviour;
-    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()

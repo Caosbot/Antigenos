@@ -26,7 +26,7 @@ public class Stats_Component
     }
 
     //Declaração de Essenciais como padrão
-    [SerializeField] private Stat[] stats = { new Stat("Vida", 20), new Stat("Estamina", 20), new Stat("Mana", 10)}; //Os Stats do Jogo, por padrão todos os scripts contém 3
+    [SerializeField] private Stat[] stats = { new Stat("Vida", 40), new Stat("Estamina", 20), new Stat("Mana", 10)}; //Os Stats do Jogo, por padrão todos os scripts contém 3
 
     public void ReceiveDamage(int inDamage, bool ignoreArmor = false) //Método da Interface IDamageable
     {
