@@ -9,22 +9,20 @@ using UnityEngine.AI;
 public class EnemyNavMesh : MonoBehaviour
 {
     private NavMeshAgent enemyAgent;
-    private Vector3 targetAgent;
+    private Vector3 targetPotion;
     private Vector3 enemyPosition;
-    private float distance;
+    private Vector3 playerPosition;
+    private float distanceTarget, distancePlayer;
     public _Enemy_Behaviour enemyBehaviour;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyAgent = GetComponent<NavMeshAgent>();
-        targetAgent = GameObject.FindGameObjectWithTag("EndPoint").transform.position;
+        playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        targetPotion = GameObject.FindGameObjectWithTag("EndPoint").transform.position;
         enemyBehaviour = GetComponent<_Enemy_Behaviour>();
-        if (targetAgent == null )
-        {
-            Debug.Log("Vazio");
-        }
-        //Debug.Log("targetAgent = "+ targetAgent);
+
         enemyAgent.speed = enemyBehaviour.speed;
         enemyAgent.acceleration = enemyBehaviour.acceleration;
         enemyAgent.stoppingDistance = enemyBehaviour.stoppingDistance;
@@ -36,10 +34,17 @@ public class EnemyNavMesh : MonoBehaviour
     {
         
         enemyPosition = transform.position;
-        distance = Vector3.Distance(targetAgent, enemyPosition);
-        if (distance >=4 )
+        distanceTarget = Vector3.Distance(targetPotion, enemyPosition);
+        distancePlayer = Vector3.Distance(playerPosition, enemyPosition);
+        if (distancePlayer <= 5f)
         {
-            enemyAgent.SetDestination(targetAgent);
+#if UNITY_EDITOR
+            Debug.Log("Podia te Pegar.");
+#endif
+        }
+        if (distanceTarget >= 4f )
+        {
+            enemyAgent.SetDestination(targetPotion);
         }
         else
         {

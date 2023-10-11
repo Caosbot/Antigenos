@@ -34,11 +34,6 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        /*if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            Debug.Log("Eu sou o host!!");
-            StartCoroutine(SpawnEnemyWaves());
-        }*/
     }
     private IEnumerator SpawnEnemyWaves()
     {

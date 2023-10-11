@@ -44,8 +44,10 @@ public class Weapon_Component : MonoBehaviourPunCallbacks
                 }
                 if (iDamage != null)
                 {
+#if UNITY_EDITOR
                     Debug.Log("Hit Damageable");
                     iDamage.TakeDamage((int)weapon.damage);
+#endif
                 }
             }
             canShoot = false;
