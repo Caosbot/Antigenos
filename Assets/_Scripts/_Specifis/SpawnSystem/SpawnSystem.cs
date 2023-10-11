@@ -46,19 +46,25 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         if (ended)
         {
             ended = false;
+            spawnLifes = serializeSpawnLifes;
+            spawnLife = spawnLifes;
+            StartCoroutine(DelayRestart());
 
         }
     }
     private IEnumerator DelayRestart()
     {
         StartCoroutine(WaveTextTimer(50));
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(20);
         foreach(_Enemy_Behaviour e in spawnedEnemiesList)
         {
+            if(e!= null)
             e.TakeDamage(10000);
         }
         yield return new WaitForSeconds(40);
         waveCounter = 0;
+        spawnLifes = serializeSpawnLifes;
+        spawnLife = spawnLifes;
         StartCoroutine(SpawnEnemyWaves());
     }
     private IEnumerator SpawnEnemyWaves()
@@ -158,6 +164,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         {
 #if UNITY_EDITOR
             Debug.Log("Missão Falhou");
+            ended = true;
             foreach(_Enemy_Behaviour g in FindObjectsOfType<_Enemy_Behaviour>())
             {
                 g.enemy_Animation.PlayDesiredAnimation("Dance");
