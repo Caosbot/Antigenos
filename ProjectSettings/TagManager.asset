@@ -9,6 +9,7 @@ TagManager:
   - AimCube
   - EndPoint
   - SpawnPoint
+  - Enemy
   layers:
   - Default
   - TransparentFX

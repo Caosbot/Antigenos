@@ -15,7 +15,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     [SerializeField] private Transform[] spawnLocations;
 
     [Header("Text")]
-    [SerializeField] private GameObject waveSpawnText;
+    [SerializeField] private TextMeshProUGUI waveSpawnText;
+    [SerializeField] private TextMeshProUGUI waveSpawnTimeText;
     public static int spawnedEnemies;
 
     private AntigenQueue<_EnemyData> enemyQueue = new AntigenQueue<_EnemyData>(30);
@@ -23,9 +24,12 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     public int serializeSpawnLifes = 15;
     public static int spawnLife = 0;
     public static int spawnLifes = 15;
+    public static bool ended;
 
     private bool wavePaused;
     private bool waveShouldPause;
+
+    private List<_Enemy_Behaviour> spawnedEnemiesList;
 
     private void Awake()
     {
@@ -34,6 +38,27 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
+
+    }
+    private void Update()
+    {
+        if (ended)
+        {
+            ended = false;
+
+        }
+    }
+    private IEnumerator DelayRestart()
+    {
+        StartCoroutine(WaveTextTimer(50));
+        yield return new WaitForSeconds(10);
+        foreach(_Enemy_Behaviour e in spawnedEnemiesList)
+        {
+            e.TakeDamage(10000);
+        }
+        yield return new WaitForSeconds(40);
+        waveCounter = 0;
+        StartCoroutine(SpawnEnemyWaves());
     }
     private IEnumerator SpawnEnemyWaves()
     {
@@ -46,11 +71,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             {
                 if(e != null)
                 {
-                    yield return new WaitForSeconds(e.spawnRate);
+                    yield return new WaitForSeconds(e.spawnRate+Random.Range(0,0.7f));
                     SpawnEnemy(enemyQueue.GetFirstValue().prefabLocation);
-#if UNITY_EDITOR
-                    //Debug.Log(enemyQueue.GetFirstValue()); //Substituir por lógica de spawn
-#endif
                     enemyQueue.Unqueu();
                 }
             }
@@ -69,10 +91,19 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 #if UNITY_EDITOR
             Debug.Log("END GAME");
 #endif
-            ENDGAME();
+            if (infinite)
+            {
+                waveCounter = 0;
+                StopAllCoroutines();
+                StartCoroutine(DelayRestart());
+                return;
+            }
             waveCounter++;
+            ENDGAME();
             return;
         }
+        waveSpawnText.text = enemyWaves[waveCounter].wave_Name;
+        StartCoroutine(WaveTextTimer(enemyWaves[waveCounter].waveSpawnRate));
         waveShouldPause = enemyWaves[waveCounter].shouldPauseOnEnded;
         foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
         {
@@ -83,15 +114,30 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 tempInt++;
             }
         }
+        Debug.Log("A");
         waveCounter++;
     }
-    public static void ENDGAME()
+    private IEnumerator WaveTextTimer(float time)
     {
-        
+        waveSpawnTimeText.text = time.ToString();
+        float currentTime = time;
+        while (currentTime != 0)
+        {
+            yield return new WaitForSeconds(time/time);
+            currentTime -= 1;
+            waveSpawnTimeText.text = currentTime.ToString();
+        }
+        yield return new WaitForSeconds(0.2f);
+        waveSpawnTimeText.text = "";
+        waveSpawnText.text = "";
+    }
+    public static void ENDGAME()
+    {   
     }
     private void SpawnEnemy(string location)
     {
         GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[Random.Range(0,spawnLocations.Length)].position, new Quaternion(0, 0, 0, 0));
+        spawnedEnemiesList.Add(instance.GetComponent<_Enemy_Behaviour>());
     }
     public void StartSpawn()
     {
@@ -109,6 +155,10 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         {
 #if UNITY_EDITOR
             Debug.Log("Missão Falhou");
+            foreach(_Enemy_Behaviour g in FindObjectsOfType<_Enemy_Behaviour>())
+            {
+                g.enemy_Animation.PlayDesiredAnimation("Dance");
+            }
 #endif
         }
     }

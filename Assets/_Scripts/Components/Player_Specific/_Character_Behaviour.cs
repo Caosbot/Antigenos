@@ -28,7 +28,7 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
 
     public void DoDamage(_Enemy_Behaviour enemyBehaviour)
     {
-        int tempDamage = 10;
+        int tempDamage = 5;
         if (enemyBehaviour.gameObject.TryGetComponent(out IAntigen antigen))
         {
             tempDamage *= (int)immunoComponent.GetImmunoMultiplier(antigen.GetImmunoType()); //Multiplica o dano pelo multiplicador Imune

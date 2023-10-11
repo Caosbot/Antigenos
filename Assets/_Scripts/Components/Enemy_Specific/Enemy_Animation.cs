@@ -12,6 +12,7 @@ public class Enemy_Animation
     }
     public void PlayDesiredAnimation(string animationName)
     {
+        if(animInstance != null)
         animInstance.Play(animationName, 0);
     }
 }

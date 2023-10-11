@@ -14,14 +14,19 @@ public class Stats_Component
         [System.NonSerialized] public int maxValue; //Valor Máximo
         public Stat(string StatName, int BaseValue) //Construtor dos Stats
         {
+            name = BaseValue.ToString();
             name = StatName;
-            baseValue = BaseValue;
-            maxValue = baseValue;
-            currentValue = baseValue;
+            //maxValue = baseValue;
+            //currentValue = baseValue;
         }
         public string GetName()
         {
             return name;
+        }
+        public void Initialize()
+        {
+            maxValue = baseValue;
+            currentValue = baseValue;
         }
     }
 
@@ -35,6 +40,13 @@ public class Stats_Component
 #if UNITY_EDITOR
         //Debug.Log("Vida atual: " + tempStat.currentValue);
 #endif
+    }
+    public void Initialize()
+    {
+        foreach(Stat t in stats)
+        {
+            t.Initialize();
+        }
     }
     private Stat FindDesiredStat(string statName) //Método que retorna o Stat baseado no seu nome, caso inválido retorna o primeiro Stat e Printa no Console Erro
     {
@@ -71,5 +83,6 @@ public class Stats_Component
         Debug.LogError("INVALID STAT");
         return 1;
     }
+
 
 }
