@@ -165,7 +165,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     {
         GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[Random.Range(0,spawnLocations.Length)].position, new Quaternion(0, 0, 0, 0));
         ///////////////////////////////////////////
-        Group(instance.GetComponent<EnemyNavMesh>());
+        //Group(instance.GetComponent<EnemyNavMesh>());
         spawnedEnemiesList.Add(instance.GetComponent<_Enemy_Behaviour>());
     }
     public void StartSpawn()
@@ -190,23 +190,23 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             }
         }
     }
-    public int[] Group(EnemyNavMesh atual)
+    public static int[] Group(EnemyNavMesh atual)
     {
         float friendDistance = 5f;
-
         foreach (EnemyNavMesh nav in FindObjectsOfType<EnemyNavMesh>())
         {
-
-            if (nav != gameObject)
+            if (nav != atual.gameObject)
             {
-                float distance = Vector3.Distance(nav.transform.position, this.transform.position);
+                Debug.Log("Entrou Diferente");
+                float distance = Vector3.Distance(nav.transform.position, atual.transform.position);
 
                 if (distance < friendDistance)
                 {
+                    Debug.Log("Entrou friendDistance");
                     if (coluna < 5)
                     {
                         enemyGroup[linha, coluna] = atual;
-                        Debug.Log("Meu Grupo: Linha: " + linha + "Coluna: " + coluna);
+                        Debug.Log("Meu Grupo: Linha: " + linha + "|Coluna: " + coluna);
                         coluna++;
                     }
                     if (coluna >= 4)
@@ -214,7 +214,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                         linha++;
                         for (int i = 0; i < coluna; i++)
                         {
-                            pronto[i] = enemyGroup[linha, i];
+                            //pronto[i] = enemyGroup[linha, i];
                         }
                         coluna = 0;
                     }

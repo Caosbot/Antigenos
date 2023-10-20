@@ -69,7 +69,9 @@ public class EnemyNavMesh : MonoBehaviour
                 
                 if (distance < friendDistance)
                 {
-                    //Debug.Log("distance: " + distance + "| friendDistance: " + friendDistance);
+                    //Debug.Log("Entrou friendDistance NavMesh");
+                    
+                    //SpawnSystem.Group(this);
                     foreach (EnemyNavMesh enemy in enemyGroup)
                     {
                         //
@@ -79,10 +81,12 @@ public class EnemyNavMesh : MonoBehaviour
                         {
                             Vector3 direction = transform.position - go.transform.position;
                             transform.Translate(direction * Time.deltaTime);
+                            //enemyAgent.speed = go.enemyAgent.speed;
                             // enemyBehaviour.speed = min;
 
                         }
                         else
+                            
                             enemyAgent.SetDestination(targetPosition);
                     }
                 }
