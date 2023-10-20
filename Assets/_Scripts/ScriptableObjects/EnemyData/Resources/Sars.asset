@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02758e26efca91a4e96f92ed2579b031, type: 3}
   m_Name: Sars
   m_EditorClassIdentifier: 
-  spawnRate: 0.63
-  prefabLocation: LaBacteriaRapida
+  spawnRate: 1.42
+  prefabLocation: LaBacteriaFuerte
