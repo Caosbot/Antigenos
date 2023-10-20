@@ -9,4 +9,5 @@ public class _EnemyData : ScriptableObject
     [Range(0.2f, 5)]
     public float spawnRate = 0.5f;
     public string prefabLocation;
+    public int num;
 }

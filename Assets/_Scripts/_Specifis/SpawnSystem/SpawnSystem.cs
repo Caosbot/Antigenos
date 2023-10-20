@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using Photon.Realtime;
 using Photon.Pun;
+using static UnityEditor.FilePathAttribute;
+using JetBrains.Annotations;
 
 public class SpawnSystem : MonoBehaviourPunCallbacks
 {
@@ -31,6 +33,14 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private bool waveShouldPause;
 
     private List<_Enemy_Behaviour> spawnedEnemiesList;
+
+    private static EnemyNavMesh[,] enemyGroup;
+    private static int coluna=0;
+    private static int linha=0;
+    public EnemyNavMesh[] pronto = new EnemyNavMesh[5];
+
+
+
     public static bool canSpawn;
 
     private void Awake()
@@ -39,6 +49,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         spawnLifes = serializeSpawnLifes;
         spawnLife = spawnLifes;
         spawnedEnemiesList = new List<_Enemy_Behaviour>(100);
+        enemyGroup = new EnemyNavMesh[10,5];
     }
     private void Start()
     {
@@ -153,6 +164,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private void SpawnEnemy(string location)
     {
         GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[Random.Range(0,spawnLocations.Length)].position, new Quaternion(0, 0, 0, 0));
+        ///////////////////////////////////////////
+        Group(instance.GetComponent<EnemyNavMesh>());
         spawnedEnemiesList.Add(instance.GetComponent<_Enemy_Behaviour>());
     }
     public void StartSpawn()
@@ -176,6 +189,61 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 g.enemy_Animation.PlayDesiredAnimation("Dance");
             }
         }
+    }
+    public int[] Group(EnemyNavMesh atual)
+    {
+        float friendDistance = 5f;
+
+        foreach (EnemyNavMesh nav in FindObjectsOfType<EnemyNavMesh>())
+        {
+
+            if (nav != gameObject)
+            {
+                float distance = Vector3.Distance(nav.transform.position, this.transform.position);
+
+                if (distance < friendDistance)
+                {
+                    if (coluna < 5)
+                    {
+                        enemyGroup[linha, coluna] = atual;
+                        Debug.Log("Meu Grupo: Linha: " + linha + "Coluna: " + coluna);
+                        coluna++;
+                    }
+                    if (coluna >= 4)
+                    {
+                        linha++;
+                        for (int i = 0; i < coluna; i++)
+                        {
+                            pronto[i] = enemyGroup[linha, i];
+                        }
+                        coluna = 0;
+                    }
+                }
+            }
+        }
+        return new int[] {linha,coluna };
+
+        
+        
+        /*
+        float max = 0;
+        float min = 10;
+        foreach (EnemyNavMesh enemy in enemyGroup[linha])
+        {
+            //Debug.Log("enemyBehaviour.speed"+enemyBehaviour.speed);
+            if (velo > max)
+            {
+                max = velo;
+            }
+            if (velo < min)
+            {
+                min = velo;
+            }
+        }*/
+    }
+    public void Proximo()
+    {
+
     }
 }
 

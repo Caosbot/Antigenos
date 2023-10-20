@@ -12,4 +12,8 @@ public class GameManager : MonoBehaviour
         Debug.Log(texto);
 #endif
     }
+    public void Grupo()
+    {
+
+    }
 }
