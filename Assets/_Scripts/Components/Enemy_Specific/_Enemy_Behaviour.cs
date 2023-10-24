@@ -11,6 +11,7 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     [SerializeField] private ProgressBar progressBar;
     public float speed=7f, acceleration=7f, stoppingDistance = 0.5f;
     public Enemy_Animation enemy_Animation;
+    public int linha, coluna;
 
     public void TakeDamage(int inDamage, bool ignoreArmor = false, GameObject damageDealer = null)
     {
@@ -48,6 +49,7 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     public void Die()
     {
         PhotonNetwork.Destroy(gameObject);
+        SpawnSystem.enemyGroup[linha][coluna] = null;
     }
     public void InnTargetEnd()
     {

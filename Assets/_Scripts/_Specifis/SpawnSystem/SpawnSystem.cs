@@ -6,6 +6,10 @@ using Photon.Realtime;
 using Photon.Pun;
 using static UnityEditor.FilePathAttribute;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
+using System.Linq;
+using Photon.Pun.Demo.SlotRacer.Utils;
+using UnityEngine.SocialPlatforms;
 
 public class SpawnSystem : MonoBehaviourPunCallbacks
 {
@@ -35,11 +39,9 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     private List<_Enemy_Behaviour> spawnedEnemiesList;
 
-    public static EnemyNavMesh[,] enemyGroup;
-    public static int coluna=0;
-    public static int linha=0;
-    public static bool ok1 = false;
-    //public EnemyNavMesh[] pronto = new EnemyNavMesh[5];
+    public static GameObject[][] enemyGroup;
+    public int linha;
+
 
 
 
@@ -47,11 +49,21 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        
         canSpawn = true;
         spawnLifes = serializeSpawnLifes;
         spawnLife = spawnLifes;
         spawnedEnemiesList = new List<_Enemy_Behaviour>(100);
-        enemyGroup = new EnemyNavMesh[spawnLocations.Length, 10];
+        linha = spawnLocations.Length + 1;
+        Debug.Log("Linha: " + linha);
+        enemyGroup =new GameObject[linha][];
+        for (int i = 0;i<linha;i++)
+        {
+            Debug.Log("i: " + i);
+            enemyGroup[i] = new GameObject[5];
+            Debug.Log("enemyGroup[i]"+ enemyGroup[i].Length);
+        }
+            
     }
     private void Start()
     {
@@ -167,6 +179,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     {
         int rand = Random.Range(0, spawnLocations.Length);
         GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[rand].position, new Quaternion(0, 0, 0, 0));
+        Group(instance, rand);
         spawnedEnemiesList.Add(instance.GetComponent<_Enemy_Behaviour>());
     }
     public void StartSpawn()
@@ -191,59 +204,51 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             }
         }
     }
-    public static int[] Group(EnemyNavMesh atual,int local)//Desativar
+    public void Group(GameObject atual,int local)
     {
-        float friendDistance = 5f;
-        linha = local;
-        foreach (EnemyNavMesh nav in FindObjectsOfType<EnemyNavMesh>())
+        //float friendDistance = 5f;
+        atual.GetComponent<_Enemy_Behaviour>().linha=local;
+        for (int i=0;i<enemyGroup[local].Length;i++)
         {
-            if (nav != atual.gameObject)
+            if (enemyGroup[local][i] == null)
             {
-                Debug.Log("Entrou Diferente");
-                float distance = Vector3.Distance(nav.transform.position, atual.transform.position);
-
-                if (distance < friendDistance)
-                {
-                    Debug.Log("Entrou friendDistance");
-                    if (coluna < 5)
-                    {
-                        enemyGroup[linha, coluna] = atual;
-                        Debug.Log("Meu Grupo: Linha: " + linha + "|Coluna: " + coluna);
-                        coluna++;
-                    }
-                    if (coluna > 5)
-                    {
-                        Debug.Log("Linha: " + linha + " Ok");
-                        coluna = 0;
-                    }
-                }
-                else
-                    Group(atual,local) ;//Debug.Log("Oque fazer?");
+                enemyGroup[local][i] = atual;
+                atual.GetComponent<_Enemy_Behaviour>().coluna = i;
+                Debug.Log("Grupo: "+local+" Posição: "+i);
+                return;
             }
         }
-        return new int[] {linha,coluna };
-
-        
-        
-        /*
+        if (enemyGroup[local].Length>=linha)
+        {
+            //Debug.Log("enemyGroup[local].Length>: "+ enemyGroup[local].Length+" =linha: "+linha);
+            /*GameObject[] enemyLinha = new GameObject[5];
+            for (int i = 0; i < enemyGroup[local].Length; i++)
+            {
+                enemyLinha[i] = enemyGroup[local][i];
+            }*/
+            MesmaSpeed(local);
+        }
+    }
+    public void MesmaSpeed(int local)
+    {
+        //Debug.Log("MesmaSpeed");
         float max = 0;
         float min = 10;
-        foreach (EnemyNavMesh enemy in enemyGroup[linha])
+        foreach (GameObject enemy in enemyGroup[local])
         {
-            //Debug.Log("enemyBehaviour.speed"+enemyBehaviour.speed);
-            if (velo > max)
+            if (enemy.GetComponent<_Enemy_Behaviour>().speed>max)
             {
-                max = velo;
+                max=enemy.GetComponent<_Enemy_Behaviour>().speed;
             }
-            if (velo < min)
+            if (enemy.GetComponent<_Enemy_Behaviour>().speed < min)
             {
-                min = velo;
+                min=enemy.GetComponent<_Enemy_Behaviour>().speed;
             }
-        }*/
-    }
-    public void Proximo()
-    {
-
+        }
+        foreach (GameObject enemy in enemyGroup[local])
+        {
+            enemy.GetComponent<_Enemy_Behaviour>().speed = max + min/2;
+        }
     }
 }
 
