@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +13,9 @@ public class EnemyNavMesh : MonoBehaviour
     private Vector3 enemyPosition;
     private Vector3 playerPosition;
     private float distanceTarget, distancePlayer;
+    float minSpaceBetween = 1.5f;
+    float friendDistance = 5f;
+
     public _Enemy_Behaviour enemyBehaviour;
     private EnemyNavMesh[] enemyGroup;
 
@@ -31,10 +35,10 @@ public class EnemyNavMesh : MonoBehaviour
     }
 
     // Update is called every frame
-    
+
     void Update()
     {
-        
+
         enemyPosition = transform.position;
         distanceTarget = Vector3.Distance(targetPosition, enemyPosition);
         distancePlayer = Vector3.Distance(playerPosition, enemyPosition);
@@ -42,60 +46,62 @@ public class EnemyNavMesh : MonoBehaviour
         {
             //Debug.Log("Podia te Pegar.");
         }
-        if (distanceTarget >= 4f )
+        if (distanceTarget >= 4f)
         {
             //enemyAgent.SetDestination(targetPotion);
-            AlgonoUpdate();
+            Agrupar();
         }
         else
         {
             enemyBehaviour.InnTargetEnd();
         }
-            //PhotonNetwork.Destroy(gameObject);
+        //PhotonNetwork.Destroy(gameObject);
     }
-    public void AlgonoUpdate()
+    public void Agrupar()
     {
-        float minSpaceBetween = 1.5f;
-        float friendDistance=5f;
+
         //float maxSpaceBetween = 10f;
         //int num = 0;
 
-        foreach(EnemyNavMesh go in FindObjectsOfType<EnemyNavMesh>())
+        foreach (EnemyNavMesh go in FindObjectsOfType<EnemyNavMesh>())
         {
-            
+
             if (go != gameObject)
             {
                 float distance = Vector3.Distance(go.transform.position, this.transform.position);
-                
+
                 if (distance < friendDistance)
                 {
-                    //Debug.Log("Entrou friendDistance NavMesh");
+                    //Debug.Log("distance: " + distance + "| friendDistance: " + friendDistance);
+                    Andar(distance,go);
+                }
                     
-                    //SpawnSystem.Group(this);
-                    foreach (EnemyNavMesh enemy in enemyGroup)
-                    {
-                        //
-                        //distance = Vector3.Distance(enemy.transform.position, this.transform.position);
-                        //
-                        if (distance <= minSpaceBetween)
-                        {
-                            Vector3 direction = transform.position - go.transform.position;
-                            transform.Translate(direction * Time.deltaTime);
-                            //enemyAgent.speed = go.enemyAgent.speed;
-                            // enemyBehaviour.speed = min;
+            }
+            //Debug.Log(enemyGroup.Length);
+        }
+    }
+    public void Andar(float distance, EnemyNavMesh go)
+    {
+            //foreach (EnemyNavMesh enemy in enemyGroup)
+            {
+                //
+                //distance = Vector3.Distance(enemy.transform.position, this.transform.position);
+                //
+                if (distance <= minSpaceBetween)
+                {
+                    Vector3 direction = transform.position - go.transform.position;
+                    transform.Translate(direction * Time.deltaTime);
+                    // enemyBehaviour.speed = min;
 
-                        }
-                        else
-                            
-                            enemyAgent.SetDestination(targetPosition);
-                    }
                 }
-                }
-                //Debug.Log(enemyGroup.Length);
+                else
+                    enemyAgent.SetDestination(targetPosition);
             }
         }
-        
-    }
+   }
+
+
+
 
 
 // * ***************************************************************************************
@@ -209,53 +215,53 @@ public class EnemyNavMesh : MonoBehaviour
             }
         }*/
 
-        // Calcular a força de alinhamento.
-       /* Vector3 alignmentForce = Vector3.zero;
-        foreach (EnemyNavMesh boid in boids)
-        {
-            Vector3 direction = boid.transform.forward;
-            alignmentForce += direction;
-        }
-        alignmentForce.Normalize();
-        alignmentForce /= boids.Count;
+// Calcular a força de alinhamento.
+/* Vector3 alignmentForce = Vector3.zero;
+ foreach (EnemyNavMesh boid in boids)
+ {
+     Vector3 direction = boid.transform.forward;
+     alignmentForce += direction;
+ }
+ alignmentForce.Normalize();
+ alignmentForce /= boids.Count;
 
-        // Calcular a força de coesão.
-        Vector3 cohesionForce = Vector3.zero;
-        Vector3 centerOfMass = Vector3.zero;
-        foreach (EnemyNavMesh boid in boids)
-        {
-            centerOfMass += boid.transform.position;
-        }
-        centerOfMass /= boids.Count;
-        cohesionForce = centerOfMass - transform.position;
+ // Calcular a força de coesão.
+ Vector3 cohesionForce = Vector3.zero;
+ Vector3 centerOfMass = Vector3.zero;
+ foreach (EnemyNavMesh boid in boids)
+ {
+     centerOfMass += boid.transform.position;
+ }
+ centerOfMass /= boids.Count;
+ cohesionForce = centerOfMass - transform.position;
 
-        // Aplicar as forças ao boid.
-        Vector3 desiredVelocity = separationForce + alignmentForce + cohesionForce;
-        desiredVelocity.Normalize();
-        desiredVelocity *= maxSpeed;
+ // Aplicar as forças ao boid.
+ Vector3 desiredVelocity = separationForce + alignmentForce + cohesionForce;
+ desiredVelocity.Normalize();
+ desiredVelocity *= maxSpeed;
 
-        // Atualizar a posição do boid.
-        enemyAgent.velocity = desiredVelocity;
-    }
+ // Atualizar a posição do boid.
+ enemyAgent.velocity = desiredVelocity;
+}
 
-    public void IniciarFlocking()
-    {
-        boids = new List<EnemyNavMesh>();
-        maxSpeed = 5f;
-        //separationDistance = 0.5f;
-        //alignmentDistance = 1f;
-        //cohesionDistance = 3f;
-        // Remover os agentes extras.
-        int numAgents = boids.Count;
-        if (numAgents > maxAgents)
-        {
-            group = true;
-            for (int i = numAgents - 1; i >= maxAgents; i--)
-            {
-                boids.RemoveAt(i);
-            }
-        }
-    }
+public void IniciarFlocking()
+{
+ boids = new List<EnemyNavMesh>();
+ maxSpeed = 5f;
+ //separationDistance = 0.5f;
+ //alignmentDistance = 1f;
+ //cohesionDistance = 3f;
+ // Remover os agentes extras.
+ int numAgents = boids.Count;
+ if (numAgents > maxAgents)
+ {
+     group = true;
+     for (int i = numAgents - 1; i >= maxAgents; i--)
+     {
+         boids.RemoveAt(i);
+     }
+ }
+}
 
 }*/
 

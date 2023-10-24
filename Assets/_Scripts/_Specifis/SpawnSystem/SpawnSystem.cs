@@ -21,6 +21,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshProUGUI waveSpawnTimeText;
     [SerializeField] private TextMeshProUGUI spawnerLives;
     public static int spawnedEnemies;
+    private int startTime = 5;
 
     private AntigenQueue<_EnemyData> enemyQueue = new AntigenQueue<_EnemyData>(30);
     private int waveCounter = 0;
@@ -34,10 +35,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     private List<_Enemy_Behaviour> spawnedEnemiesList;
 
-    private static EnemyNavMesh[,] enemyGroup;
-    private static int coluna=0;
-    private static int linha=0;
-    public EnemyNavMesh[] pronto = new EnemyNavMesh[5];
+    public static EnemyNavMesh[,] enemyGroup;
+    public static int coluna=0;
+    public static int linha=0;
+    public static bool ok1 = false;
+    //public EnemyNavMesh[] pronto = new EnemyNavMesh[5];
 
 
 
@@ -49,7 +51,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         spawnLifes = serializeSpawnLifes;
         spawnLife = spawnLifes;
         spawnedEnemiesList = new List<_Enemy_Behaviour>(100);
-        enemyGroup = new EnemyNavMesh[10,5];
+        enemyGroup = new EnemyNavMesh[spawnLocations.Length, 10];
     }
     private void Start()
     {
@@ -84,8 +86,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private IEnumerator SpawnEnemyWaves()
     {
-        StartCoroutine(WaveTextTimer(20));
-        yield return new WaitForSeconds(20);
+        StartCoroutine(WaveTextTimer(startTime));
+        yield return new WaitForSeconds(startTime);
         QueueWave();
         while(waveCounter <= enemyWaves.Length || canSpawn)
         {
@@ -163,9 +165,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private void SpawnEnemy(string location)
     {
-        GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[Random.Range(0,spawnLocations.Length)].position, new Quaternion(0, 0, 0, 0));
-        ///////////////////////////////////////////
-        //Group(instance.GetComponent<EnemyNavMesh>());
+        int rand = Random.Range(0, spawnLocations.Length);
+        GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[rand].position, new Quaternion(0, 0, 0, 0));
         spawnedEnemiesList.Add(instance.GetComponent<_Enemy_Behaviour>());
     }
     public void StartSpawn()
@@ -190,9 +191,10 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             }
         }
     }
-    public static int[] Group(EnemyNavMesh atual)
+    public static int[] Group(EnemyNavMesh atual,int local)//Desativar
     {
         float friendDistance = 5f;
+        linha = local;
         foreach (EnemyNavMesh nav in FindObjectsOfType<EnemyNavMesh>())
         {
             if (nav != atual.gameObject)
@@ -209,16 +211,14 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                         Debug.Log("Meu Grupo: Linha: " + linha + "|Coluna: " + coluna);
                         coluna++;
                     }
-                    if (coluna >= 4)
+                    if (coluna > 5)
                     {
-                        linha++;
-                        for (int i = 0; i < coluna; i++)
-                        {
-                            //pronto[i] = enemyGroup[linha, i];
-                        }
+                        Debug.Log("Linha: " + linha + " Ok");
                         coluna = 0;
                     }
                 }
+                else
+                    Group(atual,local) ;//Debug.Log("Oque fazer?");
             }
         }
         return new int[] {linha,coluna };
