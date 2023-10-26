@@ -27,7 +27,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     public static int spawnedEnemies;
     private int startTime = 5;
 
-    private AntigenQueue<_EnemyData> enemyQueue = new AntigenQueue<_EnemyData>(30);
+    private Queue<_EnemyData> enemyQueue = new Queue<_EnemyData>(30);
     private int waveCounter = 0;
     public int serializeSpawnLifes = 15;
     public static int spawnLife = 0;
@@ -46,6 +46,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
 
     public static bool canSpawn;
+    public bool enabledS = true;
 
     private void Awake()
     {
@@ -55,13 +56,13 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         spawnLife = spawnLifes;
         spawnedEnemiesList = new List<_Enemy_Behaviour>(100);
         linha = spawnLocations.Length + 1;
-        Debug.Log("Linha: " + linha);
+        //Debug.Log("Linha: " + linha);
         enemyGroup =new GameObject[linha][];
         for (int i = 0;i<linha;i++)
         {
-            Debug.Log("i: " + i);
+            //Debug.Log("i: " + i);
             enemyGroup[i] = new GameObject[5];
-            Debug.Log("enemyGroup[i]"+ enemyGroup[i].Length);
+            //Debug.Log("enemyGroup[i]"+ enemyGroup[i].Length);
         }
             
     }
@@ -71,26 +72,32 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private void Update()
     {
+
+        spawnerLives.text = spawnLife.ToString();
+    }
+    private void Ended()
+    {
         if (ended)
         {
-            ended = false;
+            //ended = false;
             spawnLifes = serializeSpawnLifes;
             spawnLife = spawnLifes;
             StartCoroutine(DelayRestart());
 
         }
-        spawnerLives.text = spawnLife.ToString();
     }
     private IEnumerator DelayRestart()
     {
-        StartCoroutine(WaveTextTimer(50));
+        StartCoroutine(WaveTextTimer(60));
         yield return new WaitForSeconds(20);
         foreach(_Enemy_Behaviour e in spawnedEnemiesList)
         {
             if(e!= null)
             e.TakeDamage(10000);
         }
+        
         yield return new WaitForSeconds(40);
+        ended = false;
         waveCounter = 0;
         spawnLifes = serializeSpawnLifes;
         spawnLife = spawnLifes;
@@ -98,13 +105,20 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private IEnumerator SpawnEnemyWaves()
     {
+        while (!enabledS)
+        {
+            yield return new WaitForSeconds(10);
+        }
+        ended = false;
         StartCoroutine(WaveTextTimer(startTime));
         yield return new WaitForSeconds(startTime);
         QueueWave();
+        /////////////////////////////
+        
         while(waveCounter <= enemyWaves.Length || canSpawn)
         {
             yield return 0;
-            _EnemyData[] tempEnemyData = enemyQueue.GetArray();
+            _EnemyData[] tempEnemyData = enemyQueue.ToArray();
             foreach (_EnemyData e in tempEnemyData)
             {
                 if(e != null)
@@ -112,8 +126,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                     yield return new WaitForSeconds(e.spawnRate+Random.Range(0,0.7f));
                     if (canSpawn)
                     {
-                        SpawnEnemy(enemyQueue.GetFirstValue().prefabLocation);
-                        enemyQueue.Unqueu();
+                        SpawnEnemy(enemyQueue.Dequeue().prefabLocation);
                     }
                 }
             }
@@ -151,7 +164,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             int tempInt = 0;
             while(tempInt < eCounter.spawnCount+PhotonNetwork.CountOfPlayersInRooms)
             {
-                enemyQueue.Queue(eCounter.enemyData);
+                enemyQueue.Enqueue(eCounter.enemyData);
                 tempInt++;
             }
         }
@@ -173,7 +186,25 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         waveSpawnText.text = "";
     }
     public static void ENDGAME()
-    {   
+    {
+        foreach(SpawnSystem s in FindObjectsOfType<SpawnSystem>())
+        {
+            s.RestartSpawn();
+        }
+            //ended = false;
+    }
+    public void RestartSpawn()
+    {
+        if(ended == false)
+        {
+            enemyQueue.Clear();
+            waveCounter = 0;
+            StopAllCoroutines();
+            ended = true;
+            spawnLifes = serializeSpawnLifes;
+            spawnLife = spawnLifes;
+            StartCoroutine(DelayRestart());
+        }
     }
     private void SpawnEnemy(string location)
     {
@@ -196,8 +227,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         spawnLife--;
         if(spawnLife == 0)
         {
-            Debug.Log("Missão Falhou");
-            ended = true;
+            ENDGAME();
             foreach(_Enemy_Behaviour g in FindObjectsOfType<_Enemy_Behaviour>())
             {
                 g.enemy_Animation.PlayDesiredAnimation("Dance");
@@ -214,18 +244,12 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             {
                 enemyGroup[local][i] = atual;
                 atual.GetComponent<_Enemy_Behaviour>().coluna = i;
-                Debug.Log("Grupo: "+local+" Posição: "+i);
+                //Debug.Log("Grupo: "+local+" Posição: "+i);
                 return;
             }
         }
         if (enemyGroup[local].Length>=linha)
         {
-            //Debug.Log("enemyGroup[local].Length>: "+ enemyGroup[local].Length+" =linha: "+linha);
-            /*GameObject[] enemyLinha = new GameObject[5];
-            for (int i = 0; i < enemyGroup[local].Length; i++)
-            {
-                enemyLinha[i] = enemyGroup[local][i];
-            }*/
             MesmaSpeed(local);
         }
     }

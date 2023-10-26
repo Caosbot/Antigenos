@@ -43,6 +43,11 @@ public class EnemyNavMesh : MonoBehaviour
 
     void Update()
     {
+        if (SpawnSystem.ended)
+        {
+            enemyAgent.speed = 0;
+            return;
+        }
         int i = 0;
         if (this.GetComponent<_Enemy_Behaviour>().coluna == 4)
         {
@@ -70,6 +75,7 @@ public class EnemyNavMesh : MonoBehaviour
     }
     public void Mover()
     {
+
         //Debug.Log("Rodando Agrupar");
         foreach (GameObject enemy in SpawnSystem.enemyGroup[linha])
         {
@@ -100,8 +106,8 @@ public class EnemyNavMesh : MonoBehaviour
             if (SpawnSystem.enemyGroup[linha][i]!=null)
             {
                 SpawnSystem.enemyGroup[linha][i].GetComponent<EnemyNavMesh>().liberado = true;
-                Debug.Log("Grupo: " + linha);
-                Debug.Log("enemyGroup[" + i + "].liberado = " + SpawnSystem.enemyGroup[linha][i].GetComponent<EnemyNavMesh>().liberado);
+                //Debug.Log("Grupo: " + linha);
+                //Debug.Log("enemyGroup[" + i + "].liberado = " + SpawnSystem.enemyGroup[linha][i].GetComponent<EnemyNavMesh>().liberado);
             }
             
         }

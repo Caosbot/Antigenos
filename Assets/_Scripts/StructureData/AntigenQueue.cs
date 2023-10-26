@@ -1,5 +1,119 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
+using UnityEngine;
+
+public class AntigenQueue<FilaType>
+{
+    private FilaType[] fila = null;
+    private int firstIndex = 0;
+    private int lastIndex = -1;
+    private float resizeFactor = 2f;
+    private bool shouldResize = true;
+    public AntigenQueue(int Size, float ResizeFactor = 2f, bool ShouldResize = true)
+    {
+        fila = new FilaType[Size];
+        resizeFactor = ResizeFactor;
+        shouldResize = ShouldResize;
+    }
+    public void Queue(FilaType value)
+    {
+        lastIndex++;
+        fila[lastIndex] = value;
+        if (lastIndex + 1 >= fila.Length+1)
+        {
+            if (shouldResize)
+            {
+                if (firstIndex != 0)
+                {
+                    Reorganize();
+                }
+                else
+                {
+                    Resize();
+                }
+            }
+            else if (firstIndex != 0)
+            {
+                Reorganize();
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+    public FilaType Unqueu()
+    {
+        FilaType temp = fila[firstIndex];
+        fila[firstIndex] = default(FilaType);
+        firstIndex++;
+        return temp;
+    }
+    private void Resize()
+    {
+        if (fila == null || lastIndex == -1)
+        {
+            Debug.LogError("Invalid fila or not initialized");
+            Debug.Break();
+            return;
+        }
+        FilaType[] tempFila = fila;
+        fila = new FilaType[(int)(tempFila.Length * resizeFactor)];
+        int tempInt = 0;
+        foreach (FilaType p in tempFila)
+        {
+            fila[tempInt] = p;
+            tempInt++;
+        }
+#if UNITY_EDITOR 
+        Debug.Log("Resized");
+#endif
+    }
+    public void Reorganize()
+    {
+        string tempInt = "";
+        foreach (FilaType f in fila)
+        {
+            tempInt += "\n" + f;
+        }
+        Debug.Log(tempInt);
+
+        FilaType[] tempFila = fila;
+        int offsetFromStart = firstIndex;
+        fila = new FilaType[fila.Length];
+        int counter = 0;
+        while (offsetFromStart < lastIndex + 1)
+        {
+            fila[counter] = tempFila[offsetFromStart];
+            counter++;
+            offsetFromStart++;
+        }
+        firstIndex = 0;
+        lastIndex = offsetFromStart;
+
+        tempInt = "";
+        foreach (FilaType f in fila)
+        {
+            tempInt += "\n" + f;
+        }
+        Debug.Log(tempInt);
+    }
+    public bool IsEmpty()
+    {
+        return (lastIndex < firstIndex);
+    }
+    public FilaType GetFirstValue()
+    {
+        return fila[firstIndex];
+    }
+    public FilaType[] GetArray()
+    {
+        return fila;
+    }
+}
+/*using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AntigenQueue<QueueType>
@@ -123,4 +237,4 @@ public class AntigenQueue<QueueType>
     {
         return queue;
     }
-}
+}*/

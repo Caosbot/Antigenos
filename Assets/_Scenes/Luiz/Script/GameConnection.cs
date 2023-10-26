@@ -57,6 +57,10 @@ public class GameConnection : MonoBehaviourPunCallbacks
 #endif
             spawnSystem.StartSpawn();
         }
+        else
+        {
+            spawnSystem.enabledS = false;
+        }
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {

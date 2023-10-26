@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 466892315}
-  m_IndirectSpecularColor: {r: 0.25330132, g: 0.21698837, b: 0.23319197, a: 1}
+  m_IndirectSpecularColor: {r: 0.25330302, g: 0.21698889, b: 0.23319246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2144,7 +2144,7 @@ MonoBehaviour:
     waveSpawnRate: 10
     shouldPauseOnEnded: 0
     enemyList:
-    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
       spawnCount: 10
     - enemyData: {fileID: 11400000, guid: 7e3e33df8aa649d4aa9abd86670efd98, type: 2}
       spawnCount: 5
@@ -2186,12 +2186,7 @@ MonoBehaviour:
   waveSpawnTimeText: {fileID: 1774302796}
   spawnerLives: {fileID: 1807700648}
   serializeSpawnLifes: 15
-  pronto:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  linha: 0
 --- !u!114 &227844378
 MonoBehaviour:
   m_ObjectHideFlags: 0
