@@ -6,6 +6,7 @@ public class GameConnection : MonoBehaviourPunCallbacks
 {
     [SerializeField] private string roomName = "PUCC";
     [SerializeField] private string[] playerNames;
+    [SerializeField] private string playerNickname;
     private GameObject playerObject;
     public SpawnSystem spawnSystem;
     void Start()
@@ -15,7 +16,11 @@ public class GameConnection : MonoBehaviourPunCallbacks
 #if UNITY_EDITOR
         //Debug.Log("Conectando no Servidor...");
 #endif
-        PhotonNetwork.NickName = playerNames[Random.Range(0,playerNames.Length-1)] + Random.Range(0, 10);
+        if (string.IsNullOrEmpty(playerNickname))
+        {
+            playerNickname = System.Environment.UserName;
+        }
+        //PhotonNetwork.NickName = playerNames[Random.Range(0,playerNames.Length-1)] + Random.Range(0, 10);
         PhotonNetwork.ConnectUsingSettings();
         
     }
