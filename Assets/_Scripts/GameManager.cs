@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static float multiplicadorDeSensibilidade;
     public bool bDebugerOnOFF;
     public void Debuger(string texto)
     {
@@ -11,6 +12,10 @@ public class GameManager : MonoBehaviour
 
         Debug.Log(texto);
 #endif
+    }
+    public void Start()
+    {
+        multiplicadorDeSensibilidade = 0.5f;
     }
     public void Grupo()
     {
