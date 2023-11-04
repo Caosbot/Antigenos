@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static float multiplicadorDeSensibilidade;
     public bool bDebugerOnOFF;
-    public void Debuger(string texto)
+    public static void Debuger(string texto)
     {
 #if UNITY_EDITOR
 
