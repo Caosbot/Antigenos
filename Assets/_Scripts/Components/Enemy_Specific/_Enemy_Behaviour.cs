@@ -16,13 +16,14 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     public void TakeDamage(int inDamage, bool ignoreArmor = false, GameObject damageDealer = null)
     {
         string tempName = "";
+        inDamage += DamageMultiplayer();
         if(damageDealer != null)
         {
             tempName = damageDealer.name;
         }
         enemy_Animation.PlayDesiredAnimation("Hit");
 #if UNITY_EDITOR
-        //Debug.Log(inDamage + " de Dano foi recebido de " + tempName);
+        //Debug.Log((inDamage )+ " de Dano foi recebido de " + tempName);
         //Debug.Log(statsComponent.FindStatValue("Vida"));
 #endif
         GetComponent<PhotonView>().RPC(nameof(SetLife), RpcTarget.All, inDamage, ignoreArmor);
@@ -56,6 +57,22 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
 
         GetComponent<PhotonView>().RPC(nameof(Die), RpcTarget.MasterClient);
         SpawnSystem.SpawnTakeDamage();
+    }
+    public int DamageMultiplayer()
+    {
+        int numPlayers;
+        numPlayers = SpawnSystem.numPlayers;
+        //Debug.Log("Qtd de Players: " + numPlayers);
+        if (numPlayers == 1)
+        {
+            return 3;
+        }
+        if (numPlayers == 2)
+        {
+            return 2;
+        }
+        else
+            return 1;
     }
 }
 

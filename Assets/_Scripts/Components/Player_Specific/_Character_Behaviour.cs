@@ -114,5 +114,4 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
             PhotonNetwork.Destroy(g);
         }
     }
-
 }

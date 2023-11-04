@@ -40,6 +40,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private List<_Enemy_Behaviour> spawnedEnemiesList;
 
     public static GameObject[][] enemyGroup;
+    public static int numPlayers=0;
     public int linha;
 
 

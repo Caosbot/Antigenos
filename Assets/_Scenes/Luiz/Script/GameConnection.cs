@@ -41,6 +41,8 @@ public class GameConnection : MonoBehaviourPunCallbacks
 #endif
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers= 20;
+        SpawnSystem.numPlayers++;
+        Debug.Log("Qtd de Players: " + SpawnSystem.numPlayers);
 #if UNITY_EDITOR
         //Debug.Log("Entrando na sala "+ roomName);
 #endif
@@ -82,5 +84,13 @@ public class GameConnection : MonoBehaviourPunCallbacks
         base.OnPlayerLeftRoom(otherPlayer);
         playerObject.GetComponent<_Character_Behaviour>().DestroyInstantedObjects();
         
+    }
+    public void TakeServer(string server)
+    {
+        roomName = server.ToUpper();
+    }
+    public void TakeNickName(string nickName)
+    {
+        playerNickname = nickName;
     }
 }
