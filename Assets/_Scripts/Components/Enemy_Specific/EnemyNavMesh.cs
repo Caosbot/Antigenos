@@ -48,7 +48,7 @@ public class EnemyNavMesh : MonoBehaviour
             enemyAgent.speed = 0;
             return;
         }
-        if (this.GetComponent<_Enemy_Behaviour>().coluna == 4)
+        if (this.GetComponent<_Enemy_Behaviour>().coluna == SpawnSystem.maxColluna-1)
         {
             Liberar(linha);
         }

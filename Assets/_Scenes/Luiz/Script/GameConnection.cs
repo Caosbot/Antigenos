@@ -83,7 +83,8 @@ public class GameConnection : MonoBehaviourPunCallbacks
 #endif
         base.OnPlayerLeftRoom(otherPlayer);
         playerObject.GetComponent<_Character_Behaviour>().DestroyInstantedObjects();
-        
+        SpawnSystem.numPlayers--;
+
     }
     public void TakeServer(string server)
     {

@@ -41,6 +41,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     public static GameObject[][] enemyGroup;
     public static int numPlayers=0;
+    public static int maxColluna=5;
     public int linha;
 
 
@@ -62,7 +63,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         for (int i = 0;i<linha;i++)
         {
             //Debug.Log("i: " + i);
-            enemyGroup[i] = new GameObject[5];
+            enemyGroup[i] = new GameObject[maxColluna];
             //Debug.Log("enemyGroup[i]"+ enemyGroup[i].Length);
         }
             
@@ -166,6 +167,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             while(tempInt < eCounter.spawnCount+PhotonNetwork.CountOfPlayersInRooms)
             {
                 enemyQueue.Enqueue(eCounter.enemyData);
+                if (numPlayers == 2)
+                    maxColluna = 6;
                 tempInt++;
             }
         }
