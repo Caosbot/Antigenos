@@ -3,7 +3,27 @@ guid: cda91b387cb227a41b6dd52d9915b62c
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Barra de ferro
+    second: {fileID: 2100000, guid: 8e77579913ab624418e5e8e0267026f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Portal
+    second: {fileID: 2100000, guid: e515a43e3b4e3a349a0f95aaf842d59c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TijoloChao
+    second: {fileID: 2100000, guid: 710c32735bf8c9748ab4bd5f29b45995, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TijoloPortal
+    second: {fileID: 2100000, guid: 838dcc4c2290d5f44a4e2cf54016e6c2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

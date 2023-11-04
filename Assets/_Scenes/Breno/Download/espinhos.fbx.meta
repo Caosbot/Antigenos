@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d8b1991c13c23d8469a5e533237a2441
+guid: e1be6150752e7cd498b33006cb73430b
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,18 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Base
-    second: {fileID: 2100000, guid: bfc4c106dbc24fa46b906f7e6aceb98e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Grade
-    second: {fileID: 2100000, guid: 02cad7dd71697844badfed4be35e1b4d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Parafuso
-    second: {fileID: 2100000, guid: 4d0fa83176f51fe4eb74c60b9b474b17, type: 2}
+      name: espinho
+    second: {fileID: 2100000, guid: 013a8cff26d6c3d4fbef4173b7b775f5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
