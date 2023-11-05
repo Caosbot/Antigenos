@@ -76,7 +76,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        waveSpawnText.text = "Press G to Start\nPress X to Quit";
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            waveSpawnText.text = "Pressione G para Começar\n Pressione X para Sair";
+        }
+           
         GameManager.Debuger("Qtd de Players: " + PhotonNetwork.CountOfPlayersInRooms+1);
     }
     private void Update()
@@ -335,6 +339,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         waveSpawnText.text = "";
         endText = true;
     }
+
 }
 
 [System.Serializable]
