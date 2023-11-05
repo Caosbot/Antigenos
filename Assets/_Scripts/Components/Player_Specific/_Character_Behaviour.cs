@@ -24,6 +24,8 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
 
     [SerializeField] private Ranged_WeaponClass weaponClass;
 
+    public int money;
+
     private GameObject[] instantedObjects;
 
     public void DoDamage(_Enemy_Behaviour enemyBehaviour)

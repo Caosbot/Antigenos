@@ -29,6 +29,11 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
         GetComponent<PhotonView>().RPC(nameof(SetLife), RpcTarget.All, inDamage, ignoreArmor);
         if (statsComponent.FindStatValue("Vida") <= 0)
         {
+            _Character_Behaviour[] cc = GameObject.FindObjectsOfType<_Character_Behaviour>();
+            foreach(_Character_Behaviour c in cc)
+            {
+                c.money += 1;
+            }
             GetComponent<PhotonView>().RPC(nameof(Die),RpcTarget.MasterClient);
         }
     }
