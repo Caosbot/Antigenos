@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static float multiplicadorDeSensibilidade;
-    public bool bDebugerOnOFF;
+    [SerializeField]
+    public bool bDebugerOnOFF=true;
+    public SpawnSystem spawnSystem;
     public static void Debuger(string texto)
     {
 #if UNITY_EDITOR
@@ -17,8 +20,5 @@ public class GameManager : MonoBehaviour
     {
         multiplicadorDeSensibilidade = 0.5f;
     }
-    public void Grupo()
-    {
 
-    }
 }

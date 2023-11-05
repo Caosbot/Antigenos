@@ -41,7 +41,7 @@ public class GameConnection : MonoBehaviourPunCallbacks
 #endif
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers= 20;
-        SpawnSystem.numPlayers++;
+        SpawnSystem.numPlayers= PhotonNetwork.CountOfPlayersInRooms;
         Debug.Log("Qtd de Players: " + SpawnSystem.numPlayers);
 #if UNITY_EDITOR
         //Debug.Log("Entrando na sala "+ roomName);
@@ -62,7 +62,12 @@ public class GameConnection : MonoBehaviourPunCallbacks
 #if UNITY_EDITOR
             //Debug.Log("Eu sou o host!!");
 #endif
-            spawnSystem.StartSpawn();
+            /*if (Input.GetKeyDown(KeyCode.G))
+            {
+                Debug.Log("A");
+                Application.Quit();
+            }
+            spawnSystem.StartSpawn();*/
         }
         else
         {
@@ -78,12 +83,20 @@ public class GameConnection : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-#if UNITY_EDITOR
-        Debug.Log("Player saiu sala " + otherPlayer.NickName);
-#endif
+        GameManager.Debuger("Player saiu sala " + otherPlayer.NickName);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            //SpawnSystem.numPlayers=0;
+            SpawnSystem.begin = false;
+        }
         base.OnPlayerLeftRoom(otherPlayer);
         playerObject.GetComponent<_Character_Behaviour>().DestroyInstantedObjects();
-        SpawnSystem.numPlayers--;
+        SpawnSystem.numPlayers= PhotonNetwork.CountOfPlayersInRooms;
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            //SpawnSystem.numPlayers=0;
+            SpawnSystem.begin = false;
+        }
 
     }
     public void TakeServer(string server)

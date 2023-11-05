@@ -43,12 +43,16 @@ public class EnemyNavMesh : MonoBehaviour
 
     void Update()
     {
+        //GameManager.Debuger("enemyGroup[linha].Length: " + SpawnSystem.enemyGroup[linha].Length);
+        //GameManager.Debuger("SpawnSystem.maxColluna - 1: " + (SpawnSystem.maxColluna - 1));
+        //GameManager.Debuger("this.GetComponent<_Enemy_Behaviour>().coluna: " + this.GetComponent<_Enemy_Behaviour>().coluna);
+
         if (SpawnSystem.ended)
         {
             enemyAgent.speed = 0;
             return;
         }
-        if (this.GetComponent<_Enemy_Behaviour>().coluna == SpawnSystem.maxColluna-1)
+        if (this.GetComponent<_Enemy_Behaviour>().coluna >= SpawnSystem.maxColluna-1)
         {
             Liberar(linha);
         }
@@ -100,6 +104,7 @@ public class EnemyNavMesh : MonoBehaviour
     }
     public void Liberar(int linha)
     {
+        
         for(int i = 0; i < SpawnSystem.enemyGroup[linha].Length; i++)
         {
             if (SpawnSystem.enemyGroup[linha][i]!=null)

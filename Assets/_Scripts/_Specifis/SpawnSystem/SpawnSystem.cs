@@ -26,22 +26,26 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshProUGUI spawnerLives;
     public static int spawnedEnemies;
     private int startTime = 5;
+    private string tempText = string.Empty;
 
     private Queue<_EnemyData> enemyQueue = new Queue<_EnemyData>(30);
     private int waveCounter = 0;
-    public int serializeSpawnLifes = 15;
+    public int serializeSpawnLifes = 150;
     public static int spawnLife = 0;
-    public static int spawnLifes = 15;
+    public static int spawnLifes = 15;///____________________________
     public static bool ended;
+    public static bool begin = false;
 
     private bool wavePaused;
     private bool waveShouldPause;
+    
 
     private List<_Enemy_Behaviour> spawnedEnemiesList;
 
     public static GameObject[][] enemyGroup;
-    public static int numPlayers=0;
+    public static int numPlayers= PhotonNetwork.CountOfPlayersInRooms;
     public static int maxColluna=5;
+    private  int sizeArray=8;
     public int linha;
 
 
@@ -63,19 +67,36 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         for (int i = 0;i<linha;i++)
         {
             //Debug.Log("i: " + i);
-            enemyGroup[i] = new GameObject[maxColluna];
+            enemyGroup[i] = new GameObject[sizeArray];
             //Debug.Log("enemyGroup[i]"+ enemyGroup[i].Length);
         }
             
     }
     private void Start()
     {
-
+        waveSpawnText.text = "Press G to Start\nPress X to Quit";
     }
     private void Update()
     {
 
         spawnerLives.text = spawnLife.ToString();
+        //numPlayers = 3;
+        GameManager.Debuger("Begin: "+ begin);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            if (Input.GetKeyDown(KeyCode.G) && begin == false)
+            {
+                StartSpawn();
+                begin = true;
+                waveSpawnText.text = "";
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Application.Quit();
+        }
+
+
     }
     private void Ended()
     {
@@ -85,7 +106,6 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             spawnLifes = serializeSpawnLifes;
             spawnLife = spawnLifes;
             StartCoroutine(DelayRestart());
-
         }
     }
     private IEnumerator DelayRestart()
@@ -158,17 +178,17 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             ENDGAME();
             return;
         }
-        waveSpawnText.text = enemyWaves[waveCounter].wave_Name;
+        tempText= enemyWaves[waveCounter].wave_Name;
+        waveSpawnText.text = tempText;
         StartCoroutine(WaveTextTimer(enemyWaves[waveCounter].waveSpawnRate));
         waveShouldPause = enemyWaves[waveCounter].shouldPauseOnEnded;
         foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
         {
             int tempInt = 0;
-            while(tempInt < eCounter.spawnCount+PhotonNetwork.CountOfPlayersInRooms)
+            while(tempInt < eCounter.spawnCount+numPlayers)//PhotonNetwork.CountOfPlayersInRooms)
             {
                 enemyQueue.Enqueue(eCounter.enemyData);
-                if (numPlayers == 2)
-                    maxColluna = 6;
+                BiggerArray();
                 tempInt++;
             }
         }
@@ -184,6 +204,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(time/time);
             currentTime -= 1;
             waveSpawnTimeText.text = currentTime.ToString();
+            waveSpawnText.text = tempText;
         }
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
@@ -242,7 +263,9 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     {
         //float friendDistance = 5f;
         atual.GetComponent<_Enemy_Behaviour>().linha=local;
-        for (int i=0;i<enemyGroup[local].Length;i++)
+        Debug.Log("Grupo: " + local);
+        //for (int i=0;i<enemyGroup[local].Length;i++)
+        for (int i=0;i<maxColluna;i++)
         {
             if (enemyGroup[local][i] == null)
             {
@@ -252,7 +275,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 return;
             }
         }
-        if (enemyGroup[local].Length>=linha)
+        if (enemyGroup[local].Length>=maxColluna)
         {
             MesmaSpeed(local);
         }
@@ -278,6 +301,16 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             enemy.GetComponent<_Enemy_Behaviour>().speed = max + min/2;
         }
     }
+    public void BiggerArray()
+    {
+        if (numPlayers == 1)
+            maxColluna = 5;
+        if (numPlayers == 2)
+            maxColluna = 6;
+        if (numPlayers >= 3)
+            maxColluna = 8;
+    }
+
 }
 
 [System.Serializable]
