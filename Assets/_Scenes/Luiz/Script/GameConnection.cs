@@ -73,6 +73,7 @@ public class GameConnection : MonoBehaviourPunCallbacks
         {
 
             GameManager.Debuger("Eu sou o host!!");
+            waveSpawnText.text = "Pressione G para Começar\n Pressione X para Sair";
 
             /*if (Input.GetKeyDown(KeyCode.G))
             {
@@ -84,28 +85,22 @@ public class GameConnection : MonoBehaviourPunCallbacks
         else
         {
             spawnSystem.enabledS = false;
-            GameManager.Debuger("Não sou o dono da sala!!");
+            GameManager.Debuger("Não sou o Host da sala!!");
         }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-#if UNITY_EDITOR
-        Debug.Log("Player entrou na sala " + newPlayer.NickName);
-#endif
+        GameManager.Debuger("Player entrou na sala " + newPlayer.NickName);
+        SpawnSystem.numPlayers++;
         base.OnPlayerEnteredRoom(newPlayer);
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         GameManager.Debuger("Player saiu sala " + otherPlayer.NickName);
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            //SpawnSystem.numPlayers=0;
-            //SpawnSystem.begin = false;
-        }
         base.OnPlayerLeftRoom(otherPlayer);
         playerObject.GetComponent<_Character_Behaviour>().DestroyInstantedObjects();
-        //SpawnSystem.numPlayers= PhotonNetwork.CountOfPlayersInRooms;
+        SpawnSystem.numPlayers--;
     }
     public void TakeServerName(string server)
     {

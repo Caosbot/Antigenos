@@ -45,12 +45,12 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private List<_Enemy_Behaviour> spawnedEnemiesList;
 
     public static GameObject[][] enemyGroup;
-    public static int numPlayers =PhotonNetwork.CountOfPlayersInRooms+1;
+    public static int numPlayers =0;
     public static int maxColluna=5;
     private  int sizeArray=8;
     public int linha;
 
-
+    PhotonView myPhotonView;
 
 
     public static bool canSpawn;
@@ -81,7 +81,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             waveSpawnText.text = "Pressione G para Começar\n Pressione X para Sair";
         }
            
-        GameManager.Debuger("Qtd de Players: " + PhotonNetwork.CountOfPlayersInRooms+1);
+        GameManager.Debuger("Qtd de Players: " + numPlayers);
+        GameManager.Debuger("Quantos na Sala Photon: " + PhotonNetwork.CountOfPlayersInRooms);
     }
     private void Update()
     {
@@ -218,7 +219,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(time/time);
             currentTime -= 1;
             waveSpawnTimeText.text = currentTime.ToString();
-            waveSpawnText.text = tempText;
+            SendChatMessage(tempText);
+            //waveSpawnText.text = tempText;
         }
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
@@ -338,6 +340,16 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         yield return new  WaitForSeconds(10);
         waveSpawnText.text = "";
         endText = true;
+    }
+    public void SendChatMessage(string message)
+    {
+        myPhotonView.RPC(nameof(ChatMessageReceived), RpcTarget.All, message);
+    }
+
+    [PunRPC]
+    void ChatMessageReceived(string message, PhotonMessageInfo info)
+    {
+        waveSpawnText.text = message;
     }
 
 }
