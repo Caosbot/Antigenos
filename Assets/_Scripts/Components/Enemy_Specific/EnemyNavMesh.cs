@@ -104,8 +104,8 @@ public class EnemyNavMesh : MonoBehaviour
     }
     public void Liberar(int linha)
     {
-        
-        for(int i = 0; i < SpawnSystem.enemyGroup[linha].Length; i++)
+        //for(int i = 0; i < SpawnSystem.maxColuna; i++)
+        for (int i = 0; i < SpawnSystem.enemyGroup[linha].Length; i++)
         {
             if (SpawnSystem.enemyGroup[linha][i]!=null)
             {
@@ -113,7 +113,10 @@ public class EnemyNavMesh : MonoBehaviour
                 //Debug.Log("Grupo: " + linha);
                 //Debug.Log("enemyGroup[" + i + "].liberado = " + SpawnSystem.enemyGroup[linha][i].GetComponent<EnemyNavMesh>().liberado);
             }
-            
+            //if (i > SpawnSystem.maxColluna)
+            //    enemyBehaviour.Die();
+
+
         }
         
     }

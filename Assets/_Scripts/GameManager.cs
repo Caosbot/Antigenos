@@ -7,14 +7,17 @@ public class GameManager : MonoBehaviour
 {
     public static float multiplicadorDeSensibilidade;
     [SerializeField]
-    public bool bDebugerOnOFF=true;
+    public static bool bDebugerOnOFF=true;
     public SpawnSystem spawnSystem;
     public static void Debuger(string texto)
     {
+        if (bDebugerOnOFF)
+        { 
 #if UNITY_EDITOR
 
         Debug.Log(texto);
 #endif
+        }
     }
     public void Start()
     {

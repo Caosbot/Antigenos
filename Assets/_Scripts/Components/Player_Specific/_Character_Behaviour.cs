@@ -110,7 +110,7 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     private void DestroyOb()
     {
-        foreach (GameObject g in instantedObjects)
+        foreach (GameObject g in instantedObjects)// Acho que aqui está distruindo todas as armas.
         {
             PhotonNetwork.Destroy(g);
         }

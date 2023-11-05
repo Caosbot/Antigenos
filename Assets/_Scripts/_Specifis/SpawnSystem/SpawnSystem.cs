@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 using System.Linq;
 using Photon.Pun.Demo.SlotRacer.Utils;
 using UnityEngine.SocialPlatforms;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class SpawnSystem : MonoBehaviourPunCallbacks
 {
@@ -34,16 +35,17 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     public static int spawnLife = 0;
     public static int spawnLifes = 15;///____________________________
     public static bool ended;
-    public static bool begin = false;
+    public bool begin = false;
 
     private bool wavePaused;
     private bool waveShouldPause;
+    private bool endText;
     
 
     private List<_Enemy_Behaviour> spawnedEnemiesList;
 
     public static GameObject[][] enemyGroup;
-    public static int numPlayers= PhotonNetwork.CountOfPlayersInRooms;
+    public static int numPlayers =PhotonNetwork.CountOfPlayersInRooms+1;
     public static int maxColluna=5;
     private  int sizeArray=8;
     public int linha;
@@ -75,13 +77,14 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private void Start()
     {
         waveSpawnText.text = "Press G to Start\nPress X to Quit";
+        GameManager.Debuger("Qtd de Players: " + PhotonNetwork.CountOfPlayersInRooms+1);
     }
     private void Update()
     {
 
         spawnerLives.text = spawnLife.ToString();
         //numPlayers = 3;
-        GameManager.Debuger("Begin: "+ begin);
+        //GameManager.Debuger("Begin: "+ begin);
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             if (Input.GetKeyDown(KeyCode.G) && begin == false)
@@ -90,6 +93,13 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 begin = true;
                 waveSpawnText.text = "";
             }
+            //.Owner
+            if (numPlayers != PhotonNetwork.CountOfPlayersInRooms+1)
+            {
+                numPlayers = PhotonNetwork.CountOfPlayersInRooms;
+                GameManager.Debuger("Qtd de Players: " + PhotonNetwork.CountOfPlayersInRooms);
+            }
+                
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -263,7 +273,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     {
         //float friendDistance = 5f;
         atual.GetComponent<_Enemy_Behaviour>().linha=local;
-        Debug.Log("Grupo: " + local);
+        //GameManager.Debuger("Grupo: " + local);
         //for (int i=0;i<enemyGroup[local].Length;i++)
         for (int i=0;i<maxColluna;i++)
         {
@@ -277,16 +287,25 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         }
         if (enemyGroup[local].Length>=maxColluna)
         {
-            MesmaSpeed(local);
+            //GameManager.Debuger("enemyGroup[local].Length: " + enemyGroup[local].Length+ "| maxColluna: "+ maxColluna);
+            waveSpawnText.text = "Os Antígenos estão atacando!";
+            if (endText)
+            {
+                endText = false;
+                StartCoroutine(Menssagem());
+            }
+                
+            //MesmaSpeed(local);
         }
     }
     public void MesmaSpeed(int local)
     {
-        //Debug.Log("MesmaSpeed");
+        //GameManager.Debuger("MesmaSpeed");
         float max = 0;
         float min = 10;
         foreach (GameObject enemy in enemyGroup[local])
         {
+
             if (enemy.GetComponent<_Enemy_Behaviour>().speed>max)
             {
                 max=enemy.GetComponent<_Enemy_Behaviour>().speed;
@@ -310,7 +329,12 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         if (numPlayers >= 3)
             maxColluna = 8;
     }
-
+    private IEnumerator Menssagem()
+    {
+        yield return new  WaitForSeconds(10);
+        waveSpawnText.text = "";
+        endText = true;
+    }
 }
 
 [System.Serializable]

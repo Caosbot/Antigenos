@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
+using TMPro;
 
 public class GameConnection : MonoBehaviourPunCallbacks
 {
@@ -9,6 +10,11 @@ public class GameConnection : MonoBehaviourPunCallbacks
     [SerializeField] private string playerNickname;
     private GameObject playerObject;
     public SpawnSystem spawnSystem;
+
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI waveSpawnText;
+    [SerializeField] private TextMeshProUGUI waveSpawnTimeText;
+    [SerializeField] private TextMeshProUGUI spawnerLives;
     void Start()
     {
         //Conecta no photon
@@ -22,7 +28,11 @@ public class GameConnection : MonoBehaviourPunCallbacks
         }
         //PhotonNetwork.NickName = playerNames[Random.Range(0,playerNames.Length-1)] + Random.Range(0, 10);
         PhotonNetwork.ConnectUsingSettings();
-        
+
+        waveSpawnText = GameObject.Find("Waves").GetComponent<TextMeshProUGUI>();
+        waveSpawnTimeText=GameObject.Find("WaveTime").GetComponent<TextMeshProUGUI>();
+        spawnerLives=GameObject.Find("Life").GetComponent<TextMeshProUGUI>();
+
     }
 
     public override void OnConnectedToMaster()
@@ -40,13 +50,15 @@ public class GameConnection : MonoBehaviourPunCallbacks
        // Debug.Log("Entrou no Lobby!");
 #endif
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers= 20;
-        SpawnSystem.numPlayers= PhotonNetwork.CountOfPlayersInRooms;
-        Debug.Log("Qtd de Players: " + SpawnSystem.numPlayers);
+        roomOptions.MaxPlayers= 3;
+        //SpawnSystem.numPlayers= PhotonNetwork.CountOfPlayersInRooms;
+        
 #if UNITY_EDITOR
         //Debug.Log("Entrando na sala "+ roomName);
 #endif
-        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, null);
+
+
+    PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, null);
     }
     public override void OnJoinedRoom()
     {
@@ -59,9 +71,9 @@ public class GameConnection : MonoBehaviourPunCallbacks
         playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-#if UNITY_EDITOR
-            //Debug.Log("Eu sou o host!!");
-#endif
+
+            GameManager.Debuger("Eu sou o host!!");
+
             /*if (Input.GetKeyDown(KeyCode.G))
             {
                 Debug.Log("A");
@@ -72,8 +84,10 @@ public class GameConnection : MonoBehaviourPunCallbacks
         else
         {
             spawnSystem.enabledS = false;
+            GameManager.Debuger("Não sou o dono da sala!!");
         }
     }
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
 #if UNITY_EDITOR
@@ -87,19 +101,13 @@ public class GameConnection : MonoBehaviourPunCallbacks
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             //SpawnSystem.numPlayers=0;
-            SpawnSystem.begin = false;
+            //SpawnSystem.begin = false;
         }
         base.OnPlayerLeftRoom(otherPlayer);
         playerObject.GetComponent<_Character_Behaviour>().DestroyInstantedObjects();
-        SpawnSystem.numPlayers= PhotonNetwork.CountOfPlayersInRooms;
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            //SpawnSystem.numPlayers=0;
-            SpawnSystem.begin = false;
-        }
-
+        //SpawnSystem.numPlayers= PhotonNetwork.CountOfPlayersInRooms;
     }
-    public void TakeServer(string server)
+    public void TakeServerName(string server)
     {
         roomName = server.ToUpper();
     }
