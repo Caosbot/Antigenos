@@ -61,6 +61,7 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
     }
     private void Update()
     {
+        playerText.transform.LookAt(Camera.main.transform);/////////////
         if (photonComponent.IsMine)
         {
             if (aimComponent != null)

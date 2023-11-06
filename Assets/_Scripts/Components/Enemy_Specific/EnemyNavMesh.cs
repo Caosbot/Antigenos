@@ -23,6 +23,7 @@ public class EnemyNavMesh : MonoBehaviour
     public _Enemy_Behaviour enemyBehaviour;
     //EnemyNavMesh[] enemyGroup = new EnemyNavMesh[5];
     public bool liberado = false;
+    public bool flag = false;
     private int linha;
 
     // Start is called before the first frame update
@@ -74,7 +75,10 @@ public class EnemyNavMesh : MonoBehaviour
                 enemyBehaviour.InnTargetEnd();
             }
         }
-
+        if (!liberado && !flag)
+        {
+            StartCoroutine(FreeForTime());
+        }
     }
     public void Mover()
     {
@@ -112,12 +116,15 @@ public class EnemyNavMesh : MonoBehaviour
                 SpawnSystem.enemyGroup[linha][i].GetComponent<EnemyNavMesh>().liberado = true;
                 //Debug.Log("Grupo: " + linha);
                 //Debug.Log("enemyGroup[" + i + "].liberado = " + SpawnSystem.enemyGroup[linha][i].GetComponent<EnemyNavMesh>().liberado);
+                if (i > SpawnSystem.maxColluna)
+                    SpawnSystem.enemyGroup[linha][i].GetComponent<_Enemy_Behaviour>().Die();
             }
-            //if (i > SpawnSystem.maxColluna)
-            //    enemyBehaviour.Die();
-
-
         }
-        
+    }
+    private IEnumerator FreeForTime()
+    {
+        flag = true;
+        yield return new WaitForSeconds(20);
+        liberado = true;
     }
 }

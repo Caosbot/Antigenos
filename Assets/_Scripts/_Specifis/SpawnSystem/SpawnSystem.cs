@@ -11,6 +11,7 @@ using System.Linq;
 using Photon.Pun.Demo.SlotRacer.Utils;
 using UnityEngine.SocialPlatforms;
 using static UnityEngine.UI.GridLayoutGroup;
+using Photon.Pun.Demo.PunBasics;
 
 public class SpawnSystem : MonoBehaviourPunCallbacks
 {
@@ -31,7 +32,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     private Queue<_EnemyData> enemyQueue = new Queue<_EnemyData>(30);
     private int waveCounter = 0;
-    public int serializeSpawnLifes = 150;
+    public int serializeSpawnLifes = 15;
     public static int spawnLife = 0;
     public static int spawnLifes = 15;///____________________________
     public static bool ended;
@@ -46,8 +47,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     public static GameObject[][] enemyGroup;
     public static int numPlayers =0;
-    public static int maxColluna=5;
-    private  int sizeArray=8;
+    public static int maxColluna=9;
+    private  int sizeArray=10;
     public int linha;
 
     PhotonView myPhotonView;
@@ -58,7 +59,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        
+        //gameObject.AddComponent<PhotonView>();
+        //myPhotonView =  GetComponent<PhotonView>();
         canSpawn = true;
         spawnLifes = serializeSpawnLifes;
         spawnLife = spawnLifes;
@@ -82,11 +84,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         }
            
         GameManager.Debuger("Qtd de Players: " + numPlayers);
-        GameManager.Debuger("Quantos na Sala Photon: " + PhotonNetwork.CountOfPlayersInRooms);
+        GameManager.Debuger("Quantos na Sala Photon: " + PhotonNetwork.PlayerList.Length);
     }
     private void Update()
     {
-
+        //SendMyMessage(spawnLife.ToString());
         spawnerLives.text = spawnLife.ToString();
         //numPlayers = 3;
         //GameManager.Debuger("Begin: "+ begin);
@@ -219,8 +221,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(time/time);
             currentTime -= 1;
             waveSpawnTimeText.text = currentTime.ToString();
-            SendChatMessage(tempText);
-            //waveSpawnText.text = tempText;
+            waveSpawnText.text = tempText;
         }
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
@@ -341,15 +342,16 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         waveSpawnText.text = "";
         endText = true;
     }
-    public void SendChatMessage(string message)
+    public void SendMyMessage(string message)
     {
-        myPhotonView.RPC(nameof(ChatMessageReceived), RpcTarget.All, message);
+        myPhotonView.RPC(nameof(ChangeText), RpcTarget.All, message);
     }
 
     [PunRPC]
-    void ChatMessageReceived(string message, PhotonMessageInfo info)
+    void ChangeText(string texto, PhotonMessageInfo info)
     {
-        waveSpawnText.text = message;
+        GameManager.Debuger("Entrou2");
+        spawnerLives.text = texto;
     }
 
 }

@@ -43,6 +43,9 @@ MonoBehaviour:
   - Die
   - DestroyOb
   - WorkingTrap
+  - ChatMessageReceived
+  - ChangeColor
+  - ChangeText
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

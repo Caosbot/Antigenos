@@ -69,6 +69,7 @@ public class GameConnection : MonoBehaviourPunCallbacks
         Vector3 position = new Vector3(0, 0.79f, 0);//79f
         Quaternion rotation = Quaternion.Euler(0, 90, 0);//Vector3.up * Random.Range(0, 360.0f));
         playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
+        SpawnSystem.numPlayers++;
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
 
@@ -92,7 +93,6 @@ public class GameConnection : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         GameManager.Debuger("Player entrou na sala " + newPlayer.NickName);
-        SpawnSystem.numPlayers++;
         base.OnPlayerEnteredRoom(newPlayer);
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
