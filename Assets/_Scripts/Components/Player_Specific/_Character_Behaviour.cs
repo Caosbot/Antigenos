@@ -55,6 +55,7 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
         else
         {
             GameObject aimCube = Instantiate(Resources.Load<GameObject>("Weapons/AimCube/DebugAimCube"));
+            DontDestroyOnLoad(aimCube);
             aimComponent.Start(aimCube);
         }
         playerText.text = PhotonNetwork.NickName;
