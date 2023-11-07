@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
 using TMPro;
+using System.Collections.Generic;
 
 public class GameConnection : MonoBehaviourPunCallbacks
 {
@@ -29,43 +30,38 @@ public class GameConnection : MonoBehaviourPunCallbacks
         //PhotonNetwork.NickName = playerNames[Random.Range(0,playerNames.Length-1)] + Random.Range(0, 10);
         PhotonNetwork.ConnectUsingSettings();
 
-        waveSpawnText = GameObject.Find("Waves").GetComponent<TextMeshProUGUI>();
-        waveSpawnTimeText=GameObject.Find("WaveTime").GetComponent<TextMeshProUGUI>();
-        spawnerLives=GameObject.Find("Life").GetComponent<TextMeshProUGUI>();
+        //waveSpawnText = GameObject.Find("Waves").GetComponent<TextMeshProUGUI>();
+        //waveSpawnTimeText=GameObject.Find("WaveTime").GetComponent<TextMeshProUGUI>();
+        //spawnerLives=GameObject.Find("Life").GetComponent<TextMeshProUGUI>();
 
     }
 
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-#if UNITY_EDITOR
-        //Debug.Log("Conectado no Servidor!");
-#endif
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
 #if UNITY_EDITOR
-       // Debug.Log("Entrou no Lobby!");
+        // Debug.Log("Entrou no Lobby!");
 #endif
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers= 3;
-        //SpawnSystem.numPlayers= PhotonNetwork.CountOfPlayersInRooms;
+        roomOptions.MaxPlayers = 3; 
+        //if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, null); 
+        }
+        //else
         
-#if UNITY_EDITOR
-        //Debug.Log("Entrando na sala "+ roomName);
-#endif
-
-
-    PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, null);
+        GameManager.Debuger("Qtd de salas no Lobby: " + PhotonNetwork.CountOfRooms);
     }
     public override void OnJoinedRoom()
     {
-#if UNITY_EDITOR
-        //Debug.Log("Entrei na sala " + PhotonNetwork.CurrentRoom.Name);
-#endif
+        GameManager.Debuger("Entrei na sala " + PhotonNetwork.CurrentRoom.Name);
         base.OnJoinedRoom();
+        GameManager.Debuger("Qtd Player na sala " + PhotonNetwork.PlayerList.Length);
         Vector3 position = new Vector3(0, 0.79f, 0);//79f
         Quaternion rotation = Quaternion.Euler(0, 90, 0);//Vector3.up * Random.Range(0, 360.0f));
         playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
@@ -75,13 +71,6 @@ public class GameConnection : MonoBehaviourPunCallbacks
 
             GameManager.Debuger("Eu sou o host!!");
             waveSpawnText.text = "Pressione G para Começar\n Pressione X para Sair";
-
-            /*if (Input.GetKeyDown(KeyCode.G))
-            {
-                Debug.Log("A");
-                Application.Quit();
-            }
-            spawnSystem.StartSpawn();*/
         }
         else
         {
@@ -100,7 +89,9 @@ public class GameConnection : MonoBehaviourPunCallbacks
         GameManager.Debuger("Player saiu sala " + otherPlayer.NickName);
         base.OnPlayerLeftRoom(otherPlayer);
         playerObject.GetComponent<_Character_Behaviour>().DestroyInstantedObjects();
-        SpawnSystem.numPlayers--;
+        //SpawnSystem.numPlayers--;
+        base.OnLeftLobby();
+        PhotonNetwork.LeaveLobby();
     }
     public void TakeServerName(string server)
     {
@@ -110,4 +101,5 @@ public class GameConnection : MonoBehaviourPunCallbacks
     {
         playerNickname = nickName;
     }
+   
 }

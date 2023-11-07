@@ -46,7 +46,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private List<_Enemy_Behaviour> spawnedEnemiesList;
 
     public static GameObject[][] enemyGroup;
-    public static int numPlayers =0;
+    public static int numPlayers = PhotonNetwork.PlayerList.Length;
     public static int maxColluna=5;
     private  int sizeArray=10;
     public int linha;
@@ -82,9 +82,6 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         {
             waveSpawnText.text = "Pressione G para Começar\n Pressione X para Sair";
         }
-           
-        GameManager.Debuger("Qtd de Players: " + numPlayers);
-        GameManager.Debuger("Quantos na Sala Photon: " + PhotonNetwork.PlayerList.Length);
     }
     private void Update()
     {
@@ -101,10 +98,10 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 waveSpawnText.text = "";
             }
             //.Owner
-            if (numPlayers != PhotonNetwork.CountOfPlayersInRooms+1)
+            if (numPlayers != PhotonNetwork.PlayerList.Length)
             {
-                numPlayers = PhotonNetwork.CountOfPlayersInRooms;
-                GameManager.Debuger("Qtd de Players: " + PhotonNetwork.CountOfPlayersInRooms);
+                numPlayers = PhotonNetwork.PlayerList.Length;
+                GameManager.Debuger("Qtd de Players: " + PhotonNetwork.PlayerList.Length);
             }
                 
         }
@@ -202,7 +199,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
         {
             int tempInt = 0;
-            while(tempInt < eCounter.spawnCount+PhotonNetwork.CountOfPlayersInRooms)
+            while(tempInt < eCounter.spawnCount+ PhotonNetwork.PlayerList.Length)
             {
                 enemyQueue.Enqueue(eCounter.enemyData);
                 BiggerArray();

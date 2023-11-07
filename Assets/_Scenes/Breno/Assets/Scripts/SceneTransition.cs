@@ -23,7 +23,7 @@ public class SceneTransition : MonoBehaviour
     {
         Application.Quit();
     }
-    public void Start()
+ /*   public void Start()
     {
         GameObject gameItem = Instantiate<GameObject>(_itemPrefab, _itemContent);
         Button button = gameItem.GetComponent<Button>();
@@ -33,5 +33,5 @@ public class SceneTransition : MonoBehaviour
         }
         button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "PULMÂO";
 
-    }
+    }*/
 }
