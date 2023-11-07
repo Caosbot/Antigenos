@@ -47,7 +47,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     public static GameObject[][] enemyGroup;
     public static int numPlayers =0;
-    public static int maxColluna=9;
+    public static int maxColluna=5;
     private  int sizeArray=10;
     public int linha;
 
@@ -202,7 +202,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
         {
             int tempInt = 0;
-            while(tempInt < eCounter.spawnCount+numPlayers)//PhotonNetwork.CountOfPlayersInRooms)
+            while(tempInt < eCounter.spawnCount+PhotonNetwork.CountOfPlayersInRooms)
             {
                 enemyQueue.Enqueue(eCounter.enemyData);
                 BiggerArray();
@@ -329,7 +329,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     public void BiggerArray()
     {
-        if (numPlayers == 1)
+        if (numPlayers <= 1)
             maxColluna = 5;
         if (numPlayers == 2)
             maxColluna = 6;
