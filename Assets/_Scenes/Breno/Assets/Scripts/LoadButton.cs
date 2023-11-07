@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class LoadButton : MonoBehaviour
 {
-    public string roomName = "1.0_Phase";
+    public string sceneName = "1.0_Phase";
     public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(roomName);
+        SceneManager.LoadScene(sceneName);
     }
 }

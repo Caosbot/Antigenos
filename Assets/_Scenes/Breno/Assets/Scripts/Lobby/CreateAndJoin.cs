@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEditor.XR;
+using UnityEngine.SceneManagement;
 
 public class CreateAndJoin : MonoBehaviourPunCallbacks
 {
@@ -30,7 +31,6 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
             playerNickname = System.Environment.UserName;
         }
         PhotonNetwork.ConnectUsingSettings();//
-
     }
 
     public override void OnConnectedToMaster()
@@ -50,17 +50,25 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
             roomName = "CORACAO";
         else
             roomName = input_Create.text.ToUpper();
+
+        GameManager.Debuger("Criado sala em CreateRoom: " + roomName);
         // roomOptions = new RoomOptions();
         // roomOptions.MaxPlayers = 3;
-         PhotonNetwork.JoinOrCreateRoom(input_Create.text.ToUpper(),roomOptions,null);
+        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions,null);
         //PhotonNetwork.CreateRoom(roomName);
-        GameManager.Debuger("Criado sala em CreateRoom: "+ roomName);
-
+        GameManager.Debuger("IsMasterClient: "+ PhotonNetwork.IsMasterClient);
+        LoadScene();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameManager.Debuger("IsMasterClient");
+           
+        }
 
     }
     public void JoinRoom()
     {
         PhotonNetwork.JoinRoom(input_Join.text);
+
     }
     public void JoinRoomInList(string RoomName)
     {
@@ -69,5 +77,20 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     public void OnJoinRoom()
     {
         //PhotonNetwork.LoadLevel("GamePlay");
+    }
+    public void LoadScene()
+    {
+        string sceneName = "1.0_Phase";
+        SceneManager.LoadScene(sceneName);
+    }
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        GameManager.Debuger("Player entrou na sala " + newPlayer.NickName);
+        base.OnPlayerEnteredRoom(newPlayer);
+        Vector3 position = new Vector3(0, 0.79f, 0);//79f
+        Quaternion rotation = Quaternion.Euler(0, 90, 0);//Vector3.up * Random.Range(0, 360.0f));
+        GameObject playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
+        DontDestroyOnLoad(playerObject);
+        playerObject.GetComponent<PhotonView>().TransferOwnership(newPlayer);
     }
 }

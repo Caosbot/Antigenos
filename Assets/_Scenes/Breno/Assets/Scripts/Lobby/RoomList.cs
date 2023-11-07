@@ -33,7 +33,9 @@ public class RoomList : MonoBehaviourPunCallbacks
 
                 allRooms[i] = Room;
             }
-            
+           /* GameObject gameItem = Instantiate<GameObject>(_itemPrefab, _itemContent);
+            Button button = gameItem.GetComponent<Button>();
+            button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = objs[i].referen;*/
         }
     }
 }
