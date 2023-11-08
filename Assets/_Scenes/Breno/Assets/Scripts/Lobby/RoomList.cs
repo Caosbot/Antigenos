@@ -9,6 +9,7 @@ public class RoomList : MonoBehaviourPunCallbacks
 {
     public GameObject roomPrefab;
     public GameObject[] allRooms;
+    public List<string> roomNames = new List<string>();
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         for (int i = 0;i < allRooms.Length; i++)
@@ -24,10 +25,11 @@ public class RoomList : MonoBehaviourPunCallbacks
 
         for (int i = 0;i< roomList.Count; i++)
         {
-            //if (roomList[i].IsOpen && roomList[i].IsVisible && roomList[i].PlayerCount>=1)
+            if (roomList[i].IsOpen && roomList[i].IsVisible && roomList[i].PlayerCount>=1)
             {
-                GameManager.Debuger("RoomList");
-                GameManager.Debuger("RoomList"+roomList[i].Name);
+                //GameManager.Debuger("RoomList");
+                GameManager.Debuger("RoomList: "+roomList[i].Name);
+                roomNames.Add(roomList[i].Name);
                 GameObject Room = Instantiate(roomPrefab, Vector3.zero, Quaternion.identity, GameObject.Find("Content").transform);
                 Room.GetComponent<Room>().name.text = roomList[i].Name;
 
@@ -36,6 +38,10 @@ public class RoomList : MonoBehaviourPunCallbacks
            /* GameObject gameItem = Instantiate<GameObject>(_itemPrefab, _itemContent);
             Button button = gameItem.GetComponent<Button>();
             button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = objs[i].referen;*/
+        }
+        foreach (string names in roomNames)
+        {
+            GameManager.Debuger("Nome das salas: " + names);
         }
     }
 }

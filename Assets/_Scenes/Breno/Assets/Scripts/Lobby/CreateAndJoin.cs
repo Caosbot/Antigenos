@@ -12,6 +12,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
 {
     public TMP_InputField input_Create;
     public TMP_InputField input_Join;
+    public TMP_InputField input_NickName;
 
     [SerializeField] private string[] playerNames;
     [SerializeField] private string playerNickname;
@@ -30,10 +31,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
         //Conecta no photon
         spawnSystem = GetComponent<SpawnSystem>();
         GameManager.Debuger("Conectando no Servidor...");
-        if (string.IsNullOrEmpty(playerNickname))
-        {
-            playerNickname = System.Environment.UserName;
-        }
+        TakeNickName();
         PhotonNetwork.ConnectUsingSettings();//
     }
 
@@ -117,5 +115,15 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
         LoadScene();
 
         //playerObject.GetComponent<PhotonView>().TransferOwnership(newPlayer);
+    }
+    public void TakeNickName()
+    {
+        if (input_Create.text == string.Empty)
+        //if (string.IsNullOrEmpty(playerNickname))
+        {
+            playerNickname = System.Environment.UserName;
+        }
+        else
+            playerNickname = input_NickName.text;
     }
 }

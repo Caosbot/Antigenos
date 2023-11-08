@@ -1142,6 +1142,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room
       objectReference: {fileID: 0}
+    - target: {fileID: 2261786743265568380, guid: 6dfd5c6e3fbeb7f4eb456c9e8070d169, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2261786743265568381, guid: 6dfd5c6e3fbeb7f4eb456c9e8070d169, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1160,7 +1164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2261786743265568381, guid: 6dfd5c6e3fbeb7f4eb456c9e8070d169, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2261786743265568381, guid: 6dfd5c6e3fbeb7f4eb456c9e8070d169, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1168,7 +1172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2261786743265568381, guid: 6dfd5c6e3fbeb7f4eb456c9e8070d169, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2261786743265568381, guid: 6dfd5c6e3fbeb7f4eb456c9e8070d169, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1208,11 +1212,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2261786743265568381, guid: 6dfd5c6e3fbeb7f4eb456c9e8070d169, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 130.62456
       objectReference: {fileID: 0}
     - target: {fileID: 2261786743265568381, guid: 6dfd5c6e3fbeb7f4eb456c9e8070d169, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 2261786743265568381, guid: 6dfd5c6e3fbeb7f4eb456c9e8070d169, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4180,7 +4184,7 @@ GameObject:
   - component: {fileID: 1421662368}
   - component: {fileID: 1421662367}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: InputFieldNickName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4688,6 +4692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input_Create: {fileID: 1023630833}
   input_Join: {fileID: 1032302033}
+  input_NickName: {fileID: 1421662367}
   playerNames: []
   playerNickname: 
   spawnSystem: {fileID: 0}
@@ -5514,7 +5519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1710918853
 RectTransform:
   m_ObjectHideFlags: 0
