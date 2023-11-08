@@ -7095,9 +7095,11 @@ MonoBehaviour:
     shouldPauseOnEnded: 0
     enemyList:
     - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
-      spawnCount: 8
+      spawnCount: 24
     - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
       spawnCount: 1
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 12
   - wave_Name: The tripod virus are coming!!!
     waveSpawnRate: 10
     shouldPauseOnEnded: 0
@@ -7107,7 +7109,21 @@ MonoBehaviour:
     - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
       spawnCount: 1
     - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
-      spawnCount: 4
+      spawnCount: 20
+  - wave_Name: They are coming!!!
+    waveSpawnRate: 10
+    shouldPauseOnEnded: 0
+    enemyList:
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
+      spawnCount: 20
+    - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
+      spawnCount: 6
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 20
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
+      spawnCount: 20
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 40
   infinite: 0
   spawnLocations:
   - {fileID: 998609747}
