@@ -25,6 +25,7 @@ public class EnemyNavMesh : MonoBehaviour
     public bool liberado = false;
     public bool flag = false;
     private int linha;
+    public bool wtf = false;
 
     // Start is called before the first frame update
     void Start()
@@ -100,8 +101,10 @@ public class EnemyNavMesh : MonoBehaviour
                         transform.Translate(direction * Time.deltaTime);
                     }
                     //else
-                    enemyAgent.SetDestination(targetPosition);
                 }
+                enemyAgent.SetDestination(targetPosition);
+                if (wtf)
+                    GameManager.Debuger("Transfor.Position: "+ this.transform.position+ "TagetPosition: "+ targetPosition);
             }
             
         }
@@ -124,7 +127,8 @@ public class EnemyNavMesh : MonoBehaviour
     private IEnumerator FreeForTime()
     {
         flag = true;
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(25);
         liberado = true;
-    }
+        wtf = true;
+}
 }

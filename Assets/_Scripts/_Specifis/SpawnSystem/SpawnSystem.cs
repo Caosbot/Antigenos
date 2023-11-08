@@ -96,23 +96,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         spawnerLives.text = spawnLife.ToString();
         //numPlayers = 3;
         //GameManager.Debuger("Begin: "+ begin);
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (!begin)
         {
-            if (Input.GetKeyDown(KeyCode.G) && begin == false)
-            {
-                StartSpawn();
-                Debug.Log("A");
-                begin = true;
-                waveSpawnText.text = "";
-            }
-            //.Owner
-            if (numPlayers != PhotonNetwork.PlayerList.Length)
-            {
-                numPlayers = PhotonNetwork.PlayerList.Length;
-                GameManager.Debuger("Qtd de Players: " + PhotonNetwork.PlayerList.Length);
-            }
-                
+            ToMaster();
         }
+        
         if (Input.GetKeyDown(KeyCode.X))
         {
             Application.Quit();
@@ -196,6 +184,10 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 #if UNITY_EDITOR
             Debug.Log("END GAME");
 #endif
+
+            waveSpawnText.text = "You Win this Battle... More Enemies are coming soom!";
+            StartCoroutine(Menssagem());
+            begin = false;
             if (infinite)
             {
                 waveCounter = 0;
@@ -383,6 +375,25 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     {
         GameManager.Debuger("Entrou2");
         spawnerLives.text = texto;
+    }
+    public void ToMaster()
+    {
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            if (Input.GetKeyDown(KeyCode.G) && begin == false)
+            {
+                StartSpawn();
+                begin = true;
+                waveSpawnText.text = "";
+            }
+            //.Owner
+            if (numPlayers != PhotonNetwork.PlayerList.Length)
+            {
+                numPlayers = PhotonNetwork.PlayerList.Length;
+                GameManager.Debuger("Qtd de Players: " + PhotonNetwork.PlayerList.Length);
+            }
+
+        }
     }
 
 }
