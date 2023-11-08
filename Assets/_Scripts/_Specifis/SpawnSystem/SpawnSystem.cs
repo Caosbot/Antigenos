@@ -59,6 +59,9 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        waveSpawnText = GameObject.Find("Waves").GetComponent<TextMeshProUGUI>();
+        waveSpawnTimeText=GameObject.Find("WaveTime").GetComponent<TextMeshProUGUI>();
+        spawnerLives=GameObject.Find("Life").GetComponent<TextMeshProUGUI>();
         //gameObject.AddComponent<PhotonView>();
         //myPhotonView =  GetComponent<PhotonView>();
         canSpawn = true;
@@ -78,14 +81,18 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
+        canSpawn = true;
+        ended = false;
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            waveSpawnText.text = "Pressione G para Começar\n Pressione X para Sair";
+            if(waveSpawnText != null)
+            waveSpawnText.text = "Press G To Start\n Press X to Quit";
         }
     }
     private void Update()
     {
         //SendMyMessage(spawnLife.ToString());
+        if(spawnerLives != null)
         spawnerLives.text = spawnLife.ToString();
         //numPlayers = 3;
         //GameManager.Debuger("Begin: "+ begin);
@@ -94,6 +101,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             if (Input.GetKeyDown(KeyCode.G) && begin == false)
             {
                 StartSpawn();
+                Debug.Log("A");
                 begin = true;
                 waveSpawnText.text = "";
             }
@@ -146,7 +154,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(10);
         }
         ended = false;
-        StartCoroutine(WaveTextTimer(startTime));
+        StartCoroutine(TextTimer(startTime));
         yield return new WaitForSeconds(startTime);
         QueueWave();
         /////////////////////////////
@@ -163,6 +171,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                     if (canSpawn)
                     {
                         SpawnEnemy(enemyQueue.Dequeue().prefabLocation);
+                        spawnedEnemies++;
                     }
                 }
             }
@@ -171,6 +180,12 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             {
                 yield return 0;
             }
+            GameManager.Debuger("Esperando os inimigos morrerem");
+            while(spawnedEnemies != 0)
+            {
+                yield return 0;
+            }
+            GameManager.Debuger("Inimigos morreão, próxima wave vindo");
             QueueWave();
         }
     }
@@ -193,7 +208,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             return;
         }
         tempText= enemyWaves[waveCounter].wave_Name;
-        waveSpawnText.text = tempText;
+        waveSpawnText.text = tempText;//////////
         StartCoroutine(WaveTextTimer(enemyWaves[waveCounter].waveSpawnRate));
         waveShouldPause = enemyWaves[waveCounter].shouldPauseOnEnded;
         foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
@@ -223,6 +238,20 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
         waveSpawnText.text = "";
+    }
+    private IEnumerator TextTimer(float time)
+    {
+        waveSpawnTimeText.text = time.ToString();
+        float currentTime = time;
+        while (currentTime != 0)
+        {
+            yield return new WaitForSeconds(time / time);
+            currentTime -= 1;
+            waveSpawnTimeText.text = currentTime.ToString();
+            waveSpawnText.text = tempText;
+        }
+        yield return new WaitForSeconds(0.2f);
+        waveSpawnTimeText.text = "";
     }
     public static void ENDGAME()
     {
@@ -292,7 +321,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         if (enemyGroup[local].Length>=maxColluna)
         {
             //GameManager.Debuger("enemyGroup[local].Length: " + enemyGroup[local].Length+ "| maxColluna: "+ maxColluna);
-            waveSpawnText.text = "Os Antígenos estão atacando!";
+            //waveSpawnText.text = "Os Antígenos estão atacando!";
             if (endText)
             {
                 endText = false;

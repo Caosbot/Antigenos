@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBehaviour: {fileID: 111072384325914206}
   liberado: 0
+  flag: 0
 --- !u!136 &111072384325914204
 CapsuleCollider:
   m_ObjectHideFlags: 0

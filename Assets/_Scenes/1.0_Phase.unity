@@ -6973,9 +6973,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxEnemiesInScene: 16
-  enemyWaves: []
+  enemyWaves:
+  - wave_Name: The bacterias are coming!!!
+    waveSpawnRate: 10
+    shouldPauseOnEnded: 0
+    enemyList:
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 8
+    - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
+      spawnCount: 1
+  - wave_Name: The tripod virus are coming!!!
+    waveSpawnRate: 10
+    shouldPauseOnEnded: 0
+    enemyList:
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
+      spawnCount: 8
+    - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
+      spawnCount: 1
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 4
   infinite: 0
-  spawnLocations: []
+  spawnLocations:
+  - {fileID: 998609747}
+  - {fileID: 1705259253}
+  - {fileID: 1105456154}
+  - {fileID: 338536984}
   waveSpawnText: {fileID: 0}
   waveSpawnTimeText: {fileID: 0}
   spawnerLives: {fileID: 0}
@@ -20504,7 +20526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 121.14, y: -120.49}
+  m_AnchoredPosition: {x: 121.14, y: -136}
   m_SizeDelta: {x: 242.28418, y: 79.2124}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1814709470
@@ -20527,7 +20549,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Vida do Cora\xE7\xE3o"
+  m_text: Life
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -20554,8 +20576,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

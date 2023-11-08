@@ -52,17 +52,11 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
             roomName = input_Create.text.ToUpper();
 
         GameManager.Debuger("Criado sala em CreateRoom: " + roomName);
+        PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
         // roomOptions = new RoomOptions();
         // roomOptions.MaxPlayers = 3;
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions,null);
         //PhotonNetwork.CreateRoom(roomName);
-        GameManager.Debuger("IsMasterClient: "+ PhotonNetwork.IsMasterClient);
-        if (PhotonNetwork.IsMasterClient)
-        {
-            GameManager.Debuger("IsMasterClient");
-           
-        }
-
     }
     public void JoinRoom()
     {
@@ -90,6 +84,18 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+
+            GameManager.Debuger("Eu sou o host!!");
+            //waveSpawnText.text = "Pressione G para Começar\n Pressione X para Sair"; --------------------------------------------------
+        }
+        else
+        {
+            spawnSystem.enabledS = false;
+            GameManager.Debuger("Não sou o Host da sala!!");
+        }
+
         Vector3 position = new Vector3(0, 0.79f, 0);//79f
         Quaternion rotation = Quaternion.Euler(0, 90, 0);//Vector3.up * Random.Range(0, 360.0f));
         GameObject playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);

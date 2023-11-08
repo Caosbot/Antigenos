@@ -54,6 +54,7 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     [PunRPC]
     public void Die()
     {
+        SpawnSystem.spawnedEnemies--;
         PhotonNetwork.Destroy(gameObject);
         SpawnSystem.enemyGroup[linha][coluna] = null;
     }
