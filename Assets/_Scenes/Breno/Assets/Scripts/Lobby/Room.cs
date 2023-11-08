@@ -12,7 +12,7 @@ public class Room : MonoBehaviour
 
     public void JoinRoom()
     {
-        GameManager.Debuger(name.text);
+        //GameManager.Debuger(name.text);
         GameObject.Find("CreateAndJoin").GetComponent<CreateAndJoin>().JoinRoomInList(name.text);
 
     }

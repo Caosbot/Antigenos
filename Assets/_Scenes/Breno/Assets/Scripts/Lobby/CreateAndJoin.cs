@@ -49,6 +49,16 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     }
     public void CreateRoom()
     {
+        string temp = string.Empty;
+        foreach (string names in RoomList.roomNames)
+        {
+            if (input_Create.text.ToUpper() == names)
+            {
+                temp = names;
+                GameManager.Debuger("Sala já existe;");
+            }
+        }
+
         if (input_Create.text == string.Empty)
             roomName = "CORACAO";
         else
@@ -63,14 +73,14 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     }
     public void JoinRoom()
     {
-        foreach (string names in RoomList.roomNames)
+        /*for (int i=0;i< RoomList.roomNames.Count;i++)
         {
             if (input_Join.text==names)
                 GameManager.Debuger("Sala Encontrada");
 
             GameManager.Debuger("Nome das salas: " + names);
         }
-        PhotonNetwork.JoinRoom(input_Join.text);
+        PhotonNetwork.JoinRoom(input_Join.text);*/
 
     }
     public void JoinRoomInList(string RoomName)
