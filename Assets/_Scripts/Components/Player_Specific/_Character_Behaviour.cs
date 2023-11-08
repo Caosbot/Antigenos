@@ -50,7 +50,7 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
     }
     private IEnumerator DelayAwake()
     {
-        yield return new WaitForSeconds(2);
+        yield return 0;
         photonComponent = GetComponent<PhotonView>();
         if (!photonComponent.IsMine)
         {
