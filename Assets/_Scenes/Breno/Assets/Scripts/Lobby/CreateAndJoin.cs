@@ -72,6 +72,11 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRoom(RoomName);
     }
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        base.OnJoinRoomFailed(returnCode, message);
+        Debug.Log("A");
+    }
     public void OnJoinRoom()
     {
         //PhotonNetwork.LoadLevel("GamePlay");
@@ -87,11 +92,6 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
         GameManager.Debuger("Player entrou na sala " + newPlayer.NickName);
         base.OnPlayerEnteredRoom(newPlayer);
         lastJoinedPLayer = newPlayer;
-        Vector3 position = new Vector3(0, 0.79f, 0);//79f
-        Quaternion rotation = Quaternion.Euler(0, 90, 0);//Vector3.up * Random.Range(0, 360.0f));
-        GameObject playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
-        DontDestroyOnLoad(playerObject);
-        playerObject.GetComponent<PhotonView>().TransferOwnership(lastJoinedPLayer);
     }
     public override void OnJoinedRoom()
     {
@@ -107,6 +107,11 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
             spawnSystem.enabledS = false;
             GameManager.Debuger("Não sou o Host da sala!!");
         }
+        Vector3 position = new Vector3(0, 0.79f, 0);//79f
+        Quaternion rotation = Quaternion.Euler(0, 90, 0);//Vector3.up * Random.Range(0, 360.0f));
+        GameObject playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
+        DontDestroyOnLoad(playerObject);
+        playerObject.GetComponent<PhotonView>().TransferOwnership(lastJoinedPLayer);
         PhotonNetwork.AutomaticallySyncScene = true;
         LoadScene();
 

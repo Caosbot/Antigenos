@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public class Room : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Room : MonoBehaviour
     {
         GameManager.Debuger(name.text);
         GameObject.Find("CreateAndJoin").GetComponent<CreateAndJoin>().JoinRoomInList(name.text);
+
     }
 
 }
