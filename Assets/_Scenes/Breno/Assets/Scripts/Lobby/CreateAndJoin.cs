@@ -19,6 +19,8 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     public SpawnSystem spawnSystem;
     public RoomOptions roomOptions;
 
+    private Player lastJoinedPLayer;
+
     public string roomName = string.Empty;
 
     void Start()
@@ -83,6 +85,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     {
         GameManager.Debuger("Player entrou na sala " + newPlayer.NickName);
         base.OnPlayerEnteredRoom(newPlayer);
+        lastJoinedPLayer = newPlayer;
     }
     public override void OnJoinedRoom()
     {
@@ -103,6 +106,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
         Quaternion rotation = Quaternion.Euler(0, 90, 0);//Vector3.up * Random.Range(0, 360.0f));
         GameObject playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
         DontDestroyOnLoad(playerObject);
+        playerObject.GetComponent<PhotonView>().TransferOwnership(lastJoinedPLayer);
         //playerObject.GetComponent<PhotonView>().TransferOwnership(newPlayer);
         LoadScene();
     }
