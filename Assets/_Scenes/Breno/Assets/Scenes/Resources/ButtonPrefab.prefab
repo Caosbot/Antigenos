@@ -88,10 +88,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2338564110181650923}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fb23c5efbe74ff42900f162297bb1e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 32a9ee59ac23fca40bcb741d5fbccfeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: 1.0_Phase
+  nameT: {fileID: 0}
 --- !u!114 &6675762410425505471
 MonoBehaviour:
   m_ObjectHideFlags: 0

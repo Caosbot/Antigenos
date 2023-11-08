@@ -31,7 +31,7 @@ public class RoomList : MonoBehaviourPunCallbacks
                 GameManager.Debuger("RoomList: "+roomList[i].Name);
                 roomNames.Add(roomList[i].Name);
                 GameObject Room = Instantiate(roomPrefab, Vector3.zero, Quaternion.identity, GameObject.Find("Content").transform);
-                Room.GetComponent<Room>().nameT.text = roomList[i].Name;
+                Room.GetComponent<RoomT>().nameT.text = roomList[i].Name;
 
                 allRooms[i] = Room;
             }
