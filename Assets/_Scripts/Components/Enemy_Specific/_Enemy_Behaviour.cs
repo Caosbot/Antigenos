@@ -74,6 +74,11 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     {
 
         GetComponent<PhotonView>().RPC(nameof(Die), RpcTarget.MasterClient);
+        GetComponent<PhotonView>().RPC(nameof(SpawnTakeDamage), RpcTarget.All);
+    }
+    [PunRPC]
+    public void SpawnTakeDamage()
+    {
         SpawnSystem.SpawnTakeDamage();
     }
     public int DamageMultiplayer()

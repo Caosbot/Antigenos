@@ -293,7 +293,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     public static void SpawnTakeDamage()
     {
         spawnLife--;
-        if(spawnLife == 0)
+        if (spawnLife == 0)
         {
             ENDGAME();
             foreach(_Enemy_Behaviour g in FindObjectsOfType<_Enemy_Behaviour>())
@@ -301,6 +301,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 g.enemy_Animation.PlayDesiredAnimation("Dance");
             }
         }
+    }
+    [PunRPC]
+    public void SpawnTakeDamageRPC()
+    {
+
     }
     public void Group(GameObject atual,int local)
     {
