@@ -37,6 +37,18 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
             GetComponent<PhotonView>().RPC(nameof(Die),RpcTarget.MasterClient);
         }
     }
+    public IEnumerator DIESenaomover()
+    {
+        while (true)
+        {
+            Vector3 t = gameObject.transform.position;
+            yield return new WaitForSeconds(30);
+            if(t == gameObject.transform.position)
+            {
+                this.TakeDamage(100000);
+            }
+        }
+    }
     void Start()
     {
         statsComponent.Initialize();
