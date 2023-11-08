@@ -26,6 +26,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+        DontDestroyOnLoad(gameObject);
         //Conecta no photon
         spawnSystem = GetComponent<SpawnSystem>();
         GameManager.Debuger("Conectando no Servidor...");
