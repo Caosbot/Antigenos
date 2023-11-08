@@ -52,7 +52,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
             roomName = input_Create.text.ToUpper();
 
         GameManager.Debuger("Criado sala em CreateRoom: " + roomName);
-        PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+        //PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
         // roomOptions = new RoomOptions();
         // roomOptions.MaxPlayers = 3;
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions,null);
