@@ -10,6 +10,9 @@ TagManager:
   - EndPoint
   - SpawnPoint
   - Enemy
+  - AudioManager
+  - Menu
+  - Sensibilidade
   layers:
   - Default
   - TransparentFX

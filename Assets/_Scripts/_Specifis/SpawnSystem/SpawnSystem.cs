@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using Photon.Realtime;
 using Photon.Pun;
-using static UnityEditor.FilePathAttribute;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using System.Linq;
@@ -79,6 +78,27 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         }
             
     }
+    private void AlternateAwake()
+    {
+        waveSpawnText = GameObject.Find("Waves").GetComponent<TextMeshProUGUI>();
+        waveSpawnTimeText = GameObject.Find("WaveTime").GetComponent<TextMeshProUGUI>();
+        spawnerLives = GameObject.Find("Life").GetComponent<TextMeshProUGUI>();
+        //gameObject.AddComponent<PhotonView>();
+        //myPhotonView =  GetComponent<PhotonView>();
+        canSpawn = true;
+        spawnLifes = serializeSpawnLifes;
+        spawnLife = spawnLifes;
+        spawnedEnemiesList = new List<_Enemy_Behaviour>(100);
+        linha = spawnLocations.Length + 1;
+        //Debug.Log("Linha: " + linha);
+        enemyGroup = new GameObject[linha][];
+        for (int i = 0; i < linha; i++)
+        {
+            //Debug.Log("i: " + i);
+            enemyGroup[i] = new GameObject[sizeArray];
+            //Debug.Log("enemyGroup[i]"+ enemyGroup[i].Length);
+        }
+    }
     private void Start()
     {
         canSpawn = true;
@@ -87,6 +107,16 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         {
             if(waveSpawnText != null)
             waveSpawnText.text = "Press G To Start\n Press X to Quit";
+        }
+    }
+    private void AlternateStart()
+    {
+        canSpawn = true;
+        ended = false;
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            if (waveSpawnText != null)
+                waveSpawnText.text = "Press G To Start\n Press X to Quit";
         }
     }
     private void Update()
@@ -191,9 +221,9 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             if (infinite)
             {
                 waveCounter = 0;
-                StopAllCoroutines();
-                StartCoroutine(DelayRestart());
-                return;
+                //StopAllCoroutines();
+                //StartCoroutine(DelayRestart());
+                //return;
             }
             waveCounter++;
             ENDGAME();
@@ -247,6 +277,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     public static void ENDGAME()
     {
+        
         foreach(SpawnSystem s in FindObjectsOfType<SpawnSystem>())
         {
             s.RestartSpawn();
@@ -255,7 +286,23 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     public void RestartSpawn()
     {
-        if(ended == false)
+        StopAllCoroutines();
+        waveCounter = 0;
+        begin = false;
+        tempText = string.Empty;
+        spawnLife = 0;
+        spawnLifes = 15;
+        ended = false;
+        wavePaused = false;
+        waveShouldPause = false;
+        endText = false;
+        canSpawn = false;
+        enabledS = true;
+        spawnedEnemies = 0;
+        Awake();
+        Start();
+        
+        /*(//ended == false)
         {
             enemyQueue.Clear();
             waveCounter = 0;
@@ -264,7 +311,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             spawnLifes = serializeSpawnLifes;
             spawnLife = spawnLifes;
             StartCoroutine(DelayRestart());
-        }
+        }*/
     }
     private void SpawnEnemy(string location)
     {

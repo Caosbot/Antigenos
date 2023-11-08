@@ -7,13 +7,13 @@ using Photon.Pun;
 
 public class Room : MonoBehaviour
 {
-    public TextMeshProUGUI name;
+    public TextMeshProUGUI nameT;
     //public Text Name;
 
     public void JoinRoom()
     {
         //GameManager.Debuger(name.text);
-        GameObject.Find("CreateAndJoin").GetComponent<CreateAndJoin>().JoinRoomInList(name.text);
+        GameObject.Find("CreateAndJoin").GetComponent<CreateAndJoin>().JoinRoomInList(nameT.text);
 
     }
 

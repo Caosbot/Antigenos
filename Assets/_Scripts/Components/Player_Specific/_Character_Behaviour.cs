@@ -67,6 +67,10 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
     }
     private void Update()
     {
+        if (Movement_Component.onMenu)
+        {
+            return;
+        }
         playerText.transform.LookAt(Camera.main.transform);/////////////
         if (photonComponent.IsMine)
         {
@@ -82,6 +86,7 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
                 Debug.Log("A");
                 Application.Quit();
             }
+
 
         }
 

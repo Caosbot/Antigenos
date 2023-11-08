@@ -43,7 +43,8 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
         {
             Vector3 t = gameObject.transform.position;
             yield return new WaitForSeconds(30);
-            if(t == gameObject.transform.position)
+            float difference = t.x - gameObject.transform.position.x;
+            if (difference > -0.1f && difference < 0.1f)
             {
                 this.TakeDamage(100000);
             }
@@ -52,6 +53,7 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     void Start()
     {
         statsComponent.Initialize();
+        StartCoroutine(DIESenaomover());
     }
     [PunRPC]
     public void SetLife(int inDamage, bool ignoreArmor, PhotonMessageInfo info)
