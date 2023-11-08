@@ -104,6 +104,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
         }
         else
         {
+            if(spawnSystem!= null)
             spawnSystem.enabledS = false;
             GameManager.Debuger("Não sou o Host da sala!!");
         }
