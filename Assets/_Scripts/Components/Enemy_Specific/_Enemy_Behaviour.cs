@@ -72,10 +72,11 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     }
     public void InnTargetEnd()
     {
-
-        GetComponent<PhotonView>().RPC(nameof(Die), RpcTarget.MasterClient);
         GetComponent<PhotonView>().RPC(nameof(SpawnTakeDamage), RpcTarget.All);
+        GetComponent<PhotonView>().RPC(nameof(Die), RpcTarget.MasterClient);
+        
     }
+
     [PunRPC]
     public void SpawnTakeDamage()
     {
