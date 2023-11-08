@@ -23,6 +23,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         //Conecta no photon
         spawnSystem = GetComponent<SpawnSystem>();
         GameManager.Debuger("Conectando no Servidor...");
@@ -42,6 +43,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
         GameManager.Debuger("Entrou no Lobby!");
+        PhotonNetwork.AutomaticallySyncScene = true;
 
     }
     public void CreateRoom()
@@ -74,7 +76,8 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     public void LoadScene()
     {
         string sceneName = "1.0_Phase";
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene(sceneName);
+        PhotonNetwork.LoadLevel(sceneName);
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -95,7 +98,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
             spawnSystem.enabledS = false;
             GameManager.Debuger("Não sou o Host da sala!!");
         }
-
+        PhotonNetwork.AutomaticallySyncScene = true;
         Vector3 position = new Vector3(0, 0.79f, 0);//79f
         Quaternion rotation = Quaternion.Euler(0, 90, 0);//Vector3.up * Random.Range(0, 360.0f));
         GameObject playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
