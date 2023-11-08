@@ -13,7 +13,7 @@ public class _Character_Behaviour : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private Initialize_Component       serverInitializeComponent;
     [System.NonSerialized] public Weapon_Component      weaponComponent = null;
     public AnimationState_Component                     animationComponent;
-    private PhotonView                                  photonComponent;
+    public PhotonView                                  photonComponent;
     public Aim_Component                                aimComponent;
     [Header("ProgressBar")]
     [SerializeField] private ProgressBar                healthProgressBar;

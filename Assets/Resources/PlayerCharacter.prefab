@@ -187,6 +187,7 @@ MonoBehaviour:
     cameraTransform: {fileID: 5061989039210877815}
     characterTransform: {fileID: 155949318435713219}
     controller: {fileID: 5051563553989844195}
+  photonComponent: {fileID: 2032860823041302141}
   aimComponent:
     aimSpeed: 20
     aimMask:
