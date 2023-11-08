@@ -63,6 +63,13 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     }
     public void JoinRoom()
     {
+        foreach (string names in RoomList.roomNames)
+        {
+            if (input_Join.text==names)
+                GameManager.Debuger("Sala Encontrada");
+
+            GameManager.Debuger("Nome das salas: " + names);
+        }
         PhotonNetwork.JoinRoom(input_Join.text);
 
     }

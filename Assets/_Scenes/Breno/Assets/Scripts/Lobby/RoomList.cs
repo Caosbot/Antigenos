@@ -9,7 +9,7 @@ public class RoomList : MonoBehaviourPunCallbacks
 {
     public GameObject roomPrefab;
     public GameObject[] allRooms;
-    public List<string> roomNames = new List<string>();
+    public static List<string> roomNames = new List<string>();
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         for (int i = 0;i < allRooms.Length; i++)
@@ -39,9 +39,6 @@ public class RoomList : MonoBehaviourPunCallbacks
             Button button = gameItem.GetComponent<Button>();
             button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = objs[i].referen;*/
         }
-        foreach (string names in roomNames)
-        {
-            GameManager.Debuger("Nome das salas: " + names);
-        }
+        
     }
 }
