@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 111072384325914195}
   - component: {fileID: 111072384325914194}
   - component: {fileID: 111072384325914204}
+  - component: {fileID: 269033610775873460}
   m_Layer: 0
   m_Name: LaBacteria
   m_TagString: Enemy
@@ -160,6 +161,20 @@ CapsuleCollider:
   m_Height: 5.64
   m_Direction: 2
   m_Center: {x: 0, y: -1.07, z: 0}
+--- !u!136 &269033610775873460
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111072384325914197}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.05
+  m_Height: 5.64
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!1001 &111072385117996692
 PrefabInstance:
   m_ObjectHideFlags: 0
