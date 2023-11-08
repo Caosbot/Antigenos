@@ -102,12 +102,12 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
             GameManager.Debuger("Não sou o Host da sala!!");
         }
         PhotonNetwork.AutomaticallySyncScene = true;
+        LoadScene();
         Vector3 position = new Vector3(0, 0.79f, 0);//79f
         Quaternion rotation = Quaternion.Euler(0, 90, 0);//Vector3.up * Random.Range(0, 360.0f));
         GameObject playerObject = PhotonNetwork.Instantiate("PlayerCharacter", position, rotation);
         DontDestroyOnLoad(playerObject);
         playerObject.GetComponent<PhotonView>().TransferOwnership(lastJoinedPLayer);
         //playerObject.GetComponent<PhotonView>().TransferOwnership(newPlayer);
-        LoadScene();
     }
 }
