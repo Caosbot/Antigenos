@@ -31,13 +31,17 @@ public class RoomList : MonoBehaviourPunCallbacks
                 GameManager.Debuger("RoomList: "+roomList[i].Name);
                 roomNames.Add(roomList[i].Name);
                 GameObject Room = Instantiate(roomPrefab, Vector3.zero, Quaternion.identity, GameObject.Find("Content").transform);
-                Room.GetComponent<RoomT>().nameT.text = roomList[i].Name;
+                Room.GetComponent<Room>().name.text = roomList[i].Name;
 
                 allRooms[i] = Room;
             }
-           /* GameObject gameItem = Instantiate<GameObject>(_itemPrefab, _itemContent);
-            Button button = gameItem.GetComponent<Button>();
-            button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = objs[i].referen;*/
+            foreach (string names in roomNames)
+            {
+                GameManager.Debuger("Salas na lista: " + names);
+            }
+            /* GameObject gameItem = Instantiate<GameObject>(_itemPrefab, _itemContent);
+             Button button = gameItem.GetComponent<Button>();
+             button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = objs[i].referen;*/
         }
         
     }

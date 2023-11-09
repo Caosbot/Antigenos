@@ -5,15 +5,15 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 
-public class RoomT : MonoBehaviour
+public class Room : MonoBehaviour
 {
-    public TextMeshProUGUI nameT;
-    public Text NameA;
+    public TextMeshProUGUI name;
+    //public Text NameA;
 
     public void JoinRoom()
     {
         //GameManager.Debuger(name.text);
-        GameObject.Find("CreateAndJoin").GetComponent<CreateAndJoin>().JoinRoomInList(nameT.text);
+        GameObject.Find("CreateAndJoin").GetComponent<CreateAndJoin>().JoinRoomInList(name.text);
 
     }
 
