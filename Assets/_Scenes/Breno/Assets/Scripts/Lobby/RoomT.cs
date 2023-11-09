@@ -8,7 +8,7 @@ using Photon.Pun;
 public class RoomT : MonoBehaviour
 {
     public TextMeshProUGUI nameT;
-    //public Text Name;
+    public Text NameA;
 
     public void JoinRoom()
     {

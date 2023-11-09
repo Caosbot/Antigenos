@@ -7095,21 +7095,29 @@ MonoBehaviour:
     shouldPauseOnEnded: 0
     enemyList:
     - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
-      spawnCount: 24
+      spawnCount: 50
     - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
       spawnCount: 1
     - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
-      spawnCount: 12
+      spawnCount: 24
   - wave_Name: The tripod virus are coming!!!
     waveSpawnRate: 10
     shouldPauseOnEnded: 0
     enemyList:
     - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
-      spawnCount: 8
+      spawnCount: 30
     - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
       spawnCount: 1
     - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
       spawnCount: 20
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
+      spawnCount: 40
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 12
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
+      spawnCount: 27
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 40
   - wave_Name: They are coming!!!
     waveSpawnRate: 10
     shouldPauseOnEnded: 0
@@ -7124,6 +7132,32 @@ MonoBehaviour:
       spawnCount: 20
     - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
       spawnCount: 40
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
+      spawnCount: 50
+    - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
+      spawnCount: 20
+  - wave_Name: The End is Near!!!
+    waveSpawnRate: 10
+    shouldPauseOnEnded: 0
+    enemyList:
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
+      spawnCount: 30
+    - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
+      spawnCount: 8
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 20
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
+      spawnCount: 20
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 40
+    - enemyData: {fileID: 11400000, guid: 8ef83b65aa81d8a4ab94b8de0415a3ce, type: 2}
+      spawnCount: 16
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 25
+    - enemyData: {fileID: 11400000, guid: f1dc1fc266c70a140963b9a536357be3, type: 2}
+      spawnCount: 50
+    - enemyData: {fileID: 11400000, guid: 2007c2fc8d5ddc1409d567dd35357ce2, type: 2}
+      spawnCount: 30
   infinite: 0
   spawnLocations:
   - {fileID: 998609747}
