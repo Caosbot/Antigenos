@@ -135,6 +135,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         {
             Application.Quit();
         }
+        if (numPlayers != PhotonNetwork.PlayerList.Length)
+        {
+            numPlayers = PhotonNetwork.PlayerList.Length;
+            GameManager.Debuger("Qtd de Players: " + PhotonNetwork.PlayerList.Length);
+        }
 
 
     }
@@ -215,7 +220,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             Debug.Log("END GAME");
 #endif
 
-            waveSpawnText.text = "You Win this Battle... More Enemies are coming soom!";
+            SendMyMessageToAll("You Win this Battle... More Enemies are coming soom!"); //waveSpawnText.text = "You Win this Battle... More Enemies are coming soom!";
             StartCoroutine(Menssagem());
             begin = false;
             if (infinite)
@@ -230,7 +235,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             return;
         }
         tempText= enemyWaves[waveCounter].wave_Name;
-        waveSpawnText.text = tempText;//////////
+        SendMyMessageToAll(tempText);//waveSpawnText.text = tempText;//////////
         StartCoroutine(WaveTextTimer(enemyWaves[waveCounter].waveSpawnRate));
         waveShouldPause = enemyWaves[waveCounter].shouldPauseOnEnded;
         foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
@@ -255,11 +260,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(time/time);
             currentTime -= 1;
             waveSpawnTimeText.text = currentTime.ToString();
-            waveSpawnText.text = tempText;
+            SendMyMessageToAll(tempText);//waveSpawnText.text = tempText;
         }
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
-        waveSpawnText.text = "";
+        SendMyMessageToAll("");//waveSpawnText.text = "";
     }
     private IEnumerator TextTimer(float time)
     {
@@ -270,7 +275,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(time / time);
             currentTime -= 1;
             waveSpawnTimeText.text = currentTime.ToString();
-            waveSpawnText.text = tempText;
+            SendMyMessageToAll(tempText);//waveSpawnText.text = tempText;
         }
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
@@ -365,7 +370,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         if (enemyGroup[local].Length>=maxColluna)
         {
             //GameManager.Debuger("enemyGroup[local].Length: " + enemyGroup[local].Length+ "| maxColluna: "+ maxColluna);
-            //waveSpawnText.text = "Os Antígenos estão atacando!";
+            SendMyMessageToAll("Os Antígenos estão atacando!");//waveSpawnText.text = "Os Antígenos estão atacando!";
             if (endText)
             {
                 endText = false;
@@ -409,7 +414,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private IEnumerator Menssagem()
     {
         yield return new  WaitForSeconds(10);
-        waveSpawnText.text = "";
+        SendMyMessageToAll("");//waveSpawnText.text = "";
         endText = true;
     }
     public void SendMyMessage(string message)
@@ -431,16 +436,19 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             {
                 StartSpawn();
                 begin = true;
-                waveSpawnText.text = "";
+                SendMyMessageToAll("");//waveSpawnText.text = "";
             }
             //.Owner
-            if (numPlayers != PhotonNetwork.PlayerList.Length)
-            {
-                numPlayers = PhotonNetwork.PlayerList.Length;
-                GameManager.Debuger("Qtd de Players: " + PhotonNetwork.PlayerList.Length);
-            }
-
         }
+    }
+
+    public void TextWaveSpawnText(string texto, PhotonMessageInfo info)
+    {
+        waveSpawnText.text=texto;
+    }
+    public void SendMyMessageToAll(string message)
+    {
+        myPhotonView.RPC(nameof(TextWaveSpawnText), RpcTarget.All, message);
     }
 
 }

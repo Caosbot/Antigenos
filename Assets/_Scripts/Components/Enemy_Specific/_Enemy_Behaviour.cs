@@ -88,8 +88,8 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     {
         int numPlayers;
         numPlayers = SpawnSystem.numPlayers;
-        //Debug.Log("Qtd de Players: " + numPlayers);
-        if (numPlayers == 1)
+        Debug.Log("Qtd de Players: " + numPlayers);
+        if (numPlayers <= 1)
         {
             return 3;
         }
