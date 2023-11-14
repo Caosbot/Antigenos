@@ -13,6 +13,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     public TMP_InputField input_Create;
     public TMP_InputField input_Join;
     public TMP_InputField input_NickName;
+    public TextMeshProUGUI lobby;
 
     [SerializeField] private string[] playerNames;
     [SerializeField] private string playerNickname;
@@ -23,9 +24,14 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     private Player lastJoinedPLayer;
 
     public string roomName = string.Empty;
+    public GameObject _CreateButton;
+    public GameObject _ImputFieldCreate;
+    public GameObject _MenuRoom;
 
     void Start()
     {
+        _MenuRoom= GameObject.Find("MenuRoom");
+        _MenuRoom.SetActive(false);
         PhotonNetwork.AutomaticallySyncScene = true;
         DontDestroyOnLoad(gameObject);
         //Conecta no photon
@@ -45,31 +51,38 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
         base.OnJoinedLobby();
         GameManager.Debuger("Entrou no Lobby!");
         PhotonNetwork.AutomaticallySyncScene = true;
+        
+        IsConected();
 
     }
     public void CreateRoom()
     {
-        string temp = string.Empty;
-        foreach (string names in RoomList.roomNames)
+        if (IsConected())
         {
-            if (input_Create.text.ToUpper() == names)
+            string temp = string.Empty;
+            foreach (string names in RoomList.roomNames)
             {
-                temp = names;
-                GameManager.Debuger("Sala já existe;");
+                if (input_Create.text.ToUpper() == names)
+                {
+                    temp = names;
+                    GameManager.Debuger("Sala já existe;");
+                }
             }
+
+            if (input_Create.text == string.Empty)
+                roomName = "CORACAO";
+            else
+                roomName = input_Create.text.ToUpper();
+
+            GameManager.Debuger("Criado sala em CreateRoom: " + roomName);
+            //PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+            // roomOptions = new RoomOptions();
+            // roomOptions.MaxPlayers = 3;
+            PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, null);
+            //PhotonNetwork.CreateRoom(roomName);
         }
-
-        if (input_Create.text == string.Empty)
-            roomName = "CORACAO";
         else
-            roomName = input_Create.text.ToUpper();
-
-        GameManager.Debuger("Criado sala em CreateRoom: " + roomName);
-        //PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
-        // roomOptions = new RoomOptions();
-        // roomOptions.MaxPlayers = 3;
-        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions,null);
-        //PhotonNetwork.CreateRoom(roomName);
+            GameManager.Debuger("Não Conectado");
     }
     public void JoinRoom()
     {
@@ -90,7 +103,7 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         base.OnJoinRoomFailed(returnCode, message);
-        Debug.Log("A");
+        //Debug.Log("A");
     }
     public void OnJoinRoom()
     {
@@ -142,5 +155,35 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
         }
         else
             playerNickname = input_NickName.text;
+    }
+    public bool IsConected()
+    {
+        if (PhotonNetwork.InLobby == true && _MenuRoom.activeSelf == true)
+        {
+            lobby.text = "LOBBY\nCONNECTED";
+            GameManager.Debuger("Conectado!");
+            _ImputFieldCreate.SetActive(true);
+            _CreateButton.SetActive(true);
+            return true;
+        }
+        else
+        {
+            if (_MenuRoom.activeSelf == true)
+                lobby.text = "LOBBY\nDISCONNECTED";
+            return false;
+        }
+            
+    }
+    public void WaitCreate()
+    {
+        lobby = GameObject.Find("Lobby").GetComponent<TextMeshProUGUI>();
+        _CreateButton = GameObject.Find("ButtonCreate");
+        _ImputFieldCreate = GameObject.Find("ImputFieldCreateRoom");
+        _ImputFieldCreate.SetActive(false);
+        _CreateButton.SetActive(false);
+    }
+    public void PressTest()
+    {
+        IsConected();
     }
 }

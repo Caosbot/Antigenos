@@ -228,7 +228,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             Debug.Log("END GAME");
 #endif
 
-            waveSpawnText.text = "You Win this Battle... More Enemies are coming soom!";
+            SendMyMessageToAll("You Win this Battle... More Enemies are coming soom!"); //waveSpawnText.text = "You Win this Battle... More Enemies are coming soom!";
             StartCoroutine(Menssagem());
             begin = false;
             if (infinite)
@@ -244,7 +244,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         }
         tempText= enemyWaves[waveCounter].wave_Name;
         SendMyMessageToAll(tempText);
-        waveSpawnText.text = tempText;//////////
+        // waveSpawnText.text = tempText;//////////
         StartCoroutine(WaveTextTimer(enemyWaves[waveCounter].waveSpawnRate));
         waveShouldPause = enemyWaves[waveCounter].shouldPauseOnEnded;
         foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
@@ -269,11 +269,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(time/time);
             currentTime -= 1;
             waveSpawnTimeText.text = currentTime.ToString();
-            waveSpawnText.text = tempText;
+            SendMyMessageToAll(tempText);// waveSpawnText.text = tempText;
         }
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
-        waveSpawnText.text = "";
+        SendMyMessageToAll("");// waveSpawnText.text = "";
     }
     private IEnumerator TextTimer(float time)
     {
@@ -284,7 +284,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(time / time);
             currentTime -= 1;
             waveSpawnTimeText.text = currentTime.ToString();
-            waveSpawnText.text = tempText;
+            SendMyMessageToAll(tempText); //waveSpawnText.text = tempText;
         }
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
@@ -383,7 +383,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         if (enemyGroup[local].Length>=maxColluna)
         {
             //GameManager.Debuger("enemyGroup[local].Length: " + enemyGroup[local].Length+ "| maxColluna: "+ maxColluna);
-            waveSpawnText.text = "The system is under attack!";
+            SendMyMessageToAll("The system is under attack!"); //waveSpawnText.text = "The system is under attack!";
             if (endText)
             {
                 endText = false;
@@ -426,8 +426,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private IEnumerator Menssagem()
     {
-        yield return new  WaitForSeconds(10);
-        waveSpawnText.text = "";
+        yield return new  WaitForSeconds(5);
+        SendMyMessageToAll("");//waveSpawnText.text = "";
         endText = true;
     }
     public void SendMyMessage(string message)
@@ -443,9 +443,8 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     public void TextWaveSpawnText(string texto, PhotonMessageInfo info)
     {
-        GameManager.Debuger("Entrou3");
         waveSpawnText.text=texto;
-        StartCoroutine(DelayRPCSumir());
+        //StartCoroutine(DelayRPCSumir());
     }
     public IEnumerator DelayRPCSumir()
     {
@@ -471,7 +470,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
                 begin = true;
                 EnemyNavMesh.fim=false;
                 GameManager.Debuger("Fim: " + EnemyNavMesh.fim);
-                waveSpawnText.text = "";
+                SendMyMessageToAll("");//waveSpawnText.text = "";
                 foreach (GameObject e in GameObject.FindGameObjectsWithTag("Enemy"))
                 {
                     if (e != null)

@@ -14,7 +14,5 @@ public class Room : MonoBehaviour
     {
         //GameManager.Debuger(name.text);
         GameObject.Find("CreateAndJoin").GetComponent<CreateAndJoin>().JoinRoomInList(name.text);
-
     }
-
 }

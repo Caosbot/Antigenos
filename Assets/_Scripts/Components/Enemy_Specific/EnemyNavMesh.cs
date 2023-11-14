@@ -135,7 +135,7 @@ public class EnemyNavMesh : MonoBehaviour
     private IEnumerator FreeForTime()
     {
         flag = true;
-        yield return new WaitForSeconds(25);
+        yield return new WaitForSeconds(15);
         liberado = true;
         wtf = true;
 }

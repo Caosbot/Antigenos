@@ -42,7 +42,7 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
         while (true)
         {
             Vector3 t = gameObject.transform.position;
-            yield return new WaitForSeconds(30);
+            yield return new WaitForSeconds(20);
             float difference = t.x - gameObject.transform.position.x;
             if (difference > -0.1f && difference < 0.1f)
             {
