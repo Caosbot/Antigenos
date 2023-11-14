@@ -448,6 +448,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     public void SendMyMessageToAll(string message)
     {
+        myPhotonView = GetComponent<PhotonView>();
         if (myPhotonView != null)
             myPhotonView.RPC(nameof(TextWaveSpawnText), RpcTarget.All, message);
         else
