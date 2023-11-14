@@ -445,6 +445,13 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     {
         GameManager.Debuger("Entrou3");
         waveSpawnText.text=texto;
+        StartCoroutine(DelayRPCSumir());
+    }
+    public IEnumerator DelayRPCSumir()
+    {
+        yield return new WaitForSeconds(7);
+        waveSpawnText.text = "";
+
     }
     public void SendMyMessageToAll(string message)
     {
