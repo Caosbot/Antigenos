@@ -16,7 +16,7 @@ public class EnemyNavMesh : MonoBehaviour
     private Vector3 enemyPosition;
     private Vector3 playerPosition;
     private float distanceTarget, distancePlayer;
-    private float minSpaceBetween = 1.5f;
+    private float minSpaceBetween = 5f;
     private float friendDistance = 5f;
     //private int position;
 
@@ -26,6 +26,7 @@ public class EnemyNavMesh : MonoBehaviour
     public bool flag = false;
     private int linha;
     public bool wtf = false;
+    public static bool fim = false;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +70,7 @@ public class EnemyNavMesh : MonoBehaviour
             }
             if (distanceTarget >= 4f)
             {
-                Mover();
+                    Mover();
             }
             else
             {
@@ -87,6 +88,11 @@ public class EnemyNavMesh : MonoBehaviour
         //Debug.Log("Rodando Agrupar");
         foreach (GameObject enemy in SpawnSystem.enemyGroup[linha])
         {
+            if (fim)
+            {
+                enemyAgent.speed = 0;
+            }
+            else { 
             if (enemy!=null)
             {
                 float distance = Vector3.Distance(enemy.transform.position, this.transform.position);
@@ -99,14 +105,16 @@ public class EnemyNavMesh : MonoBehaviour
                         //Debug.Log("distance: " + distance);
                         Vector3 direction = transform.position - enemy.transform.position;
                         transform.Translate(direction * Time.deltaTime);
+                        enemyAgent.SetDestination(targetPosition);
                     }
+
                     //else
                 }
-                enemyAgent.SetDestination(targetPosition);
-                if (wtf)
-                    GameManager.Debuger("Transfor.Position: "+ this.transform.position+ "TagetPosition: "+ targetPosition);
+                
+                //if (wtf)
+                   //GameManager.Debuger("Transfor.Position: "+ this.transform.position+ "TagetPosition: "+ targetPosition);
             }
-            
+            }
         }
     }
     public void Liberar(int linha)

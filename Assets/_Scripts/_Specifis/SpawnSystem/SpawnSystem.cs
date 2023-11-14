@@ -62,7 +62,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         waveSpawnTimeText=GameObject.Find("WaveTime").GetComponent<TextMeshProUGUI>();
         spawnerLives=GameObject.Find("Life").GetComponent<TextMeshProUGUI>();
         //gameObject.AddComponent<PhotonView>();
-        //myPhotonView =  GetComponent<PhotonView>();
+        myPhotonView =  GetComponent<PhotonView>();
         canSpawn = true;
         spawnLifes = serializeSpawnLifes;
         spawnLife = spawnLifes;
@@ -103,16 +103,19 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     {
         canSpawn = true;
         ended = false;
+        EnemyNavMesh.fim = false;
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             if(waveSpawnText != null)
-            waveSpawnText.text = "Press G To Start\n Press X to Quit";
+                waveSpawnText.text = "Press G To Start\n Press X to Quit";
         }
     }
     private void AlternateStart()
     {
         canSpawn = true;
         ended = false;
+        EnemyNavMesh.fim = false;
+        GameManager.Debuger("Fim: "+ EnemyNavMesh.fim);
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             if (waveSpawnText != null)
@@ -155,6 +158,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private IEnumerator DelayRestart()
     {
+        
         StartCoroutine(WaveTextTimer(60));
         yield return new WaitForSeconds(20);
         foreach(_Enemy_Behaviour e in spawnedEnemiesList)
@@ -172,6 +176,10 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     }
     private IEnumerator SpawnEnemyWaves()
     {
+        if (ended)
+        {
+            ended = false;
+        }
         while (!enabledS)
         {
             yield return new WaitForSeconds(10);
@@ -220,7 +228,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             Debug.Log("END GAME");
 #endif
 
-            SendMyMessageToAll("You Win this Battle... More Enemies are coming soom!"); //waveSpawnText.text = "You Win this Battle... More Enemies are coming soom!";
+            waveSpawnText.text = "You Win this Battle... More Enemies are coming soom!";
             StartCoroutine(Menssagem());
             begin = false;
             if (infinite)
@@ -235,7 +243,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             return;
         }
         tempText= enemyWaves[waveCounter].wave_Name;
-        SendMyMessageToAll(tempText);//waveSpawnText.text = tempText;//////////
+        waveSpawnText.text = tempText;//////////
         StartCoroutine(WaveTextTimer(enemyWaves[waveCounter].waveSpawnRate));
         waveShouldPause = enemyWaves[waveCounter].shouldPauseOnEnded;
         foreach(EnemiesCount eCounter in enemyWaves[waveCounter].enemyList)
@@ -260,11 +268,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(time/time);
             currentTime -= 1;
             waveSpawnTimeText.text = currentTime.ToString();
-            SendMyMessageToAll(tempText);//waveSpawnText.text = tempText;
+            waveSpawnText.text = tempText;
         }
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
-        SendMyMessageToAll("");//waveSpawnText.text = "";
+        waveSpawnText.text = "";
     }
     private IEnumerator TextTimer(float time)
     {
@@ -275,7 +283,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(time / time);
             currentTime -= 1;
             waveSpawnTimeText.text = currentTime.ToString();
-            SendMyMessageToAll(tempText);//waveSpawnText.text = tempText;
+            waveSpawnText.text = tempText;
         }
         yield return new WaitForSeconds(0.2f);
         waveSpawnTimeText.text = "";
@@ -297,13 +305,14 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         tempText = string.Empty;
         spawnLife = 0;
         spawnLifes = 15;
-        ended = false;
+        ended = true;
         wavePaused = false;
         waveShouldPause = false;
         endText = false;
         canSpawn = false;
         enabledS = true;
         spawnedEnemies = 0;
+        EnemyNavMesh.fim = false;
         Awake();
         Start();
         
@@ -324,9 +333,11 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         GameObject instance = PhotonNetwork.Instantiate(location, spawnLocations[rand].position, new Quaternion(0, 0, 0, 0));
         Group(instance, rand);
         spawnedEnemiesList.Add(instance.GetComponent<_Enemy_Behaviour>());
+        
     }
     public void StartSpawn()
     {
+        spawnLife = 15;
         {
 #if UNITY_EDITOR
             //Debug.Log("Eu sou o host!!");
@@ -340,6 +351,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         if (spawnLife == 0)
         {
             ENDGAME();
+            EnemyNavMesh.fim = true;
             foreach(_Enemy_Behaviour g in FindObjectsOfType<_Enemy_Behaviour>())
             {
                 g.enemy_Animation.PlayDesiredAnimation("Dance");
@@ -370,7 +382,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
         if (enemyGroup[local].Length>=maxColluna)
         {
             //GameManager.Debuger("enemyGroup[local].Length: " + enemyGroup[local].Length+ "| maxColluna: "+ maxColluna);
-            SendMyMessageToAll("Os Antígenos estão atacando!");//waveSpawnText.text = "Os Antígenos estão atacando!";
+            waveSpawnText.text = "The system is under attack!";
             if (endText)
             {
                 endText = false;
@@ -414,19 +426,31 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
     private IEnumerator Menssagem()
     {
         yield return new  WaitForSeconds(10);
-        SendMyMessageToAll("");//waveSpawnText.text = "";
+        waveSpawnText.text = "";
         endText = true;
     }
     public void SendMyMessage(string message)
     {
         myPhotonView.RPC(nameof(ChangeText), RpcTarget.All, message);
     }
-
     [PunRPC]
     void ChangeText(string texto, PhotonMessageInfo info)
     {
         GameManager.Debuger("Entrou2");
         spawnerLives.text = texto;
+    }
+    [PunRPC]
+    public void TextWaveSpawnText(string texto, PhotonMessageInfo info)
+    {
+        GameManager.Debuger("Entrou3");
+        waveSpawnText.text=texto;
+    }
+    public void SendMyMessageToAll(string message)
+    {
+        if (myPhotonView != null)
+            myPhotonView.RPC(nameof(TextWaveSpawnText), RpcTarget.All, message);
+        else
+            GameManager.Debuger("Vazio");
     }
     public void ToMaster()
     {
@@ -436,21 +460,18 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             {
                 StartSpawn();
                 begin = true;
-                SendMyMessageToAll("");//waveSpawnText.text = "";
+                EnemyNavMesh.fim=false;
+                GameManager.Debuger("Fim: " + EnemyNavMesh.fim);
+                waveSpawnText.text = "";
+                foreach (GameObject e in GameObject.FindGameObjectsWithTag("Enemy"))
+                {
+                    if (e != null)
+                        e.GetComponent<_Enemy_Behaviour>().TakeDamage(10000);
+                }
             }
             //.Owner
         }
     }
-
-    public void TextWaveSpawnText(string texto, PhotonMessageInfo info)
-    {
-        waveSpawnText.text=texto;
-    }
-    public void SendMyMessageToAll(string message)
-    {
-        myPhotonView.RPC(nameof(TextWaveSpawnText), RpcTarget.All, message);
-    }
-
 }
 
 [System.Serializable]

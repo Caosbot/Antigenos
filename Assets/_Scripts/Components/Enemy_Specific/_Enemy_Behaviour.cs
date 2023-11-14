@@ -46,7 +46,8 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
             float difference = t.x - gameObject.transform.position.x;
             if (difference > -0.1f && difference < 0.1f)
             {
-                this.TakeDamage(100000);
+                if (!SpawnSystem.ended)
+                    this.TakeDamage(100000);
             }
         }
     }
@@ -74,6 +75,10 @@ public class _Enemy_Behaviour : MonoBehaviour, IAntigen, IDamageable
     }
     public void InnTargetEnd()
     {
+        if (SpawnSystem.ended)
+        {
+            return;
+        }
         GetComponent<PhotonView>().RPC(nameof(SpawnTakeDamage), RpcTarget.All);
         GetComponent<PhotonView>().RPC(nameof(Die), RpcTarget.MasterClient);
         
