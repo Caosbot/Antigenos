@@ -243,6 +243,7 @@ public class SpawnSystem : MonoBehaviourPunCallbacks
             return;
         }
         tempText= enemyWaves[waveCounter].wave_Name;
+        SendMyMessageToAll(tempText);
         waveSpawnText.text = tempText;//////////
         StartCoroutine(WaveTextTimer(enemyWaves[waveCounter].waveSpawnRate));
         waveShouldPause = enemyWaves[waveCounter].shouldPauseOnEnded;
